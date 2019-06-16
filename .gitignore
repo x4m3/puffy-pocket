@@ -1,3 +1,6 @@
+# test databases
+*.db
+
 # Logs
 logs
 *.log
