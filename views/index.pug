@@ -1,5 +1,8 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  h1= config.siteName
+  p Welcome to the home page
+  p.
+    Show login prompt if user is not logged in#[br]
+    Otherwise display from db: #[i items], #[i prices], #[i points]?
