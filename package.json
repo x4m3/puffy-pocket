@@ -15,7 +15,8 @@
     "jquery": "^3.4.1",
     "morgan": "~1.9.1",
     "popper.js": "^1.15.0",
-    "pug": "^2.0.3"
+    "pug": "^2.0.3",
+    "uuid": "^3.3.2"
   },
   "description": "puffy-pocket",
   "main": "app.js",
