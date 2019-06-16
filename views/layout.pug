@@ -1,7 +1,10 @@
+block dependencies
+- if(typeof title === "undefined") title = null;
 doctype html
 html
   head
-    title= title
+    meta(charset="utf-8")
+    title !{title != null ? `${title} - ` : ""}#{config.siteName}
     link(rel='stylesheet', href='/css/style.css')
   body
     block content
