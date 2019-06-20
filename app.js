@@ -1,39 +1,52 @@
-var createError = require('http-errors');
+var config = require('./config/config');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-
+// setup app and website title variable
 var app = express();
+app.locals.siteName = config.siteName;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(logger('dev'));
+// express setup
+app.use(require('morgan')('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+
+// use public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// routing
+app.use('/', require('./routes/index'));
 
-// catch 404 and forward to error handler
+// 404
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.status(404);
+  res.render('error', {
+    title: 'error',
+    code: 404,
+    status: 'not found',
+    url: req.url
+  });
 });
 
-// error handler
+// 500
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
+  console.error(err.stack);
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error', {
+    title: 'error',
+    code: 500,
+    status: err.message,
+    url: req.url
+  });
+});
+
+// start server
+var server = app.listen(config.port, function() {
+  console.log(`${config.siteName} running on port ${config.port} in ${config.status} mode`);
 });
 
 module.exports = app;
