@@ -1,4 +1,3 @@
-var config = require('../config/config');
 var express = require('express');
 var router = express.Router();
 
