@@ -6,12 +6,16 @@ i didnt know how to name this project
 
 node, npm
 
-## how to start
+## get started
 
 - clone the repo
 - run `npm i` to install dependencies
 - copy `config/config.example.js` to `config/config.js` and edit parameters
-- run `npm run start` to start the server
+
+## start
+
+- `npm run start` for production mode
+- `npm run dev` for development mode
 
 ## authors
 
