@@ -1,10 +1,17 @@
 var config = require('./config/config');
 var express = require('express');
 var path = require('path');
+var mongoose = require('mongoose');
 
 // setup app and website title variable
 var app = express();
 app.locals.siteName = config.siteName;
+
+// database
+var db = config.MongoURI;
+mongoose.connect(db, { useNewUrlParser: true })
+  .then(() => console.log('connected to mongodb'))
+  .catch(err => console.log(err));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,10 +32,8 @@ app.use('/auth', require('./routes/auth'));
 // 404
 app.use(function(req, res, next) {
   res.status(404);
-  res.render('error', {
+  res.render('404', {
     title: 'error',
-    code: 404,
-    status: 'not found',
     url: req.url
   });
 });
@@ -39,9 +44,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     title: 'error',
-    code: 500,
-    status: err.message,
-    url: req.url
+    httpCode: err.status || 500,
+    error: err,
+    time: Date()
   });
 });
 
