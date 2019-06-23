@@ -25,8 +25,12 @@
   "main": "app.js",
   "repository": {
     "type": "git",
-    "url": "https://git.x4m3.rocks/x4m3/puffy-pocket"
+    "url": "git+https://github.com/x4m3/puffy-pocket.git"
   },
+  "bugs": {
+    "url": "https://github.com/x4m3/puffy-pocket/issues"
+  },
+  "homepage": "https://github.com/x4m3/puffy-pocket#readme",
   "author": "",
   "license": "UNLICENSED",
   "devDependencies": {
