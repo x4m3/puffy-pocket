@@ -8,7 +8,7 @@ var app = express();
 app.locals.siteName = config.siteName;
 
 // database
-var db = config.MongoURI;
+var db = config.database;
 mongoose.connect(db, { useNewUrlParser: true })
   .then(() => console.log('connected to mongodb'))
   .catch(err => console.log(err));
