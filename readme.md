@@ -10,7 +10,7 @@ node, npm
 
 - clone the repo
 - run `npm i` to install dependencies
-- edit file `config/config.js` to adjust stuff
+- copy `config/config.example.js` to `config/config.js` and edit parameters
 - run `npm run start` to start the server
 
 ## authors
