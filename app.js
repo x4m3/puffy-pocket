@@ -20,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // routing
 app.use('/', require('./routes/index'));
+app.use('/auth', require('./routes/auth'));
 
 // 404
 app.use(function(req, res, next) {
