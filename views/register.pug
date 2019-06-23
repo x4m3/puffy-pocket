@@ -1,0 +1,15 @@
+extends layout
+block content
+  h1 register
+  if errors
+    ul
+      for err in errors
+        li= err.msg
+    p please try again
+  form(action="/auth/register" id="register-form" method="post")
+    input(type="text" name="name" id="name" placeholder="enter your name" value=name required)
+    input(type="email" name="email" id="email" placeholder="enter your email address" value=email required)
+    input(type="password" name="password" id="password" placeholder="choose a password" required)
+    input(type="password", name="passwordConfirm" id="passwordConfirm" placeholder="repeat your password" required)
+    input(type="text" name="referent" id="referent" placeholder="enter your referal code" value=referent required)
+    button(type="submit" form="register-form") register
