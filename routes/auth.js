@@ -47,6 +47,17 @@ router.post('/register', (req, res) => {
 
   // validation passed, ready to store in database
   else {
+    // check if referent code is good
+    User.findOne({ referent: referent })
+      .then(user => { console.log(`referent code ${user.referent} exists!`) })
+      .catch(() => {
+        errors.push({ msg: "referent code does not exist" });
+        res.render('register', {
+          errors,
+          name,
+          email,
+        });
+      });
     // try to find email in database
     User.findOne({ email: email })
     .then(user => {
@@ -56,7 +67,6 @@ router.post('/register', (req, res) => {
         res.render('register', {
           errors,
           name,
-          email,
           referent
         });
       } else {
