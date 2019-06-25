@@ -8,17 +8,17 @@ var User = require('../models/user');
 
 // main auth page
 router.get('/', (req, res, next) => {
-  res.render('auth');
+  res.render('auth', { title: "authentication"});
 });
 
 // login page
 router.get('/login', (req, res, next) => {
-  res.render('login');
+  res.render('login', { title: "login" });
 });
 
 // register page
 router.get('/register', (req, res, next) => {
-  res.render('register');
+  res.render('register', { title: "register" });
 });
 
 // if register form is sent
@@ -38,6 +38,7 @@ router.post('/register', (req, res) => {
 
   if (errors.length > 0) {
     res.render('register', {
+      title: "register",
       errors,
       name,
       email,
@@ -58,6 +59,7 @@ router.post('/register', (req, res) => {
                 // if email already exists, render page with error message
                 errors.push({ msg: "email is already registered" });
                 res.render('register', {
+                  title: "register",
                   errors,
                   name,
                   referent
@@ -89,6 +91,7 @@ router.post('/register', (req, res) => {
           // referent code couldn't be found, render page with error message
           errors.push({ msg: "referent code does not exist" });
           res.render('register', {
+            title: "register",
             errors,
             name,
             email,
