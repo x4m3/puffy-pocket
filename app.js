@@ -3,9 +3,12 @@ var express = require('express');
 var path = require('path');
 var mongoose = require('mongoose');
 
-// setup app and website title variable
+// setup app and local variables
 var app = express();
 app.locals.siteName = config.siteName;
+if (config.status == 'development') {
+  app.locals.pretty = true;
+}
 
 // database
 var db = config.database;
