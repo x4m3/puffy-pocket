@@ -54,7 +54,7 @@ app.use(function(err, req, res, next) {
 });
 
 // start server
-var server = app.listen(config.port, function() {
+app.listen(config.port, function() {
   console.log(`${config.siteName} running on port ${config.port} in ${config.status} mode`);
 });
 
