@@ -47,51 +47,54 @@ router.post('/register', (req, res) => {
 
   // validation passed, ready to store in database
   else {
-    // check if referent code is good
+    // find if referent code exists
     User.findOne({ referent: referent })
-      .then(user => { console.log(`referent code ${user.referent} exists!`) })
-      .catch(() => {
-        errors.push({ msg: "referent code does not exist" });
-        res.render('register', {
-          errors,
-          name,
-          email,
-        });
-      });
-    // try to find email in database
-    User.findOne({ email: email })
-    .then(user => {
-      // if user already exists
-      if (user) {
-        errors.push({ msg: "email is already registered" });
-        res.render('register', {
-          errors,
-          name,
-          referent
-        });
-      } else {
-        // create user
-        var newUser = new User({
-          id: require('uuid/v4')(),
-          name,
-          email,
-          password,
-          referent
-        });
+      .then(user => {
+        if (user) {
+          // if referent code matches, find if email is alread registered
+          User.findOne({ email: email })
+            .then(user => {
+              if (user) {
+                // if email already exists, render page with error message
+                errors.push({ msg: "email is already registered" });
+                res.render('register', {
+                  errors,
+                  name,
+                  referent
+                });
+              } else {
+                // create user
+                var newUser = new User({
+                  id: require('uuid/v4')(),
+                  name,
+                  email,
+                  password,
+                  referent
+                });
 
-        // generate salt and hash password
-        bcrypt.genSalt(10, (err, salt) =>
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            // store hashed password
-            newUser.password = hash;
-            // save new user
-            newUser.save()
-              .then(user => { res.redirect('/auth/login') })
-              .catch(err => console.error(err));
-        }));
-      }
-    });
+                // generate salt and hash password
+                bcrypt.genSalt(10, (err, salt) =>
+                  bcrypt.hash(newUser.password, salt, (err, hash) => {
+                    if (err) throw err;
+                    // store hashed password
+                    newUser.password = hash;
+                    // save new user and redirect to login page
+                    newUser.save()
+                      .then(user => { res.redirect('/auth/login') })
+                      .catch(err => console.error(err));
+                  }));
+              }
+            });
+        } else {
+          // referent code couldn't be found, render page with error message
+          errors.push({ msg: "referent code does not exist" });
+          res.render('register', {
+            errors,
+            name,
+            email,
+          });
+        }
+      });
   }
 });
 
