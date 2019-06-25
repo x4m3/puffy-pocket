@@ -23,7 +23,7 @@ router.get('/register', (req, res, next) => {
 
 // if register form is sent
 router.post('/register', (req, res) => {
-  const { name, email, password, passwordConfirm, referent } = req.body;
+  const { firstName, lastName, email, phone, address, password, passwordConfirm, referent } = req.body;
   let errors = [];
 
   // check if password is at least long enough (see config file)
@@ -40,8 +40,11 @@ router.post('/register', (req, res) => {
     res.render('register', {
       title: "register",
       errors,
-      name,
+      firstName,
+      lastName,
       email,
+      phone,
+      address,
       referent
     });
   }
@@ -52,7 +55,7 @@ router.post('/register', (req, res) => {
     User.findOne({ referent: referent })
       .then(user => {
         if (user) {
-          // if referent code matches, find if email is alread registered
+          // find if email is alread registered
           User.findOne({ email: email })
             .then(user => {
               if (user) {
@@ -61,15 +64,21 @@ router.post('/register', (req, res) => {
                 res.render('register', {
                   title: "register",
                   errors,
-                  name,
+                  firstName,
+                  lastName,
+                  phone,
+                  address,
                   referent
                 });
               } else {
                 // create user
                 var newUser = new User({
                   id: require('uuid/v4')(),
-                  name,
+                  firstName,
+                  lastName,
                   email,
+                  phone,
+                  address,
                   password,
                   referent
                 });
@@ -93,8 +102,11 @@ router.post('/register', (req, res) => {
           res.render('register', {
             title: "register",
             errors,
-            name,
+            firstName,
+            lastName,
             email,
+            phone,
+            address,
           });
         }
       });
