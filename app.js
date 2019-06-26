@@ -14,7 +14,12 @@ if (config.status == 'development') {
 var db = config.database;
 mongoose.connect(db, { useNewUrlParser: true })
   .then(() => console.log('connected to mongodb'))
-  .catch(err => console.log(err));
+  .catch(err => {
+    console.error(err.name);
+    console.error("check if the database is only, or check the path in config");
+    console.log("exiting with error");
+    process.exit(1);
+  });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
