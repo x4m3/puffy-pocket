@@ -2,7 +2,16 @@ extends layout
 
 block content
   h1 login
+  if errors
+    ul
+      for err in errors
+        li= err.msg
+      p please try again
   form(action="/auth/login" id="login-form" method="post")
-    input(type="email" name="email" id="email" placeholder="email address" required)
-    input(type="password" name="password" id="password" placeholder="enter password" required)
+    div
+      label(for="email") Email address
+      input(type="email" name="email" placeholder="email address" value=email required)
+    div
+      label(for="password") Password
+      input(type="password" name="password" placeholder="enter password" value=password required)
     button(type="submit" form="login-form") login
