@@ -80,7 +80,7 @@ router.post('/register', (req, res) => {
                   phone,
                   address,
                   password,
-                  referent
+                  referent: require('../util/generateReferentCode')(firstName, lastName, 3)
                 });
 
                 // generate salt and hash password
