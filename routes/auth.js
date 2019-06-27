@@ -26,6 +26,11 @@ router.post('/register', (req, res) => {
   const { firstName, lastName, email, phone, address, password, passwordConfirm, referent } = req.body;
   let errors = [];
 
+  // check if firstName and lastName contain only letters
+  if (!firstName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/) || !lastName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+    errors.push({ msg: `only letters are allowed for name` });
+  }
+
   // check if password is at least long enough (see config file)
   if (password.length < config.passwordLength) {
     errors.push({ msg: `password must be at least ${config.passwordLength} characters` });
