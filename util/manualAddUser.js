@@ -26,4 +26,4 @@ module.exports = function () {
         .then(user => { console.log(`user ${user} created`) })
         .catch(err => console.error(err));
     }));
-}
+};
