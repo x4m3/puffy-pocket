@@ -71,6 +71,7 @@ router.post('/register', (req, res) => {
                   errors,
                   firstName,
                   lastName,
+                  email,
                   phone,
                   address,
                   referent
@@ -112,6 +113,7 @@ router.post('/register', (req, res) => {
             email,
             phone,
             address,
+            referent
           });
         }
       });
