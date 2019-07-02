@@ -79,6 +79,7 @@ router.post('/register', (req, res) => {
               } else {
                 // create user
                 var newUser = new User({
+                  // TODO: check if id already exists in database
                   id: require('uuid/v4')(),
                   firstName,
                   lastName,
