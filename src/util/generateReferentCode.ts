@@ -1,6 +1,6 @@
-module.exports = function (firstName, lastName, nb) {
-  if (typeof firstName !== 'string' || typeof lastName !== 'string' || typeof nb !== 'number' || !firstName || !lastName) {
-    throw new Error("bad parameters, check the types and make sure values are not empty");
+module.exports = function (firstName: string, lastName: string, nb: number) {
+  if (!firstName || !lastName || nb == 0) {
+    throw new Error("bad parameters, make sure values are not empty");
   }
 
   // store first characters of firstName and lastName
