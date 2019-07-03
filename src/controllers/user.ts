@@ -1,7 +1,9 @@
 import { passwordLength } from "../config/config";
 import { User } from "../models/user";
 import { Request, Response, NextFunction } from "express";
+import { generateReferentCode } from "../util/generateReferentCode";
 import bcrypt from "bcryptjs";
+import uuid from "uuid/v4";
 
 /**
  * GET /login
@@ -85,14 +87,14 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
                 // create user
                 var newUser = new User({
                   // TODO: check if id already exists in database
-                  id: require("uuid/v4")(),
+                  id: uuid(),
                   firstName,
                   lastName,
                   email,
                   phone,
                   address,
                   password,
-                  referent: require("../util/generateReferentCode")(firstName, lastName, 3)
+                  referent: generateReferentCode(firstName, lastName)
                 });
 
                 // generate salt and hash password

@@ -1,9 +1,9 @@
 /**
  * Generates a referent code based of a person's initials with a number of digits
- * @param {string} firstName First name of person
- * @param {string} lastName Last name of person
- * @param {number} nb Number of digits in the referent code (optional, defaults to 3)
- * @returns {string} Referent code
+ * @param   {string}  firstName First name of person
+ * @param   {string}  lastName Last name of person
+ * @param   {number=} nb Number of digits in the referent code (optional, defaults to 3)
+ * @returns {string}  Referent code
  */
 export function generateReferentCode(firstName: string, lastName: string, nb?: number): string {
   if (!nb || nb == 0) {
