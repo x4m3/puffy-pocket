@@ -12,6 +12,10 @@ if (config.status == 'development') {
   app.use(errorHandler());
 }
 
+// import controllers
+import * as indexController from "./controllers/index";
+import * as userController from "./controllers/user";
+
 // database
 var db: string = config.database;
 mongoose.connect(db, { useNewUrlParser: true })
@@ -37,8 +41,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 
 // routing
-app.use('/', require('./routes/index'));
-app.use('/auth', require('./routes/auth'));
+app.get("/", indexController.index);
+app.get("/account/login", userController.getLogin);
+app.get("/account/register", userController.getRegister);
 
 // 404
 app.use((req, res, next) => {

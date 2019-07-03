@@ -1,48 +1,53 @@
-var config = require('../config/config');
-var express = require('express');
-var router = express.Router();
-var bcrypt = require('bcryptjs');
+import { passwordLength } from "../config/config";
+import { User } from "../models/user";
+import { Request, Response, NextFunction } from "express";
+import bcrypt from "bcryptjs";
 
-// user model
-var User = require('../models/user');
+/**
+ * GET /login
+ * login page
+ */
+export const getLogin = (req: Request, res: Response) => {
+  res.render("account/login", {
+    title: "login"
+  });
+};
 
-// main auth page
-router.get('/', (req, res, next) => {
-  res.render('auth', { title: "authentication"});
-});
+/**
+ * GET /register
+ * register page
+ */
+export const getRegister = (req: Request, res: Response) => {
+  res.render("account/register", {
+    title: "register"
+  });
+};
 
-// login page
-router.get('/login', (req, res, next) => {
-  res.render('login', { title: "login" });
-});
-
-// register page
-router.get('/register', (req, res, next) => {
-  res.render('register', { title: "register" });
-});
-
-// if register form is sent
-router.post('/register', (req, res) => {
+/**
+ * POST /register
+ * register new user
+ */
+export const postRegister = (req: Request, res: Response, next: NextFunction) => {
   const { firstName, lastName, email, phone, address, password, passwordConfirm, referent } = req.body;
-  let errors = [];
+  let errors: Array<string> = [];
 
   // check if firstName and lastName contain only letters
   if (!firstName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/) || !lastName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
-    errors.push({ msg: `only letters are allowed for name` });
+    errors.push("only letters are allowed for name");
   }
 
   // check if password is at least long enough (see config file)
-  if (password.length < config.passwordLength) {
-    errors.push({ msg: `password must be at least ${config.passwordLength} characters` });
+  if (password.length < passwordLength) {
+    errors.push(`password must be at least ${passwordLength} characters`);
   }
 
   // check if passwords match
   else if (password != passwordConfirm) {
-    errors.push({ msg: "passwords don't match" });
+    errors.push("passwords don't match");
   }
 
   if (errors.length > 0) {
-    res.render('register', {
+    res.render("register", {
       title: "register",
       errors,
       firstName,
@@ -60,13 +65,13 @@ router.post('/register', (req, res) => {
     User.findOne({ referent: referent })
       .then(user => {
         if (user) {
-          // find if email is alread registered
+          // find if email is already registered
           User.findOne({ email: email })
             .then(user => {
               if (user) {
                 // if email already exists, render page with error message
-                errors.push({ msg: "email is already registered" });
-                res.render('register', {
+                errors.push("email is already registered");
+                res.render("register", {
                   title: "register",
                   errors,
                   firstName,
@@ -80,17 +85,18 @@ router.post('/register', (req, res) => {
                 // create user
                 var newUser = new User({
                   // TODO: check if id already exists in database
-                  id: require('uuid/v4')(),
+                  id: require("uuid/v4")(),
                   firstName,
                   lastName,
                   email,
                   phone,
                   address,
                   password,
-                  referent: require('../util/generateReferentCode')(firstName, lastName, 3)
+                  referent: require("../util/generateReferentCode")(firstName, lastName, 3)
                 });
 
                 // generate salt and hash password
+                // TODO: move password encryption to models/user.ts (see microsoft template)
                 bcrypt.genSalt(10, (err, salt) =>
                   bcrypt.hash(newUser.password, salt, (err, hash) => {
                     if (err) throw err;
@@ -105,8 +111,8 @@ router.post('/register', (req, res) => {
             });
         } else {
           // referent code couldn't be found, render page with error message
-          errors.push({ msg: "referent code does not exist" });
-          res.render('register', {
+          errors.push("referent code does not exist");
+          res.render("register", {
             title: "register",
             errors,
             firstName,
@@ -119,6 +125,4 @@ router.post('/register', (req, res) => {
         }
       });
   }
-});
-
-module.exports = router;
+};
