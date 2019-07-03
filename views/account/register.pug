@@ -4,7 +4,7 @@ block content
   if errors
     ul
       for err in errors
-        li= err.msg
+        li= err
     p please try again
   form(action="/auth/register" id="register-form" method="post")
     div
