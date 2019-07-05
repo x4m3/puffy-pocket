@@ -1,4 +1,17 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
+
+export type UserDocument = mongoose.Document & {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  address: string;
+  password: string;
+  referent: string;
+  creationDate: Date;
+};
 
 const UserSchema = new mongoose.Schema({
   // TODO: see if 'required' is really useful, see best practices for mongodb schema
@@ -13,4 +26,19 @@ const UserSchema = new mongoose.Schema({
   creationDate: { type: Date, default: Date.now }
 });
 
-export const User = mongoose.model("User", UserSchema);
+/**
+ * Password hashing
+ */
+UserSchema.pre("save", function save(next) {
+  const user = this as UserDocument;
+  bcrypt.genSalt(10, (err, salt) => {
+    if (err) { return next(err); }
+    bcrypt.hash(user.password, salt, (err: mongoose.Error, hash: string) => {
+      if (err) { return next(err); }
+      user.password = hash;
+      next();
+    });
+  });
+});
+
+export const User = mongoose.model<UserDocument>("User", UserSchema);
