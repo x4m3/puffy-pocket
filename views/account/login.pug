@@ -7,7 +7,7 @@ block content
       for err in errors
         li= err.msg
       p please try again
-  form(action="/auth/login" id="login-form" method="post")
+  form(action="/account/login" id="login-form" method="post")
     div
       label(for="email") Email address
       input(type="email" name="email" placeholder="email address" value=email required)

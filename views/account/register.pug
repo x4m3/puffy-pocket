@@ -6,7 +6,7 @@ block content
       for err in errors
         li= err
     p please try again
-  form(action="/auth/register" id="register-form" method="post")
+  form(action="/account/register" id="register-form" method="post")
     div
       label(for="firstName") First Name
       input(type="text" name="firstName" placeholder="James" value=firstName required)
