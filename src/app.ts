@@ -46,6 +46,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.get("/", indexController.index);
 app.get("/account/login", userController.getLogin);
 app.get("/account/register", userController.getRegister);
+app.post("/account/register", userController.postRegister);
 
 // 404
 app.use((req, res, next) => {
