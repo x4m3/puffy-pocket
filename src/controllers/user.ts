@@ -33,23 +33,30 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
   const { firstName, lastName, email, phone, address, password, passwordConfirm, referent } = req.body;
   let errors: Array<string> = [];
 
-  // check if firstName and lastName contain only letters
+  // valid name and last name
   if (!firstName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/) || !lastName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
     errors.push("only letters are allowed for name");
   }
 
-  // check if password is at least long enough (see config file)
+  // phone number formatting
+  if (!phone.match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)) {
+    errors.push("invalid phone number");
+  }
+
   if (password.length < passwordLength) {
     errors.push(`password must be at least ${passwordLength} characters`);
   }
-
-  // check if passwords match
   else if (password != passwordConfirm) {
     errors.push("passwords don't match");
   }
 
+  // only capital letters and numbers for referent
+  if (!referent.match(/[A-Z0-9]+/)) {
+    errors.push("referent code format doesn't match");
+  }
+
   if (errors.length > 0) {
-    res.render("register", {
+    return res.render("account/register", {
       title: "register",
       errors,
       firstName,
@@ -73,7 +80,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
               if (user) {
                 // if email already exists, render page with error message
                 errors.push("email is already registered");
-                res.render("register", {
+                res.render("account/register", {
                   title: "register",
                   errors,
                   firstName,
@@ -114,7 +121,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         } else {
           // referent code couldn't be found, render page with error message
           errors.push("referent code does not exist");
-          res.render("register", {
+          res.render("account/register", {
             title: "register",
             errors,
             firstName,
