@@ -18,8 +18,10 @@ import * as userController from "./controllers/user";
 
 // database
 var db: string = config.database;
-mongoose.connect(db, { useNewUrlParser: true })
-  .then(() => console.log('connected to mongodb'))
+mongoose.connect(db, {
+  useNewUrlParser: true,
+  useCreateIndex: true
+}).then(() => console.log('connected to mongodb'))
   .catch(err => {
     console.error(err.name);
     console.error("check if the database is online, or check the path in config");
