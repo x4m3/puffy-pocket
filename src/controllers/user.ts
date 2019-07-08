@@ -19,10 +19,12 @@ export const getLogin = (req: Request, res: Response) => {
  * login user
  */
 export const postLogin = (req: Request, res: Response, next: NextFunction) => {
-  User.findOne({ email: req.body.email }, (err, userEmail) => {
+  const inputEmail: string = req.body.email.toLowerCase();
+
+  User.findOne({ email: inputEmail }, (err, userEmail) => {
     if (err) { return next(err); }
     if (userEmail) {
-      console.log(`email ${req.body.email} is valid`);
+      console.log(`email ${inputEmail} is valid`);
     } else {
       res.render("account/login", {
         title: "login",
