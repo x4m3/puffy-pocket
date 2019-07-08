@@ -1,6 +1,6 @@
 import express from "express";
 import path from "path";
-import mongoose from "mongoose";
+import mongoose, { Query } from "mongoose";
 import errorHandler from "errorhandler";
 import * as config from "./config/config";
 
@@ -11,6 +11,29 @@ if (config.status == 'development') {
   app.locals.pretty = true;
   app.use(errorHandler());
 }
+
+app.use(
+  require("express-status-monitor")({
+    title: config.siteName + " status",
+    theme: 'default.css',
+    path: '/status',
+    spans: [{
+      interval: 1, // Every second
+      retention: 60 // Keep 60 datapoints in memory
+    }, {
+      interval: 5, // Every 5 seconds
+      retention: 60
+    }],
+    chartVisibility: {
+      cpu: true,
+      mem: true,
+      load: true,
+      responseTime: true,
+      rps: false,
+      statusCodes: true
+    },
+  })
+);
 
 // import controllers
 import * as indexController from "./controllers/index";
