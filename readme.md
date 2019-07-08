@@ -10,7 +10,7 @@ node, npm
 
 - clone the repo
 - run `npm i` to install dependencies
-- copy `config/config.example.js` to `config/config.js` and edit parameters
+- copy `config/config.example.ts` to `config/config.ts` and edit parameters
 
 ## start
 
