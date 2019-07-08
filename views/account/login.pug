@@ -2,11 +2,9 @@ extends ../layout
 
 block content
   h1 login
-  if errors
-    ul
-      for err in errors
-        li= err.msg
-      p please try again
+  if error
+    p= error
+    p please try again
   form(action="/account/login" id="login-form" method="post")
     div
       label(for="email") Email address

@@ -15,6 +15,25 @@ export const getLogin = (req: Request, res: Response) => {
 };
 
 /**
+ * POST /login
+ * login user
+ */
+export const postLogin = (req: Request, res: Response, next: NextFunction) => {
+  User.findOne({ email: req.body.email }, (err, userEmail) => {
+    if (err) { return next(err); }
+    if (userEmail) {
+      console.log(`email ${req.body.email} is valid`);
+    } else {
+      res.render("account/login", {
+        title: "login",
+        error: "could not find your account",
+        email: req.body.email
+      });
+    }
+  })
+};
+
+/**
  * GET /register
  * register page
  */

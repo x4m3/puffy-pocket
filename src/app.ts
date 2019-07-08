@@ -71,6 +71,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 // routing
 app.get("/", indexController.index);
 app.get("/account/login", userController.getLogin);
+app.post("/account/login", userController.postLogin);
 app.get("/account/register", userController.getRegister);
 app.post("/account/register", userController.postRegister);
 
@@ -78,7 +79,7 @@ app.post("/account/register", userController.postRegister);
 app.use((req, res, next) => {
   res.status(404);
   res.render('404', {
-    title: 'error',
+    title: '404 error',
     url: req.url
   });
   next();
