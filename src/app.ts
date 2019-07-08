@@ -7,16 +7,17 @@ import * as config from "./config/config";
 // express app setup
 var app = express();
 app.locals.siteName = config.siteName;
-if (config.status == 'development') {
+if (config.status == "development") {
   app.locals.pretty = true;
   app.use(errorHandler());
 }
 
+// status monitor
 app.use(
   require("express-status-monitor")({
     title: "status - " + config.siteName,
-    theme: 'default.css',
-    path: '/status',
+    theme: "default.css",
+    path: "/status",
     spans: [{
       interval: 1, // Every second
       retention: 60 // Keep 60 data points in memory
@@ -47,7 +48,7 @@ var db: string = config.database;
 mongoose.connect(db, {
   useNewUrlParser: true,
   useCreateIndex: true
-}).then(() => console.log('connected to mongodb'))
+}).then(() => console.log("connected to mongodb"))
   .catch(err => {
     console.error(err.name);
     console.error("check if the database is online, or check the path in config");
@@ -57,16 +58,16 @@ mongoose.connect(db, {
 
 // view engine setup
 app.set("port", config.port);
-app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'pug');
+app.set("views", path.join(__dirname, "../views"));
+app.set("view engine", "pug");
 
 // express setup
-app.use(require('morgan')('dev'));
+app.use(require("morgan")("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // use public directory
-app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, "../public")));
 
 // routing
 app.get("/", indexController.index);
@@ -79,8 +80,8 @@ app.get("/account/avatar/:id", userController.getAvatar);
 // 404
 app.use((req, res, next) => {
   res.status(404);
-  res.render('404', {
-    title: '404 error',
+  res.render("404", {
+    title: "404 error",
     url: req.url
   });
   next();
