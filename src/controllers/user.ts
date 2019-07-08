@@ -150,7 +150,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
  */
 export const getAvatar = (req: Request, res: Response, next: NextFunction) => {
   var size: number = 500;
-  var avatar = generateAvatar(req.params.id, size);
+  var avatar: Buffer = generateAvatar(req.params.id, size);
   res.writeHead(200, {
     'Content-Type': 'image/png',
     'Content-Length': avatar.length
