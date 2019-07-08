@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../models/user";
 import { generateReferentCode } from "../util/generateReferentCode";
 import { generateUserId } from "../util/generateUserId";
+import { generateAvatar } from "../util/generateAvatar";
 
 /**
  * GET /login
@@ -141,4 +142,18 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
       });
     }
   });
+};
+
+/**
+ * GET /avatar/:id
+ * Display user avatar as png image (based of user :id)
+ */
+export const getAvatar = (req: Request, res: Response, next: NextFunction) => {
+  var size: number = 500;
+  var avatar = generateAvatar(req.params.id, size);
+  res.writeHead(200, {
+    'Content-Type': 'image/png',
+    'Content-Length': avatar.length
+  });
+  res.end(avatar);
 };

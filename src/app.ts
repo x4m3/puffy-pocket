@@ -74,6 +74,7 @@ app.get("/account/login", userController.getLogin);
 app.post("/account/login", userController.postLogin);
 app.get("/account/register", userController.getRegister);
 app.post("/account/register", userController.postRegister);
+app.get("/account/avatar/:id", userController.getAvatar);
 
 // 404
 app.use((req, res, next) => {
