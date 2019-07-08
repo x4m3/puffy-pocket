@@ -1,7 +1,7 @@
 import { User } from "../models/user";
 import uuid from "uuid/v4";
 
-export function generateUserId(): string {
+export function generateUserId(): string | boolean {
     // generate user id
     var userId: string = uuid();
 
