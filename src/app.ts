@@ -14,14 +14,17 @@ if (config.status == 'development') {
 
 app.use(
   require("express-status-monitor")({
-    title: config.siteName + " status",
+    title: "status - " + config.siteName,
     theme: 'default.css',
     path: '/status',
     spans: [{
       interval: 1, // Every second
-      retention: 60 // Keep 60 datapoints in memory
+      retention: 60 // Keep 60 data points in memory
     }, {
       interval: 5, // Every 5 seconds
+      retention: 60
+    }, {
+      interval: 60, // Every minute
       retention: 60
     }],
     chartVisibility: {
