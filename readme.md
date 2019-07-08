@@ -1,20 +1,18 @@
 # puffy-pocket
 
-i didnt know how to name this project
-
 ## requirements
 
 node, npm
 
 ## get started
 
-- clone the repo
+- git clone
 - run `npm i` to install dependencies
-- copy `config/config.example.ts` to `config/config.ts` and edit parameters
+- copy `src/config/config.example.ts` to `src/config/config.ts` and edit parameters
 
 ## start
 
-- `npm run start` for production mode
+- `npm start` for production mode
 - `npm run dev` for development mode
 
 ## authors
