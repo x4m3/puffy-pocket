@@ -6,7 +6,7 @@ export function generateUserId(): string | boolean {
     var userId: string = uuid();
 
     // check in database if already exists
-    User.findOne({ id: userId }, (err, existingId) => {
+    User.findOne({ userId: userId }, (err, existingId) => {
         if (err) { return false; }
         // call function again to generate a new id and check again
         if (existingId) { generateUserId(); }

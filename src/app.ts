@@ -1,7 +1,9 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import mongoose, { Query } from "mongoose";
 import errorHandler from "errorhandler";
+import session from "express-session";
+import passport from "passport";
 import * as config from "./config/config";
 
 // express app setup
@@ -42,6 +44,7 @@ app.use(
 // import controllers
 import * as indexController from "./controllers/index";
 import * as userController from "./controllers/user";
+import { isAuthenticated } from "./passport";
 
 // database
 var db: string = config.database;
@@ -61,6 +64,17 @@ app.set("port", config.port);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");
 
+// express session
+app.use(session({
+  resave: true,
+  saveUninitialized: true,
+  secret: config.secret
+}));
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // express setup
 app.use(require("morgan")("dev"));
 app.use(express.json());
@@ -73,6 +87,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 app.get("/", indexController.index);
 app.get("/login", userController.getLogin);
 app.post("/login", userController.postLogin);
+app.get("/logout", isAuthenticated, userController.getLogout);
 app.get("/register", userController.getRegister);
 app.post("/register", userController.postRegister);
 app.get("/account/avatar/:id", userController.getAvatar);

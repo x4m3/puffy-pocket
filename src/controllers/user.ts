@@ -1,9 +1,12 @@
 import { passwordLength } from "../config/config";
 import { Request, Response, NextFunction } from "express";
-import { User } from "../models/user";
+import { User, UserDocument } from "../models/user";
 import { generateReferentCode } from "../util/generateReferentCode";
 import { generateUserId } from "../util/generateUserId";
 import { generateAvatar } from "../util/generateAvatar";
+import { IVerifyOptions } from "passport-local";
+import passport from "passport";
+import "../passport";
 
 /**
  * GET /login
@@ -20,20 +23,22 @@ export const getLogin = (req: Request, res: Response) => {
  * login user
  */
 export const postLogin = (req: Request, res: Response, next: NextFunction) => {
-  const inputEmail: string = req.body.email.toLowerCase();
-
-  User.findOne({ email: inputEmail }, (err, userEmail) => {
+  passport.authenticate("local", (err: Error, user: UserDocument, info: IVerifyOptions) => {
     if (err) { return next(err); }
-    if (userEmail) {
-      console.log(`email ${inputEmail} is valid`);
-    } else {
-      res.render("account/login", {
+    if (!user) {
+      // if login failed
+      return res.render("account/login", {
         title: "login",
-        error: "could not find your account",
+        error: info.message,
         email: req.body.email
       });
     }
-  })
+    req.logIn(user, (err) => {
+      if (err) { return next(err); }
+      // if login succeeded
+      res.redirect(req.session.returnTo || "/good");
+    });
+  })(req, res, next);
 };
 
 /**
@@ -92,7 +97,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
 
   // create new user, generate user id and referent code
   const newUser = new User({
-    id: generateUserId(),
+    userId: generateUserId(),
     firstName: firstName,
     lastName: lastName,
     email: email,
@@ -158,3 +163,12 @@ export const getAvatar = (req: Request, res: Response) => {
   });
   res.end(avatar);
 };
+
+/**
+ * GET /logout
+ * Logout user
+ */
+export const getLogout = (req: Request, res: Response) => {
+  req.logOut();
+  res.send("you are logged out");
+}

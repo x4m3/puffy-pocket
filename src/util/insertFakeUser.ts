@@ -15,7 +15,7 @@ import { generateUserId } from "./generateUserId";
 export function insertFakeUser(firstName: string, lastName: string, email: string, phone: string, address: string, password: string): boolean {
   // create new user, generate user id and referent code
   const newUser = new User({
-    id: generateUserId(),
+    userId: generateUserId(),
     firstName: firstName,
     lastName: lastName,
     email: email,

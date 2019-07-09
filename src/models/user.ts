@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 export type UserDocument = mongoose.Document & {
-  id: string;
+  userId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -13,7 +13,7 @@ export type UserDocument = mongoose.Document & {
 };
 
 const UserSchema = new mongoose.Schema({
-  id: { type: String, required: true, unique: true },
+  userId: { type: String, required: true, unique: true },
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, lowercase: true, required: [ true, "can't be blank" ], unique: true, index: true },
@@ -37,5 +37,18 @@ UserSchema.pre("save", function save(next) {
     });
   });
 });
+
+/**
+ * Compare password
+ */
+type comparePasswordFunction = (candidatePassword: string, cb: (err: any, isMatch: any) => {}) => void;
+
+const comparePassword: comparePasswordFunction = function (candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, (err: mongoose.Error, isMatch: boolean) => {
+    cb(err, isMatch);
+  });
+};
+
+UserSchema.methods.comparePassword = comparePassword;
 
 export const User = mongoose.model<UserDocument>("User", UserSchema);
