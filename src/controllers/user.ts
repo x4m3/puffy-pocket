@@ -125,7 +125,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         // save user in database
         newUser.save((err) => {
           if (err) { return next(err); }
-          return res.redirect("/");
+          return res.redirect("/account/login");
         });
       });
     } else {
@@ -148,7 +148,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
  * GET /avatar/:id
  * Display user avatar as png image (based of user :id)
  */
-export const getAvatar = (req: Request, res: Response, next: NextFunction) => {
+export const getAvatar = (req: Request, res: Response) => {
   var size: number = 500;
   var avatar: Buffer = generateAvatar(req.params.id, size);
   res.writeHead(200, {
