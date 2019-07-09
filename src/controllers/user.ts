@@ -51,7 +51,8 @@ export const getRegister = (req: Request, res: Response) => {
  * register new user
  */
 export const postRegister = (req: Request, res: Response, next: NextFunction) => {
-  const { firstName, lastName, email, phone, address, password, passwordConfirm, referent } = req.body;
+  const { firstName, lastName, password, phone, address, passwordConfirm, referent } = req.body;
+  const email: string = req.body.email.toLowerCase(); // lowercase email
   let errors: Array<string> = [];
 
   // valid name and last name
