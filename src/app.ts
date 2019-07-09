@@ -71,10 +71,10 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 // routing
 app.get("/", indexController.index);
-app.get("/account/login", userController.getLogin);
-app.post("/account/login", userController.postLogin);
-app.get("/account/register", userController.getRegister);
-app.post("/account/register", userController.postRegister);
+app.get("/login", userController.getLogin);
+app.post("/login", userController.postLogin);
+app.get("/register", userController.getRegister);
+app.post("/register", userController.postRegister);
 app.get("/account/avatar/:id", userController.getAvatar);
 
 // 404

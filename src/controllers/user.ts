@@ -125,7 +125,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         // save user in database
         newUser.save((err) => {
           if (err) { return next(err); }
-          return res.redirect("/account/login");
+          return res.redirect("/login");
         });
       });
     } else {
