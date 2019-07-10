@@ -151,12 +151,12 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
 };
 
 /**
- * GET /avatar/:id
- * Display user avatar as png image (based of user :id)
+ * GET /account/avatar
+ * Display user avatar as png image
  */
 export const getAvatar = (req: Request, res: Response) => {
   var size: number = 500;
-  var avatar: Buffer = generateAvatar(req.params.id, size);
+  var avatar: Buffer = generateAvatar(req.user.userId, size);
   res.writeHead(200, {
     'Content-Type': 'image/png',
     'Content-Length': avatar.length
@@ -170,5 +170,5 @@ export const getAvatar = (req: Request, res: Response) => {
  */
 export const getLogout = (req: Request, res: Response) => {
   req.logOut();
-  res.send("you are logged out");
+  res.redirect("/");
 }
