@@ -4,7 +4,10 @@ import mongoose, { Query } from "mongoose";
 import errorHandler from "errorhandler";
 import session from "express-session";
 import passport from "passport";
+import mongo from "connect-mongo";
 import * as config from "./config/config";
+
+const MongoStore = mongo(session);
 
 // express app setup
 var app = express();
@@ -68,7 +71,11 @@ app.set("view engine", "pug");
 app.use(session({
   resave: true,
   saveUninitialized: true,
-  secret: config.secret
+  secret: config.secret,
+  store: new MongoStore({
+    url: config.database,
+    autoReconnect: true
+  })
 }));
 
 // passport middleware
