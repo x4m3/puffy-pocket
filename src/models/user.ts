@@ -3,24 +3,38 @@ import bcrypt from "bcryptjs";
 
 export type UserDocument = mongoose.Document & {
   userId: string;
-  firstName: string;
-  lastName: string;
   email: string;
-  phone: string;
-  address: string;
   password: string;
-  referent: string;
+  info: {
+    name: {
+      first: string;
+      last: string;
+    },
+    phone: string;
+    address: string;
+  };
+  referral: {
+    user: string;
+    registration: string;
+  };
 };
 
 const UserSchema = new mongoose.Schema({
-  userId: { type: String, required: true, unique: true },
-  firstName: { type: String, required: true },
-  lastName: { type: String, required: true },
-  email: { type: String, lowercase: true, required: [ true, "can't be blank" ], unique: true, index: true },
-  phone: { type: String, required: true },
-  address: { type: String, required: true },
-  password: { type: String, required: true },
-  referent: { type: String, required: true },
+  userId: { type: String, unique: true },
+  email: { type: String, lowercase: true, unique: true, index: true },
+  password: String,
+  info: {
+    name: {
+      first: String,
+      last: String
+    },
+    phone: String,
+    address: String
+  },
+  referral: {
+    user: String,
+    registration: String
+  }
 }, { timestamps: true });
 
 /**

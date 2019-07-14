@@ -56,7 +56,7 @@ export const getRegister = (req: Request, res: Response) => {
  * register new user
  */
 export const postRegister = (req: Request, res: Response, next: NextFunction) => {
-  const { firstName, lastName, password, phone, address, passwordConfirm, referent } = req.body;
+  const { firstName, lastName, password, phone, address, passwordConfirm, referral } = req.body;
   const email: string = req.body.email.toLowerCase(); // lowercase email
   let errors: Array<string> = [];
 
@@ -70,6 +70,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
     errors.push("invalid phone number");
   }
 
+  // password length and matching passwords
   if (password.length < passwordLength) {
     errors.push(`password must be at least ${passwordLength} characters`);
   }
@@ -78,7 +79,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
   }
 
   // only capital letters and numbers for referent
-  if (!referent.match(/[A-Z0-9]+/)) {
+  if (!referral.match(/[A-Z0-9]+/)) {
     errors.push("referent code format doesn't match");
   }
 
@@ -91,26 +92,14 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
       email,
       phone,
       address,
-      referent
+      referral
     });
   }
 
-  // create new user, generate user id and referent code
-  const newUser = new User({
-    userId: generateUserId(),
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-    phone: phone,
-    address: address,
-    password: password,
-    referent: generateReferentCode(firstName, lastName)
-  });
-
-  // find referent code in database
-  User.findOne({ referent: referent }, (err, existingReferent) => {
+  // find referral code in database
+  User.findOne({ "referral.user" : referral }, (err, existingReferral) => {
     if (err) { return next(err); }
-    if (existingReferent) {
+    if (existingReferral) {
       // find if email is already registered
       User.findOne({ email: email }, (err, existingUser) => {
         if (err) { return next(err); }
@@ -124,11 +113,30 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
             email,
             phone,
             address,
-            referent
+            referral
           });
         }
 
-        // save user in database
+        // create new user, generate user id and referent code
+        const newUser: UserDocument = new User({
+          userId: generateUserId(),
+          email: email,
+          password: password,
+          info: {
+            name: {
+              first: firstName,
+              last: lastName
+            },
+            phone: phone,
+            address: address,
+          },
+          referral: {
+            user: generateReferentCode(firstName, lastName),
+            registration: req.body.referent
+          }
+        });
+
+        // save new user in database
         newUser.save((err) => {
           if (err) { return next(err); }
           return res.redirect("/login");
@@ -144,7 +152,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         email,
         phone,
         address,
-        referent
+        referral
       });
     }
   });
