@@ -140,7 +140,15 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         // save new user in database
         newUser.save((err) => {
           if (err) { return next(err); }
-          return res.redirect("/login");
+
+          // login new user
+          passport.authenticate("local", (err: Error, user: UserDocument, info: IVerifyOptions) => {
+            if (err) { return next(err); }
+            req.logIn(user, (err) => {
+              if (err) { return next(err); }
+              res.redirect(req.session.returnTo || "/account");
+            });
+          })(req, res, next);
         });
       });
     } else {
