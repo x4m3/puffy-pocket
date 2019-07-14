@@ -132,7 +132,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
           },
           referral: {
             user: generateReferentCode(firstName, lastName),
-            registration: req.body.referent
+            registration: req.body.referral
           }
         });
 
