@@ -1,7 +1,7 @@
 import { passwordLength } from "../config/config";
 import { Request, Response, NextFunction } from "express";
 import { User, UserDocument } from "../models/user";
-import { generateReferentCode } from "../util/generateReferentCode";
+import { generateReferralCode } from "../util/generateReferralCode";
 import { generateUserId } from "../util/generateUserId";
 import { generateAvatar } from "../util/generateAvatar";
 import { IVerifyOptions } from "passport-local";
@@ -78,9 +78,9 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
     errors.push("passwords don't match");
   }
 
-  // only capital letters and numbers for referent
+  // only capital letters and numbers for referral
   if (!referral.match(/[A-Z0-9]+/)) {
-    errors.push("referent code format doesn't match");
+    errors.push("referral code format doesn't match");
   }
 
   if (errors.length > 0) {
@@ -117,7 +117,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
           });
         }
 
-        // create new user, generate user id and referent code
+        // create new user, generate user id and referral code
         const newUser: UserDocument = new User({
           userId: generateUserId(),
           email: email,
@@ -131,8 +131,8 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
             address: address,
           },
           referral: {
-            user: generateReferentCode(firstName, lastName),
-            registration: req.body.referral
+            user: generateReferralCode(referral, firstName, lastName, 3),
+            registration: referral
           }
         });
 
@@ -143,7 +143,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         });
       });
     } else {
-      errors.push("referent code does not exist");
+      errors.push("referral code does not exist");
       return res.render("account/register", {
         title: "register",
         errors,
