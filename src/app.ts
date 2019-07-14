@@ -97,6 +97,7 @@ app.post("/login", userController.postLogin);
 app.get("/logout", isAuthenticated, userController.getLogout);
 app.get("/register", userController.getRegister);
 app.post("/register", userController.postRegister);
+app.get("/account", isAuthenticated, userController.getAccount);
 app.get("/account/avatar", isAuthenticated, userController.getAvatar);
 
 // 404

@@ -6,6 +6,7 @@ import { generateUserId } from "../util/generateUserId";
 import { generateAvatar } from "../util/generateAvatar";
 import { IVerifyOptions } from "passport-local";
 import passport from "passport";
+import dateformat from "dateformat";
 import "../passport";
 
 /**
@@ -13,7 +14,7 @@ import "../passport";
  * login page
  */
 export const getLogin = (req: Request, res: Response) => {
-  res.render("account/login", {
+  res.render("login", {
     title: "login"
   });
 };
@@ -27,7 +28,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     if (err) { return next(err); }
     if (!user) {
       // if login failed
-      return res.render("account/login", {
+      return res.render("login", {
         title: "login",
         error: info.message,
         email: req.body.email
@@ -36,7 +37,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       // if login succeeded
-      res.redirect(req.session.returnTo || "/good");
+      res.redirect(req.session.returnTo || "/account");
     });
   })(req, res, next);
 };
@@ -46,7 +47,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
  * register page
  */
 export const getRegister = (req: Request, res: Response) => {
-  res.render("account/register", {
+  res.render("register", {
     title: "register"
   });
 };
@@ -84,7 +85,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
   }
 
   if (errors.length > 0) {
-    return res.render("account/register", {
+    return res.render("register", {
       title: "register",
       errors,
       firstName,
@@ -105,7 +106,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         if (err) { return next(err); }
         if (existingUser) {
           errors.push("email is already registered");
-          return res.render("account/register", {
+          return res.render("register", {
             title: "register",
             errors,
             firstName,
@@ -144,7 +145,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
       });
     } else {
       errors.push("referral code does not exist");
-      return res.render("account/register", {
+      return res.render("register", {
         title: "register",
         errors,
         firstName,
@@ -155,6 +156,19 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         referral
       });
     }
+  });
+};
+
+/**
+ * GET /account
+ * Display user account
+ */
+export const getAccount = (req: Request, res: Response) => {
+  res.render("account", {
+    title: "Your account",
+    user: req.user,
+    creationDate: dateformat(req.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
+    UpdateDate: dateformat(req.user.updatedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")
   });
 };
 
