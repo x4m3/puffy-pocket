@@ -1,6 +1,9 @@
 extends layout
 block content
   h1 register
+  p.
+    Please use a real email address (don't use a throwaway one)#[br]
+    Your password needs to be at least #{passwordLength} characters
   if errors
     ul
       for err in errors
@@ -24,8 +27,8 @@ block content
       input(type="text" name="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
     div
       label(for="password") Password
-      input(type="password" name="password" placeholder="At least 12 characters" required)
-      input(type="password" name="passwordConfirm" placeholder="Confirm password" required)
+      input(type="password" name="password" placeholder="Password" required)
+      input(type="password" name="passwordConfirm" placeholder="Confirm" required)
     div
       label(for="referral") Referral code
       input(type="text" name="referral" placeholder="Referral code" value=referral required)

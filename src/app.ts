@@ -12,6 +12,7 @@ const MongoStore = mongo(session);
 // express app setup
 var app = express();
 app.locals.siteName = config.siteName;
+app.locals.passwordLength = config.passwordLength;
 if (config.status == "development") {
   app.locals.pretty = true;
   app.use(errorHandler());
