@@ -5,6 +5,7 @@ export type UserDocument = mongoose.Document & {
   userId: string;
   email: string;
   password: string;
+  points: number;
   info: {
     name: {
       first: string;
@@ -23,6 +24,7 @@ const UserSchema = new mongoose.Schema({
   userId: { type: String, unique: true },
   email: { type: String, lowercase: true, unique: true, index: true },
   password: String,
+  points: Number,
   info: {
     name: {
       first: String,

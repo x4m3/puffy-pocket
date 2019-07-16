@@ -123,6 +123,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
           userId: generateUserId(),
           email: email,
           password: password,
+          points: 0,
           info: {
             name: {
               first: firstName,

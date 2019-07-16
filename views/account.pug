@@ -11,8 +11,9 @@ block content
     li Email address #[b #{user.email}]
     li Phone number #[b #{user.info.phone}]
     li Address #[b #{user.info.address}]
-  h3 Referral code
+  h3 Store
   p Your referral code is #[b #{user.referral.user}]
+  p You currently have #[b #{user.points}] points.
   h3 Miscellaneous
   p.
     Your account was created on #{creationDate}#[br]
