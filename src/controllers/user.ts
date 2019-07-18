@@ -12,6 +12,9 @@ import "../passport";
  * login page
  */
 export const getLogin = (req: Request, res: Response) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/account");
+  }
   res.render("login", {
     title: "login"
   });
@@ -45,6 +48,9 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
  * register page
  */
 export const getRegister = (req: Request, res: Response) => {
+  if (req.isAuthenticated()) {
+    return res.redirect("/account");
+  }
   res.render("register", {
     title: "register"
   });
