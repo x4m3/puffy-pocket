@@ -49,6 +49,9 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
   res.redirect("/login");
 };
 
+/**
+ * Admin Required middleware
+ */
 export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   if (req.user.admin === true) {
     return next();
