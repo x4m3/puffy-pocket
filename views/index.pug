@@ -3,6 +3,8 @@ extends layout
 block content
   h1 #{siteName}
   p Welcome to the home page
-  p.
-    Show login prompt if user is not logged in#[br]
-    Otherwise display from db: #[i items], #[i prices], #[i points]?
+  if !user
+    p please #[a(href="/login") login] or #[a(href="/register") register]
+  else
+    p Display from store collection: #[i items], #[i prices]
+    p See your #[a(href="/account") account]
