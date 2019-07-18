@@ -20,7 +20,8 @@ var newUser = {
   referral: {
     user: require("uuid/v4")(),
     registration: ""
-  }
+  },
+  admin: true
 };
 
 MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {

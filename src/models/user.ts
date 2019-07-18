@@ -18,10 +18,11 @@ export type UserDocument = mongoose.Document & {
     user: string;
     registration: string;
   };
+  admin: boolean;
 };
 
 const UserSchema = new mongoose.Schema({
-  userId: { type: String, unique: true },
+  userId: { type: String, unique: true, required: true },
   email: { type: String, lowercase: true, unique: true, index: true },
   password: String,
   points: Number,
@@ -36,7 +37,8 @@ const UserSchema = new mongoose.Schema({
   referral: {
     user: String,
     registration: String
-  }
+  },
+  admin: { type: Boolean, required: true, default: false }
 }, { timestamps: true });
 
 /**
