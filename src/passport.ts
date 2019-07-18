@@ -48,3 +48,14 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
   }
   res.redirect("/login");
 };
+
+export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.user.admin === true) {
+    return next();
+  }
+  res.status(403);
+  res.render("4xx/403", {
+    title: "403 error",
+    url: req.url
+  });
+};
