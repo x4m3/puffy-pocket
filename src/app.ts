@@ -49,7 +49,8 @@ app.use(
 import * as indexController from "./controllers/index";
 import * as userController from "./controllers/user";
 import * as accountController from "./controllers/account";
-import { isAuthenticated } from "./passport";
+import * as adminController from "./controllers/admin";
+import { isAuthenticated, isAdmin } from "./passport";
 
 // database
 var db: string = config.database;
@@ -101,11 +102,12 @@ app.get("/register", userController.getRegister);
 app.post("/register", userController.postRegister);
 app.get("/account", isAuthenticated, accountController.getAccount);
 app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
+app.get("/admin", isAuthenticated, isAdmin, adminController.getAdmin);
 
 // 404
 app.use((req, res, next) => {
   res.status(404);
-  res.render("404", {
+  res.render("4xx/404", {
     title: "404 error",
     url: req.url
   });
