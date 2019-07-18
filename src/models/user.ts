@@ -2,23 +2,23 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
 export type UserDocument = mongoose.Document & {
-  userId: string;
-  email: string;
-  password: string;
-  points: number;
+  userId: string; // unique user id
+  email: string; // email address of user
+  password: string; // password
+  points: number; // points of user
   info: {
     name: {
-      first: string;
-      last: string;
+      first: string; // first name
+      last: string; // last name
     },
-    phone: string;
-    address: string;
+    phone: string; // phone number
+    address: string; // postal address
   };
   referral: {
-    user: string;
-    registration: string;
+    user: string; // code to give to others
+    registration: string; // code used to register
   };
-  admin: boolean;
+  admin: boolean; // administrator of store ?
 };
 
 const UserSchema = new mongoose.Schema({

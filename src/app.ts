@@ -105,7 +105,7 @@ app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getAdmin);
 
 // 404
-app.use((req, res, next) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404);
   res.render("4xx/404", {
     title: "404 error",
