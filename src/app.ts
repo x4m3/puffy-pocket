@@ -111,6 +111,7 @@ app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getAdminIndex);
 app.get("/admin/products", isAuthenticated, isAdmin, adminController.getAdminProducts);
 app.post("/admin/products/add", adminController.postAdminProductsAdd);
+app.get("/admin/users", isAuthenticated, isAdmin, adminController.getAdminUsers);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {

@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import { Request, Response, NextFunction } from "express";
 import { Product, ProductDocument } from "../models/product";
+import { User } from "../models/user";
 import { generateProductId } from "../util/generateProductId";
 
 /**
@@ -20,6 +21,40 @@ export const getAdminIndex = (req: Request, res: Response, next: NextFunction) =
 export const getAdminProducts = (req: Request, res: Response, next: NextFunction) => {
   res.render("admin/products", {
     title: "products - admin panel"
+  });
+};
+
+/**
+ * GET /admin/users
+ * Display users page
+ */
+export const getAdminUsers = (req: Request, res: Response, next: NextFunction) => {
+  type userData = {
+    userId: string;
+    email: string;
+    name: string;
+    phone: string;
+    admin: string;
+    points: number;
+  };
+  let userList: Array<userData> = [];
+
+  User.find({}, (err, users) => {
+    if (err) { return next(err); }
+    users.forEach((user) => {
+      userList.push({
+        userId: user.userId,
+        email: user.email,
+        name: user.info.name.first + " " + user.info.name.last,
+        phone: user.info.phone,
+        admin: (user.admin) ? "yes" : "no",
+        points: user.points
+      });
+    });
+    res.render("admin/users", {
+      title: "users - admin panel",
+      users: userList
+    });
   });
 };
 
