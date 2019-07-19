@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Administrative panel
   h2 Add new item
-  form(action="/admin", method="post" id="item-form")
+  form(action="/admin", method="post" id="item-form" enctype="multipart/form-data")
     div
       label(for="name") Product name
       input(type="text", name="name" required)

@@ -5,6 +5,7 @@ import errorHandler from "errorhandler";
 import session from "express-session";
 import passport from "passport";
 import mongo from "connect-mongo";
+import ExpressFormidable from "express-formidable";
 import * as config from "./config/config";
 
 const MongoStore = mongo(session);
@@ -84,6 +85,11 @@ app.use(session({
 // passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Formidable middleware
+app.use(ExpressFormidable({
+  hash: "sha1"
+}));
 
 // express setup
 app.use(require("morgan")("dev"));

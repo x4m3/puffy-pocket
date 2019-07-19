@@ -1,7 +1,7 @@
 import { Product } from "../models/product";
 import uuid from "uuid/v4";
 
-export function generateProductId(): string | boolean {
+export function generateProductId(): string {
   // generate product id
   var productId: string = uuid();
 

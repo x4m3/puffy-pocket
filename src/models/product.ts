@@ -6,7 +6,10 @@ export type ProductDocument = mongoose.Document & {
   name: string; // name
   price: number; // price
   points: number; // points of this product
-  image: object; // image of product
+  image: { // image of product
+    data: Buffer;
+    contentType: string;
+  };
 };
 
 const ProductSchema = new mongoose.Schema({
@@ -15,7 +18,10 @@ const ProductSchema = new mongoose.Schema({
   name: { type: String, required: true },
   price: { type: Number, required: true },
   points: { type: Number, required: true },
-  image: { data: Buffer, contentType: String }
+  image: {
+    data: { type: Buffer, required: true },
+    contentType: { type: String, required: true }
+  }
 }, { timestamps: true });
 
 export const Product = mongoose.model<ProductDocument>("Product", ProductSchema);
