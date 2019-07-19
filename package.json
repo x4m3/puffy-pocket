@@ -20,12 +20,12 @@
     "express-status-monitor": "^1.2.6",
     "identicon.js": "^2.3.3",
     "jquery": "^3.4.1",
-    "mongoose": "^5.6.0",
+    "mongoose": "^5.6.5",
     "morgan": "~1.9.1",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "popper.js": "^1.15.0",
-    "pug": "^2.0.3",
+    "pug": "^2.0.4",
     "uuid": "^3.3.2"
   },
   "description": "",
@@ -49,15 +49,15 @@
     "@types/express-formidable": "^1.0.3",
     "@types/express-session": "^1.15.13",
     "@types/identicon.js": "^2.3.0",
-    "@types/mongoose": "^5.5.6",
-    "@types/node": "^12.0.10",
+    "@types/mongoose": "^5.5.9",
+    "@types/node": "^12.6.8",
     "@types/passport": "^1.0.0",
     "@types/passport-local": "^1.0.33",
     "@types/pug": "^2.0.4",
-    "@types/uuid": "^3.4.4",
+    "@types/uuid": "^3.4.5",
     "errorhandler": "^1.5.1",
     "nodemon": "^1.19.1",
     "ts-node": "^8.3.0",
-    "typescript": "^3.5.2"
+    "typescript": "^3.5.3"
   }
 }
