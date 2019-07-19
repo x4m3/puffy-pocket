@@ -2,7 +2,7 @@
 
 ## requirements
 
-node, npm
+node, npm, mongo
 
 ## get started
 
