@@ -29,6 +29,8 @@ export const postAdminAddItem = (req: Request, res: Response, next: NextFunction
 
   newProduct.save((err) => {
     if (err) { return next(err); }
+    console.log("new product saved");
+    res.contentType(newProduct.image.contentType);
+    res.send(newProduct.image.data);
   });
-  console.log("new product saved");
 };
