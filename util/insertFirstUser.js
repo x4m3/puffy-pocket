@@ -7,21 +7,9 @@ var collection = "users";
 
 var newUser = {
   userId: "00000000-0000-0000-0000-000000000000",
-  email: "",
-  password: "",
-  info: {
-    name: {
-      first: "",
-      last: ""
-    },
-    phone: "",
-    address: "",
-  },
   referral: {
-    user: require("uuid/v4")(),
-    registration: ""
-  },
-  admin: true
+    user: require("uuid/v4")()
+  }
 };
 
 MongoClient.connect(url, { useNewUrlParser: true }, function(err, db) {
