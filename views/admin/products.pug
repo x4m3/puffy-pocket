@@ -1,9 +1,9 @@
-extends layout
+extends ../layout
 
 block content
-  h1 Administrative panel
-  h2 Add new item
-  form(action="/admin", method="post" id="item-form" enctype="multipart/form-data")
+  h1 Administrative panel / products
+  h2 Add new product
+  form(action="/admin/products/add", method="post" id="item-form" enctype="multipart/form-data")
     div
       label(for="name") Product name
       input(type="text", name="name" required)
@@ -17,3 +17,4 @@ block content
       label(for="image") Image
       input(type="file" name="image" required)
     button(type="submit" form="item-form") Add
+

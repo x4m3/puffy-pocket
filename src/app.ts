@@ -108,8 +108,9 @@ app.get("/register", userController.getRegister);
 app.post("/register", userController.postRegister);
 app.get("/account", isAuthenticated, accountController.getAccount);
 app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
-app.get("/admin", isAuthenticated, isAdmin, adminController.getAdmin);
-app.post("/admin", adminController.postAdminAddItem);
+app.get("/admin", isAuthenticated, isAdmin, adminController.getAdminIndex);
+app.get("/admin/products", isAuthenticated, isAdmin, adminController.getAdminProducts);
+app.post("/admin/products/add", adminController.postAdminProductsAdd);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {

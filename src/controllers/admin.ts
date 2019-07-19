@@ -7,13 +7,27 @@ import { generateProductId } from "../util/generateProductId";
  * GET /admin
  * Display main admin page
  */
-export const getAdmin = (req: Request, res: Response, next: NextFunction) => {
-  res.render("admin", {
+export const getAdminIndex = (req: Request, res: Response, next: NextFunction) => {
+  res.render("admin/index", {
     title: "admin panel"
   });
 };
 
-export const postAdminAddItem = (req: Request, res: Response, next: NextFunction) => {
+/**
+ * GET /admin/products
+ * Display products page
+ */
+export const getAdminProducts = (req: Request, res: Response, next: NextFunction) => {
+  res.render("admin/products", {
+    title: "products - admin panel"
+  });
+};
+
+/**
+ * POST /admin/products/add
+ * Add new product to database
+ */
+export const postAdminProductsAdd = (req: Request, res: Response, next: NextFunction) => {
   // TODO: check if uploaded file is an image
 
   const newProduct: ProductDocument = new Product({
