@@ -103,6 +103,7 @@ app.post("/register", userController.postRegister);
 app.get("/account", isAuthenticated, accountController.getAccount);
 app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getAdmin);
+app.post("/admin", adminController.postAdminAddItem);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {

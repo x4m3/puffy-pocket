@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1 Administrative panel
+  h2 Add new item
+  form(action="/admin", method="post" id="item-form")
+    div
+      label(for="name") Product name
+      input(type="text", name="name" required)
+    div
+      label(for="price") Price
+      input(type="number", name="price" required)
+    div
+      label(for="points") Points
+      input(type="number", name="points" required)
+    div
+      label(for="image") Image
+      input(type="file" name="image" required)
+    button(type="submit" form="item-form") Add
