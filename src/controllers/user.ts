@@ -13,6 +13,7 @@ import "../passport";
  */
 export const getLogin = (req: Request, res: Response) => {
   if (req.isAuthenticated()) {
+    // if user is already logged in
     return res.redirect("/account");
   }
   res.render("login", {
@@ -49,6 +50,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
  */
 export const getRegister = (req: Request, res: Response) => {
   if (req.isAuthenticated()) {
+    // if user is already logged in
     return res.redirect("/account");
   }
   res.render("register", {
