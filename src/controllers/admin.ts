@@ -8,7 +8,7 @@ import { generateProductId } from "../util/generateProductId";
  * GET /admin
  * Display main admin page
  */
-export const getAdminIndex = (req: Request, res: Response, next: NextFunction) => {
+export const getIndex = (req: Request, res: Response, next: NextFunction) => {
   res.render("admin/index", {
     title: "admin panel"
   });
@@ -18,7 +18,7 @@ export const getAdminIndex = (req: Request, res: Response, next: NextFunction) =
  * GET /admin/products
  * Display products page
  */
-export const getAdminProducts = (req: Request, res: Response, next: NextFunction) => {
+export const getProducts = (req: Request, res: Response, next: NextFunction) => {
   res.render("admin/products", {
     title: "products - admin panel"
   });
@@ -28,7 +28,7 @@ export const getAdminProducts = (req: Request, res: Response, next: NextFunction
  * GET /admin/users
  * Display users page
  */
-export const getAdminUsers = (req: Request, res: Response, next: NextFunction) => {
+export const getUsers = (req: Request, res: Response, next: NextFunction) => {
   type userData = {
     userId: string;
     email: string;
@@ -62,7 +62,7 @@ export const getAdminUsers = (req: Request, res: Response, next: NextFunction) =
  * POST /admin/products/add
  * Add new product to database
  */
-export const postAdminProductsAdd = (req: Request, res: Response, next: NextFunction) => {
+export const postProductsAdd = (req: Request, res: Response, next: NextFunction) => {
   // TODO: check if uploaded file is an image
 
   const newProduct: ProductDocument = new Product({
