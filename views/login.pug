@@ -7,7 +7,7 @@ block content
     p please try again
   if message
     p= message
-  form(action="/login" id="login-form" method="post")
+  form(action="/login" id="login-form" method="post" enctype="application/x-www-form-urlencoded")
     div
       label(for="email") Email address
       input(type="email" name="email" placeholder="email address" value=email required)

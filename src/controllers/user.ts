@@ -63,14 +63,14 @@ export const getRegister = (req: Request, res: Response) => {
  * register new user
  */
 export const postRegister = (req: Request, res: Response, next: NextFunction) => {
-  const firstName:       string = <string>req.fields.firstName;
-  const lastName:        string = <string>req.fields.lastName;
-  const password:        string = <string>req.fields.password;
-  const passwordConfirm: string = <string>req.fields.passwordConfirm;
-  const phone:           string = <string>req.fields.phone;
-  const address:         string = <string>req.fields.address;
-  const referral:        string = <string>req.fields.referral;
-  const email:           string = <string>req.fields.email;
+  const firstName:       string = <string>req.body.firstName;
+  const lastName:        string = <string>req.body.lastName;
+  const password:        string = <string>req.body.password;
+  const passwordConfirm: string = <string>req.body.passwordConfirm;
+  const phone:           string = <string>req.body.phone;
+  const address:         string = <string>req.body.address;
+  const referral:        string = <string>req.body.referral;
+  const email:           string = <string>req.body.email;
 
   let errors: Array<string> = [];
 

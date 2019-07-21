@@ -19,7 +19,7 @@ passport.deserializeUser((id, done) => {
 /**
  * Sign in using Email and Password.
  */
-passport.use(new LocalStrategy({ usernameField: "email" }, (email, password, done) => {
+passport.use(new LocalStrategy({ usernameField: "email", passwordField: "password" }, (email, password, done) => {
   // find the email in the database
   User.findOne({ email: email.toLowerCase() }, (err, user: any) => {
     if (err) { return done(err); }

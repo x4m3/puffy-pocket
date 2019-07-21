@@ -86,11 +86,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Formidable middleware
-app.use(ExpressFormidable({
-  hash: "sha1"
-}));
-
 // express setup
 app.use(require("morgan")("dev"));
 app.use(express.json());
@@ -110,7 +105,7 @@ app.get("/account", isAuthenticated, accountController.getAccount);
 app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getIndex);
 app.get("/admin/products", isAuthenticated, isAdmin, adminController.getProducts);
-app.post("/admin/products/add", adminController.postProductsAdd);
+app.post("/admin/products/add", ExpressFormidable({ hash: "sha1" }), adminController.postProductsAdd);
 app.get("/admin/users", isAuthenticated, isAdmin, adminController.getUsers);
 
 // 404
