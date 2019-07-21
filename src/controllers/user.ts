@@ -63,8 +63,15 @@ export const getRegister = (req: Request, res: Response) => {
  * register new user
  */
 export const postRegister = (req: Request, res: Response, next: NextFunction) => {
-  const { firstName, lastName, password, phone, address, passwordConfirm, referral } = req.body;
-  const email: string = req.body.email.toLowerCase(); // lowercase email
+  const firstName:       string = <string>req.fields.firstName;
+  const lastName:        string = <string>req.fields.lastName;
+  const password:        string = <string>req.fields.password;
+  const passwordConfirm: string = <string>req.fields.passwordConfirm;
+  const phone:           string = <string>req.fields.phone;
+  const address:         string = <string>req.fields.address;
+  const referral:        string = <string>req.fields.referral;
+  const email:           string = <string>req.fields.email;
+
   let errors: Array<string> = [];
 
   // valid name and last name
@@ -108,7 +115,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
     if (err) { return next(err); }
     if (existingReferral) {
       // find if email is already registered
-      User.findOne({ email: email }, (err, existingUser) => {
+      User.findOne({ email: email.toLowerCase() }, (err, existingUser) => {
         if (err) { return next(err); }
         if (existingUser) {
           errors.push("email is already registered");
@@ -127,7 +134,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         // create new user, generate user id and referral code
         const newUser: UserDocument = new User({
           userId: generateUserId(),
-          email: email,
+          email: email.toLowerCase(),
           password: password,
           points: 0,
           info: {
