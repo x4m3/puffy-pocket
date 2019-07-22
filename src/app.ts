@@ -51,6 +51,7 @@ import * as indexController from "./controllers/index";
 import * as userController from "./controllers/user";
 import * as accountController from "./controllers/account";
 import * as adminController from "./controllers/admin";
+import * as productController from "./controllers/product"
 import { isAuthenticated, isAdmin } from "./passport";
 
 // database
@@ -106,8 +107,8 @@ app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getIndex);
 app.get("/admin/products", isAuthenticated, isAdmin, adminController.getProducts);
 app.post("/admin/products/add", ExpressFormidable({ hash: "sha1" }), adminController.postProductsAdd);
-app.get("/admin/products/image/:productId", isAuthenticated, isAdmin, adminController.getProductImage);
 app.get("/admin/users", isAuthenticated, isAdmin, adminController.getUsers);
+app.get("/products/:productId/image", isAuthenticated, productController.getProductImage);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
