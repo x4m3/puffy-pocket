@@ -1,5 +1,4 @@
 extends ../layout
-
 block content
   h1 Administrative panel / products
   h2 Add new product
@@ -26,6 +25,7 @@ block content
       th Is Available
       th Price
       th Points
+      th Image
     for product in products
       tr
         td= product.productId
@@ -33,4 +33,6 @@ block content
         td= product.available
         td= product.price
         td= product.points
+        td
+          a(href="/products/" + product.productId + "/image") Thumbnail
 

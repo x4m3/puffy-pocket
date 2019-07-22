@@ -26,7 +26,7 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     name: string;
     price: number;
     points: number;
-    // TODO: add image (thumbnail + link to actual image from database)
+    // TODO: add imageThumbnail
   };
   let productList: Array<productData> = [];
 
