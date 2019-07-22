@@ -109,6 +109,7 @@ app.get("/admin/products", isAuthenticated, isAdmin, adminController.getProducts
 app.post("/admin/products/add", ExpressFormidable({ hash: "sha1" }), adminController.postProductsAdd);
 app.get("/admin/users", isAuthenticated, isAdmin, adminController.getUsers);
 app.get("/products/:productId/image", isAuthenticated, productController.getProductImage);
+app.get("/products/:productId/thumbnail", isAuthenticated, productController.getProductThumbnail);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {

@@ -26,7 +26,6 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     name: string;
     price: number;
     points: number;
-    // TODO: add imageThumbnail
   };
   let productList: Array<productData> = [];
 

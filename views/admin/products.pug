@@ -34,5 +34,6 @@ block content
         td= product.price
         td= product.points
         td
-          a(href="/products/" + product.productId + "/image") Thumbnail
+          a(href="/products/" + product.productId + "/image")
+            img(src="/products/" + product.productId + "/thumbnail", alt=product.name + " thumbnail")
 
