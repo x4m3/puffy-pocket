@@ -18,4 +18,19 @@ block content
       label(for="image") Image
       input(type="file" name="image" required)
     button(type="submit" form="item-form") Add
+  h2 Product management
+  table(border='1')
+    tr
+      th ProductId
+      th Name
+      th Is Available
+      th Price
+      th Points
+    for product in products
+      tr
+        td= product.productId
+        td= product.name
+        td= product.available
+        td= product.price
+        td= product.points
 

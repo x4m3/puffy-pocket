@@ -20,8 +20,31 @@ export const getIndex = (req: Request, res: Response, next: NextFunction) => {
  * Display products page
  */
 export const getProducts = (req: Request, res: Response, next: NextFunction) => {
-  res.render("admin/products", {
-    title: "products - admin panel"
+  type productData = {
+    productId: string;
+    available: string;
+    name: string;
+    price: number;
+    points: number;
+    // TODO: add image (thumbnail + link to actual image from database)
+  };
+  let productList: Array<productData> = [];
+
+  Product.find({}, (err, products) => {
+    if (err) { return next(err); }
+    products.forEach((product) => {
+      productList.push({
+        productId: product.productId,
+        available: (product.available) ? "yes" : "no",
+        name: product.name,
+        price: product.price,
+        points: product.points
+      });
+    });
+    res.render("admin/products", {
+      title: "products - admin panel",
+      products: productList
+    });
   });
 };
 
