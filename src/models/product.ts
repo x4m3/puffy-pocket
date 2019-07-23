@@ -16,8 +16,8 @@ const ProductSchema = new mongoose.Schema({
   productId: { type: String, unique: true, required: true },
   available: { type: Boolean, required: true, default: true },
   name: { type: String, required: true },
-  price: { type: Number, required: true },
-  points: { type: Number, required: true },
+  price: { type: Number, required: true, min: 0 },
+  points: { type: Number, required: true, min: 0 },
   image: {
     data: { type: Buffer, required: true },
     contentType: { type: String, required: true }

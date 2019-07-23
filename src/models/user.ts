@@ -26,7 +26,7 @@ const UserSchema = new mongoose.Schema({
   userId: { type: String, unique: true, required: true },
   email: { type: String, lowercase: true, unique: true, index: true },
   password: String,
-  points: Number,
+  points: { type: Number, min: 0 },
   info: {
     name: {
       first: String,
