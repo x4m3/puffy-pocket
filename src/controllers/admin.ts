@@ -121,3 +121,17 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
     return res.redirect("/admin/products");
   });
 };
+
+/**
+ * POST /admin/users/delete
+ * Delete user
+ */
+export const postUserDelete = (req: Request, res: Response, next: NextFunction) => {
+  // find user via userId in database and remove it
+  User.findOneAndDelete({ userId: req.body.userId }, (err) => {
+    if (err) { return next(err); }
+  });
+
+  // redirect back to the users page
+  return res.redirect("/admin/users");
+};

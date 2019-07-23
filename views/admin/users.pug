@@ -10,6 +10,7 @@ block content
       th Phone
       th Admin
       th Points
+      th Actions
     for user in users
       tr
         td= user.userId
@@ -18,3 +19,7 @@ block content
         td= user.phone
         td= user.admin
         td= user.points
+        td
+          form(action="/admin/users/delete" id="delete-form" method="post" enctype="application/x-www-form-urlencoded")
+            input(type="hidden" name="userId" value=user.userId)
+            button(type="submit" form="delete-form") Delete
