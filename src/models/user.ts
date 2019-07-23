@@ -18,6 +18,7 @@ export type UserDocument = mongoose.Document & {
     user: string; // code to give to others
     registration: string; // code used to register
   };
+  firstUser: boolean; // user should not be deleted if this is set to true
   admin: boolean; // administrator of store ?
 };
 
@@ -38,7 +39,8 @@ const UserSchema = new mongoose.Schema({
     user: String,
     registration: String
   },
-  admin: { type: Boolean, required: true, default: false }
+  admin: { type: Boolean, required: true, default: false },
+  firstUser: { type: Boolean, default: false }
 }, { timestamps: true });
 
 /**

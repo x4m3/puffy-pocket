@@ -148,7 +148,8 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
           referral: {
             user: generateReferralCode(referral, firstName, lastName, 3),
             registration: referral
-          }
+          },
+          admin: (existingReferral.firstUser == true) ? true : false // first user to register has to be admin
         });
 
         // save new user in database
