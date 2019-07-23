@@ -10,6 +10,7 @@ block content
       th Phone
       th Admin
       th Points
+      th Referral
       th Actions
     for user in users
       tr
@@ -19,4 +20,5 @@ block content
         td= user.phone
         td= user.admin
         td= user.points
+        td= user.referral
         td #[a(href="/admin/users/edit/" + user.userId) Edit] #[a(href="/admin/users/delete/" + user.userId) Delete]

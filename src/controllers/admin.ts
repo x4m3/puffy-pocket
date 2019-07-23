@@ -59,6 +59,7 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
     phone: string;
     admin: string;
     points: number;
+    referral: string;
   };
   let userList: Array<userData> = [];
 
@@ -71,7 +72,8 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
         name: user.info.name.first + " " + user.info.name.last,
         phone: user.info.phone,
         admin: (user.admin) ? "yes" : "no",
-        points: user.points
+        points: user.points,
+        referral: user.referral.user
       });
     });
     res.render("admin/users", {
