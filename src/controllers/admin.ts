@@ -134,7 +134,7 @@ export const getUserDelete = (req: Request, res: Response, next: NextFunction) =
       // delete user
       userToDelete.remove((err, removedUser) => {
         if (err) { return next(err); }
-        console.log("deleted");
+
         // redirect back to the users page
         return res.redirect("/admin/users");
       });

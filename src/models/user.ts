@@ -48,6 +48,10 @@ const UserSchema = new mongoose.Schema({
  */
 UserSchema.pre("save", function save(next) {
   const user = this as UserDocument;
+
+  // if password field has not changed
+  if (!user.isModified("password")) { return next(); }
+
   bcrypt.genSalt(10, (err, salt) => {
     if (err) { return next(err); }
     bcrypt.hash(user.password, salt, (err: mongoose.Error, hash: string) => {
