@@ -19,7 +19,4 @@ block content
         td= user.phone
         td= user.admin
         td= user.points
-        td
-          form(action="/admin/users/delete" id="delete-form" method="post" enctype="application/x-www-form-urlencoded")
-            input(type="hidden" name="userId" value=user.userId)
-            button(type="submit" form="delete-form") Delete
+        td #[a(href="/admin/users/edit/" + user.userId) Edit] #[a(href="/admin/users/delete/" + user.userId) Delete]

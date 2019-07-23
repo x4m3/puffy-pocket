@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  h1 Edit user details
+  p.
+    Please fill #[b only] the fields that needs to be updated.#[br]
+    If the modification #[b succeeds], you will be taken back the list of all users.
+  form(action="/admin/users/edit/" + userId id="edit-form" method="post" enctype="application/x-www-form-urlencoded")
+    div
+      label(for="firstName") First Name
+      input(type="text" name="firstName" placeholder=firstName)
+    div
+      label(for="lastName") Last Name
+      input(type="text" name="lastName" placeholder=lastName)
+    div
+      label(for="email") Email Address
+      input(type="email" name="email" placeholder=email)
+    div
+      label(for="phone") Phone Number
+      input(type="tel" name="phone" placeholder=phone)
+    div
+      label(for="address") Address
+      input(type="text" name="address" placeholder=address)
+    div
+      label(for="admin") Admin
+      if admin == true
+        input(type="radio" name="admin" value="true" checked)/ Yes
+        input(type="radio" name="admin" value="false")/ No
+      else
+        input(type="radio" name="admin" value="true")/ Yes
+        input(type="radio" name="admin" value="false" checked)/ No
+    button(type="submit" form="edit-form") Edit
+
