@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+  h1 Edit product details
+  p.
+    Please fill #[b only] the fields that needs to be updated.#[br]
+    If the modification #[b succeeds], you will be taken back the list of all products.
+  form(action="/admin/products/edit/" + productId id="edit-form" method="post" enctype="multipart/form-data")
+    div
+      label(for="name") Name
+      input(type="text" name="name" placeholder=name)
+    div
+      label(for="price") Price
+      input(type="number" name="price" placeholder=price)
+    div
+      label(for="points") Points
+      input(type="number" name="points" placeholder=points)
+    div
+      label(for="image") Image
+      div
+        a(href="/products/" + productId + "/image")
+          img(src="/products/" + productId + "/thumbnail", alt=name + " thumbnail")
+      input(type="file" name="image")
+    div
+      label(for="available") Available
+      if available == true
+        input(type="radio" name="available" value="true" checked)/ Yes
+        input(type="radio" name="available" value="false")/ No
+      else
+        input(type="radio" name="available" value="true")/ Yes
+        input(type="radio" name="available" value="false" checked)/ No
+    button(type="submit" form="edit-form") Edit
+

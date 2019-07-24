@@ -250,3 +250,90 @@ export const getProductDelete = (req: Request, res: Response, next: NextFunction
     }
   });
 };
+
+/**
+ * GET /admin/products/edit/:userId
+ * Display edit product information from "productId"
+ */
+export const getProductEdit = (req: Request, res: Response, next: NextFunction) => {
+  // try to find product in database
+  Product.findOne({ productId: req.params.productId }, (err, product) => {
+    if (err) { return next(err); }
+    if (product) {
+      return res.render("admin/product-edit", {
+        title: "edit product - admin panel",
+        productId: product.productId,
+        name: product.name,
+        price: product.price,
+        points: product.points,
+        available: product.available
+      })
+    }
+    // if userId is invalid, return 404
+    return next(err);
+  });
+};
+
+/**
+ * POST /admin/products/edit/:productId
+ * Edit product information from "productId"
+ */
+export const postProductEdit = (req: Request, res: Response, next: NextFunction) => {
+  let name: string = <string>req.fields.name;
+  let price: number = +req.fields.price;
+  let points: number = +req.fields.points;
+  let available: boolean = (req.fields.available) == "true" ? true : false;
+
+  // if no files were uploaded
+  if (req.files.image.size == 0) {
+    // delete uploaded file from filesystem
+    fs.unlink(req.files.image.path, (err) => {
+      if (err) throw err;
+    });
+  } else {
+    // if uploaded file is not an image
+    if (checkFileImage(req.files.image.name) == false) {
+      // delete uploaded file from filesystem
+      fs.unlink(req.files.image.path, (err) => {
+        if (err) throw err;
+      });
+
+      // redirect back to the products page
+      return res.redirect("/admin/products");
+    }
+  }
+
+  // find product in database
+  Product.findOne({ userId: req.params.userId }, (err, product) => {
+    if (err) { return next(err); }
+    if (product) {
+      // update info if it has changed
+      if (name.length != 0) { product.name = name; }
+      if (price != 0) { product.price = price; }
+      if (points != 0) { product.points = points; }
+
+      // save new image if it has changed
+      if (req.files.image.size != 0) {
+        product.image.data = fs.readFileSync(req.files.image.path);
+        product.image.contentType = req.files.image.type;
+
+        // delete uploaded file from filesystem
+        fs.unlink(req.files.image.path, (err) => {
+          if (err) throw err;
+        });
+      }
+
+      // change available status
+      if (available == true && product.available == false) { product.available = true; }
+      if (available == false && product.available == true) { product.available = false; }
+
+      // save changes in database
+      product.save((err) => {
+        if (err) { return next(err); }
+
+        // redirect back to the products page
+        return res.redirect("/admin/products");
+      })
+    }
+  });
+};
