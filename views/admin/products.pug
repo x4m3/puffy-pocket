@@ -26,6 +26,7 @@ block content
       th Price
       th Points
       th Image
+      th Actions
     for product in products
       tr
         td= product.productId
@@ -36,4 +37,5 @@ block content
         td
           a(href="/products/" + product.productId + "/image")
             img(src="/products/" + product.productId + "/thumbnail", alt=product.name + " thumbnail")
+        td #[a(href="/admin/products/delete/" + product.productId) Delete]
 

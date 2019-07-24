@@ -227,3 +227,26 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
     }
   });
 };
+
+/**
+ * GET /admin/products/delete/:productId
+ * Delete product from "productId"
+ */
+export const getProductDelete = (req: Request, res: Response, next: NextFunction) => {
+  // find product via productId in database
+  Product.findOne({ productId: req.params.productId }, (err, productToDelete) => {
+    if (err) { return next(err); }
+    if (productToDelete) {
+      // delete product
+      productToDelete.remove((err, removedProduct) => {
+        if (err) { return next(err); }
+
+        // redirect back to the products page
+        return res.redirect("/admin/products");
+      });
+    } else {
+      // if productId is invalid, return 404
+      return next(err);
+    }
+  });
+};

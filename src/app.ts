@@ -107,6 +107,7 @@ app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getIndex);
 app.get("/admin/products", isAuthenticated, isAdmin, adminController.getProducts);
 app.post("/admin/products/add", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminController.postProductsAdd);
+app.get("/admin/products/delete/:productId", isAuthenticated, isAdmin, adminController.getProductDelete);
 app.get("/admin/users", isAuthenticated, isAdmin, adminController.getUsers);
 app.get("/admin/users/delete/:userId", isAuthenticated, isAdmin, adminController.getUserDelete);
 app.get("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminController.getUserEdit);
