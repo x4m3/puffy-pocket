@@ -78,6 +78,7 @@ export const getUserEdit = (req: Request, res: Response, next: NextFunction) => 
     if (user) {
       return res.render("admin/user-edit", {
         title: "edit user - admin panel",
+        currentUser: req.user.userId,
         userId: user.userId,
         firstName: user.info.name.first,
         lastName: user.info.name.last,

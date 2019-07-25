@@ -21,13 +21,14 @@ block content
     div
       label(for="address") Address
       input(type="text" name="address" placeholder=address)
-    div
-      label(for="admin") Admin
-      if admin == true
-        input(type="radio" name="admin" value="true" checked)/ Yes
-        input(type="radio" name="admin" value="false")/ No
-      else
-        input(type="radio" name="admin" value="true")/ Yes
-        input(type="radio" name="admin" value="false" checked)/ No
+    if currentUser != userId
+      div
+        label(for="admin") Admin
+        if admin == true
+          input(type="radio" name="admin" value="true" checked)/ Yes
+          input(type="radio" name="admin" value="false")/ No
+        else
+          input(type="radio" name="admin" value="true")/ Yes
+          input(type="radio" name="admin" value="false" checked)/ No
     button(type="submit" form="edit-form") Edit
 
