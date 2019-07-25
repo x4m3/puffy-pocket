@@ -50,7 +50,9 @@ app.use(
 import * as indexController from "./controllers/index";
 import * as userController from "./controllers/user";
 import * as accountController from "./controllers/account";
-import * as adminController from "./controllers/admin";
+import * as adminController from "./controllers/admin/admin";
+import * as adminProductController from "./controllers/admin/product";
+import * as adminUserController from "./controllers/admin/user";
 import * as productController from "./controllers/product"
 import { isAuthenticated, isAdmin } from "./passport";
 
@@ -105,15 +107,15 @@ app.post("/register", userController.postRegister);
 app.get("/account", isAuthenticated, accountController.getAccount);
 app.get("/account/avatar", isAuthenticated, accountController.getAvatar);
 app.get("/admin", isAuthenticated, isAdmin, adminController.getIndex);
-app.get("/admin/products", isAuthenticated, isAdmin, adminController.getProducts);
-app.post("/admin/products/add", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminController.postProductsAdd);
-app.get("/admin/products/delete/:productId", isAuthenticated, isAdmin, adminController.getProductDelete);
-app.get("/admin/products/edit/:productId", isAuthenticated, isAdmin, adminController.getProductEdit);
-app.post("/admin/products/edit/:productId", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminController.postProductEdit);
-app.get("/admin/users", isAuthenticated, isAdmin, adminController.getUsers);
-app.get("/admin/users/delete/:userId", isAuthenticated, isAdmin, adminController.getUserDelete);
-app.get("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminController.getUserEdit);
-app.post("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminController.postUserEdit);
+app.get("/admin/products", isAuthenticated, isAdmin, adminProductController.getProducts);
+app.post("/admin/products/add", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminProductController.postProductsAdd);
+app.get("/admin/products/delete/:productId", isAuthenticated, isAdmin, adminProductController.getProductDelete);
+app.get("/admin/products/edit/:productId", isAuthenticated, isAdmin, adminProductController.getProductEdit);
+app.post("/admin/products/edit/:productId", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminProductController.postProductEdit);
+app.get("/admin/users", isAuthenticated, isAdmin, adminUserController.getUsers);
+app.get("/admin/users/delete/:userId", isAuthenticated, isAdmin, adminUserController.getUserDelete);
+app.get("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserController.getUserEdit);
+app.post("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserController.postUserEdit);
 app.get("/products/:productId/image", isAuthenticated, productController.getProductImage);
 app.get("/products/:productId/thumbnail", isAuthenticated, productController.getProductThumbnail);
 
