@@ -78,7 +78,8 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
     });
     res.render("admin/users", {
       title: "users - admin panel",
-      users: userList
+      users: userList,
+      currentUser: req.user.userId
     });
   });
 };

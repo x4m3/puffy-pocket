@@ -21,4 +21,7 @@ block content
         td= user.admin
         td= user.points
         td= user.referral
-        td #[a(href="/admin/users/edit/" + user.userId) Edit] #[a(href="/admin/users/delete/" + user.userId) Delete]
+        if user.userId == currentUser
+          td #[a(href="/admin/users/edit/" + user.userId) Edit]
+        else
+          td #[a(href="/admin/users/edit/" + user.userId) Edit] #[a(href="/admin/users/delete/" + user.userId) Delete]
