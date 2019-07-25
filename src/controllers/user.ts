@@ -156,6 +156,13 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         newUser.save((err) => {
           if (err) { return next(err); }
 
+          // delete firstUser, now that there is a real user with admin privileges
+          if (existingReferral.firstUser == true) {
+            existingReferral.remove((err, removedFirstUser) => {
+              if (err) { return next(err); }
+            });
+          }
+
           // login new user
           passport.authenticate("local", (err: Error, user: UserDocument, info: IVerifyOptions) => {
             if (err) { return next(err); }
