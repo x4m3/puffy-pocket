@@ -60,7 +60,10 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
     phone: string;
     admin: string;
     points: number;
-    referral: string;
+    referral: {
+      user: string;
+      registration: string;
+    }
   };
   let userList: Array<userData> = [];
 
@@ -74,7 +77,10 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
         phone: user.info.phone,
         admin: (user.admin) ? "yes" : "no",
         points: user.points,
-        referral: user.referral.user
+        referral: {
+          user: user.referral.user,
+          registration: user.referral.registration
+        }
       });
     });
     res.render("admin/users", {

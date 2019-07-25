@@ -10,7 +10,8 @@ block content
       th Phone
       th Admin
       th Points
-      th Referral
+      th User Referral
+      th Referral Registration
       th Actions
     for user in users
       tr
@@ -20,7 +21,8 @@ block content
         td= user.phone
         td= user.admin
         td= user.points
-        td= user.referral
+        td= user.referral.user
+        td= user.referral.registration
         if user.userId == currentUser
           td #[a(href="/admin/users/edit/" + user.userId) Edit]
         else
