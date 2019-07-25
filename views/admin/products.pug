@@ -18,24 +18,27 @@ block content
       input(type="file" name="image" required)
     button(type="submit" form="item-form") Add
   h2 Product management
-  table(border='1')
-    tr
-      th ProductId
-      th Name
-      th Available
-      th Price
-      th Points
-      th Image
-      th Actions
-    for product in products
+  if numberOfProducts == 0
+    p There are no products stored
+  else
+    table(border='1')
       tr
-        td= product.productId
-        td= product.name
-        td= product.available
-        td= product.price
-        td= product.points
-        td
-          a(href="/products/" + product.productId + "/image")
-            img(src="/products/" + product.productId + "/thumbnail", alt=product.name + " thumbnail")
-        td #[a(href="/admin/products/edit/" + product.productId) Edit] #[a(href="/admin/products/delete/" + product.productId) Delete]
+        th ProductId
+        th Name
+        th Available
+        th Price
+        th Points
+        th Image
+        th Actions
+      for product in products
+        tr
+          td= product.productId
+          td= product.name
+          td= product.available
+          td= product.price
+          td= product.points
+          td
+            a(href="/products/" + product.productId + "/image")
+              img(src="/products/" + product.productId + "/thumbnail", alt=product.name + " thumbnail")
+          td #[a(href="/admin/products/edit/" + product.productId) Edit] #[a(href="/admin/products/delete/" + product.productId) Delete]
 

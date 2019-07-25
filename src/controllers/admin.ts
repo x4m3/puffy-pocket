@@ -42,7 +42,8 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     });
     res.render("admin/products", {
       title: "products - admin panel",
-      products: productList
+      products: productList,
+      numberOfProducts: productList.length
     });
   });
 };
