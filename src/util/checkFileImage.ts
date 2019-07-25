@@ -8,7 +8,6 @@ import mimeTypes from "mime-types";
 export function checkFileImage(fileName: string) : boolean {
   const mime = mimeTypes.lookup(fileName);
 
-  console.log(mime);
   switch (mime) {
     case "image/jpeg": return true; break;
     case "image/png": return true; break;
