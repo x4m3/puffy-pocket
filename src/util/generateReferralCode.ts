@@ -1,12 +1,12 @@
 /**
  * Generates a referral code based of a person's initials with a number of digits
- * @param   {string}  orig Referral code given to register
- * @param   {string}  firstName First name of person
- * @param   {string}  lastName Last name of person
- * @param   {number}  nb Number of digits in the referral code
- * @returns {string}  Referral code
+ * @param   {string}   firstName First name of person
+ * @param   {string}   lastName Last name of person
+ * @param   {number}   nb Number of digits in the referral code
+ * @param   {string=}  orig Referral code given to register (optional)
+ * @returns {string}   Referral code
  */
-export function generateReferralCode(orig: string, firstName: string, lastName: string, nb: number): string {
+export function generateReferralCode(firstName: string, lastName: string, nb: number, orig?: string): string {
   // store first characters of firstName and lastName
   var referralCode: string = firstName.charAt(0) + lastName.charAt(0);
 
@@ -17,7 +17,7 @@ export function generateReferralCode(orig: string, firstName: string, lastName: 
 
   // if by any chance the generated code is the same as the original one
   if (orig === referralCode) {
-    generateReferralCode(orig, firstName, lastName, nb);
+    generateReferralCode(firstName, lastName, nb, orig);
   }
 
   return referralCode;
