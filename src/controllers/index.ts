@@ -13,6 +13,13 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
     });
   }
 
+  // number of products to display per page
+  const productsPerPage: number = 3;
+
+  // current page to display (0 if not specified in url, otherwise number - 1)
+  // we count starting from 0, remember :)
+  const currentPage: number = req.query.page - 1 || 0;
+
   type productData = {
     name: string;
     price: number;
@@ -37,5 +44,5 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
       title: "homepage",
       products: productList
     });
-  }).limit(3);
+  }).limit(productsPerPage).skip(currentPage * productsPerPage);
 };
