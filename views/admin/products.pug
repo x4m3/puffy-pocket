@@ -39,6 +39,6 @@ block content
           td= product.points
           td
             a(href="/products/" + product.productId + "/image")
-              img(src="/products/" + product.productId + "/thumbnail", alt=product.name + " thumbnail")
+              img(src="/products/" + product.productId + "/image?width=250", alt=product.name + " thumbnail")
           td #[a(href="/admin/products/edit/" + product.productId) Edit] #[a(href="/admin/products/delete/" + product.productId) Delete]
 

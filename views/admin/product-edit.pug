@@ -19,7 +19,7 @@ block content
       label(for="image") Image
       div
         a(href="/products/" + productId + "/image")
-          img(src="/products/" + productId + "/thumbnail", alt=name + " thumbnail")
+          img(src="/products/" + productId + "/image?width=250", alt=name + " thumbnail")
       input(type="file" name="image")
     div
       label(for="available") Available

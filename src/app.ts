@@ -118,7 +118,6 @@ app.get("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserControll
 app.post("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserController.postUserEdit);
 app.post("/admin/users/add", isAuthenticated, isAdmin, adminUserController.postUserAdd);
 app.get("/products/:productId/image", isAuthenticated, productController.getProductImage);
-app.get("/products/:productId/thumbnail", isAuthenticated, productController.getProductThumbnail);
 
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
