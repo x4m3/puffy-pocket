@@ -116,6 +116,7 @@ app.get("/admin/users", isAuthenticated, isAdmin, adminUserController.getUsers);
 app.get("/admin/users/delete/:userId", isAuthenticated, isAdmin, adminUserController.getUserDelete);
 app.get("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserController.getUserEdit);
 app.post("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserController.postUserEdit);
+app.post("/admin/users/add", isAuthenticated, isAdmin, adminUserController.postUserAdd);
 app.get("/products/:productId/image", isAuthenticated, productController.getProductImage);
 app.get("/products/:productId/thumbnail", isAuthenticated, productController.getProductThumbnail);
 

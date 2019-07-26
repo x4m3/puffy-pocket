@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../../models/user";
+import { User, UserDocument } from "../../models/user";
+import { passwordLength } from "../../config/config";
+import { generateUserId } from "../../util/generateUserId";
+import { generateReferralCode } from "../../util/generateReferralCode";
 
 /**
  * GET /admin/users
@@ -146,5 +149,63 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
         return res.redirect("/admin/users");
       })
     }
+  });
+};
+
+/**
+ * POST /admin/users/add
+ * Manually add new user
+ */
+export const postUserAdd = (req: Request, res: Response, next: NextFunction) => {
+  const firstName: string = <string>req.body.firstName;
+  const lastName: string = <string>req.body.lastName;
+  const password: string = <string>req.body.password;
+  const passwordConfirm: string = <string>req.body.passwordConfirm;
+  const phone: string = <string>req.body.phone;
+  const address: string = <string>req.body.address;
+  const email: string = <string>req.body.email;
+  const admin: boolean = (req.body.admin == "true") ? true : false;
+
+  // password length and matching passwords
+  if (password.length < passwordLength) {
+    return res.redirect("/admin/users");
+  }
+  else if (password != passwordConfirm) {
+    return res.redirect("/admin/users");
+  }
+
+  // check if email is already registered
+  User.findOne({ email: email.toLowerCase() }, (err, existingUser) => {
+    if (err) { return next(err); }
+    if (existingUser) {
+      // email is already registered
+      return res.redirect("/admin/users");
+    }
+
+    const newUser: UserDocument = new User({
+      userId: generateUserId(),
+      email: email.toLowerCase(),
+      password: password,
+      points: 0,
+      info: {
+        name: {
+          first: firstName,
+          last: lastName
+        },
+        phone: phone,
+        address: address
+      },
+      referral: {
+        user: generateReferralCode(firstName, lastName, 3)
+      },
+      admin: admin
+    });
+
+    newUser.save((err) => {
+      if (err) { return next(err); }
+
+      // registration succeeded, go back to list of users
+      return res.redirect("/admin/users");
+    });
   });
 };

@@ -2,6 +2,36 @@ extends ../layout
 
 block content
   h1 Administrative panel / users
+  h2 Add new user
+  p Make sure that the email address is not already registered.
+  p If the registration #[b fails], the new user will not appear in the list below, otherwise it will.
+  p Your password needs to be at least #{passwordLength} characters
+  form(action="/admin/users/add" id="new-user-form" method="post" enctype="application/x-www-form-urlencoded")
+    div
+      label(for="firstName") First Name
+      input(type="text" name="firstName" placeholder="James" required)
+    div
+      label(for="lastName") Last Name
+      input(type="text" name="lastName" placeholder="Smith" required)
+    div
+      label(for="email") Email Address
+      input(type="email" name="email" placeholder="james.smith@example.net" required)
+    div
+      label(for="phone") Phone Number
+      input(type="tel" name="phone" placeholder="+1 206 555 0100" required)
+    div
+      label(for="address") Address
+      input(type="text" name="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" required)
+    div
+      label(for="password") Password
+      input(type="password" name="password" placeholder="Password" required)
+      input(type="password" name="passwordConfirm" placeholder="Confirm" required)
+    div
+      label(for="admin") Admin
+        input(type="radio" name="admin" value="true")/ Yes
+        input(type="radio" name="admin" value="false" checked)/ No
+    button(type="submit" form="new-user-form") register
+  h2 List of users
   table(border='1')
     tr
       th UserId
