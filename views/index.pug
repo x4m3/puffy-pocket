@@ -2,9 +2,10 @@ extends layout
 
 block content
   h1 #{siteName}
-  p Welcome to the home page
-  if !user
-    p please #[a(href="/login") login] or #[a(href="/register") register]
-  else
-    p Display from store collection: #[i items], #[i prices], #[i points]
-    p See your #[a(href="/account") account]
+  p See your #[a(href="/account") account]
+  div
+    for product in products
+      p #[b #{product.name}], #[b #{product.price}]€, #[b #{product.points}] points
+      p
+        a(href=product.image)
+          img(src=product.thumbnail, alt=product.name + " thumbnail")
