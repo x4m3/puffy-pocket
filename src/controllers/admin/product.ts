@@ -15,6 +15,8 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     name: string;
     price: number;
     points: number;
+    image: string;
+    thumbnail: string;
   };
   let productList: Array<productData> = [];
 
@@ -26,7 +28,9 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
         available: (product.available) ? "yes" : "no",
         name: product.name,
         price: product.price,
-        points: product.points
+        points: product.points,
+        image: "/products/" + product.productId + "/image",
+        thumbnail: "/products/" + product.productId + "/image?width=250"
       });
     });
     res.render("admin/products", {
@@ -116,7 +120,9 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
         name: product.name,
         price: product.price,
         points: product.points,
-        available: product.available
+        available: product.available,
+        image: "/products/" + product.productId + "/image",
+        thumbnail: "/products/" + product.productId + "/image?width=250"
       })
     }
     // if userId is invalid, return 404
