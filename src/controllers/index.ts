@@ -19,6 +19,7 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
   // current page to display (0 if not specified in url, otherwise number - 1)
   // we count starting from 0, remember :)
   let currentPage: number = req.query.page - 1 || 0;
+  // if a negative number is passed, redirect to first page
   if (currentPage < 0) { res.redirect("/?page=1"); }
 
   type productData = {
@@ -36,9 +37,11 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
 
     let productsAvailable: number = count;
 
+    // find products that are available with filters
     Product.find({ available: true }, (err, products) => {
       if (err) { return next(err); }
 
+      // for each product found add it to list of products to be sent to client
       products.forEach(product => {
         console.log("new product");
         productList.push({
@@ -52,10 +55,13 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
       res.render("index", {
         title: "homepage",
         products: productList,
+        // number of total pages
         numberOfPages: (productsAvailable / productsPerPage) + 1
       });
     })
+      // limit search to number of products per page
       .limit(productsPerPage)
+      // skip documents based of the current page
       .skip(currentPage * productsPerPage);
   });
 };
