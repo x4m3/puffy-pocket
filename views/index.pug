@@ -3,6 +3,10 @@ extends layout
 block content
   h1 #{siteName}
   p See your #[a(href="/account") account]
+  - var n = 1;
+  ul
+    while n < numberOfPages
+      li #[a(href="/?page=" + n) Page #{n++}]
   div
     for product in products
       p #[b #{product.name}], #[b #{product.price}]€, #[b #{product.points}] points
