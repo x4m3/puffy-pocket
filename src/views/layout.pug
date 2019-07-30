@@ -4,8 +4,10 @@ doctype html
 html
   head
     meta(charset="utf-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no")
     title !{title != null ? `${title} - ` : ""}#{siteName}
     link(rel='stylesheet', href='/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/style.css')
     block stylesheet
   body
     block content
