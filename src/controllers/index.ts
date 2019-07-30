@@ -32,7 +32,7 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
   let productList: Array<productData> = [];
 
   // count total numbers of products available
-  Product.count({ available: true }, function(err, count) {
+  Product.countDocuments({ available: true }, function(err, count) {
     if (err) { return next(err); }
 
     let productsAvailable: number = count;
