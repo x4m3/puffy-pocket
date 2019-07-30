@@ -71,7 +71,7 @@ mongoose.connect(db, {
 
 // view engine setup
 app.set("port", config.port);
-app.set("views", path.join(__dirname, "../views"));
+app.set("views", path.join(__dirname, "./views"));
 app.set("view engine", "pug");
 
 // express session
@@ -95,7 +95,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // use public directory
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "./public")));
 
 // routing
 app.get("/", indexController.index);

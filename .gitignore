@@ -1,6 +1,11 @@
 src/config/config.ts
 build/
 
+# external libraries
+bootstrap.js
+bootstrap.css
+jquery.js
+
 # test databases
 *.db
 
