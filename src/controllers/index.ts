@@ -43,7 +43,6 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
 
       // for each product found add it to list of products to be sent to client
       products.forEach(product => {
-        console.log("new product");
         productList.push({
           name: product.name,
           price: product.price,
