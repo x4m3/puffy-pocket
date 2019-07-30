@@ -8,7 +8,7 @@ import { Product } from "../models/product";
 export const index = (req: Request, res: Response, next: NextFunction) => {
   // if user is not logged in, return public homepage
   if (req.isUnauthenticated()) {
-    return res.render("index-public", {
+    return res.render("public/index-public", {
       title: "homepage"
     });
   }
@@ -52,7 +52,7 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
           thumbnail: "/products/" + product.productId + "/image?width=250"
         });
       });
-      res.render("index", {
+      res.render("public/index", {
         title: "homepage",
         products: productList,
         // number of total pages

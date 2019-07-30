@@ -16,7 +16,7 @@ export const getLogin = (req: Request, res: Response) => {
     // if user is already logged in
     return res.redirect("/account");
   }
-  res.render("login", {
+  res.render("public/login", {
     title: "login"
   });
 };
@@ -30,7 +30,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     if (err) { return next(err); }
     if (!user) {
       // if login failed
-      return res.render("login", {
+      return res.render("public/login", {
         title: "login",
         error: info.message,
         email: req.body.email
@@ -53,7 +53,7 @@ export const getRegister = (req: Request, res: Response) => {
     // if user is already logged in
     return res.redirect("/account");
   }
-  res.render("register", {
+  res.render("public/register", {
     title: "register"
   });
 };
@@ -98,7 +98,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
   }
 
   if (errors.length > 0) {
-    return res.render("register", {
+    return res.render("public/register", {
       title: "register",
       errors,
       firstName,
@@ -119,7 +119,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         if (err) { return next(err); }
         if (existingUser) {
           errors.push("email is already registered");
-          return res.render("register", {
+          return res.render("public/register", {
             title: "register",
             errors,
             firstName,
@@ -181,7 +181,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
       });
     } else {
       errors.push("referral code does not exist");
-      return res.render("register", {
+      return res.render("public/register", {
         title: "register",
         errors,
         firstName,

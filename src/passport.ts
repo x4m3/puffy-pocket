@@ -57,7 +57,7 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
     return next();
   }
   res.status(403);
-  res.render("4xx/403", {
+  res.render("errors/403", {
     title: "403 error",
     url: req.url
   });

@@ -7,7 +7,7 @@ import Identicon from "identicon.js";
  * Display user account
  */
 export const getAccount = (req: Request, res: Response) => {
-  res.render("account", {
+  res.render("public/account", {
     title: "Your account",
     user: req.user,
     creationDate: dateformat(req.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT"),

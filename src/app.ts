@@ -122,7 +122,7 @@ app.get("/products/:productId/image", isAuthenticated, productController.getProd
 // 404
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(404);
-  res.render("4xx/404", {
+  res.render("errors/404", {
     title: "404 error",
     url: req.url
   });
