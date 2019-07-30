@@ -5,9 +5,12 @@ html
   head
     meta(charset="utf-8")
     title !{title != null ? `${title} - ` : ""}#{siteName}
+    link(rel='stylesheet', href='/css/bootstrap.css')
     link(rel='stylesheet', href='/css/style.css')
   body
     block content
+    script(src="/js/jquery.js")
+    script(src="/js/bootstrap.js")
   //
     Made with </> and <3 by
     Philippe Loctaux and Alexandre Wagner
