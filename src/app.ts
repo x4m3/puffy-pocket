@@ -131,8 +131,9 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
 // start server
 app.listen(config.port, () => {
-  console.log(`  App is running at http://localhost:${config.port} in ${config.status} mode`);
-  console.log("  Press CTRL-C to stop\n");
+  console.log("");
+  console.log(`App is running at http://localhost:${config.port} in ${config.status} mode`);
+  console.log("Press CTRL-C to stop\n");
 });
 
 export default app;

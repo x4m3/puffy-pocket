@@ -14,7 +14,7 @@ const devBootstrapCss = "./node_modules/bootstrap/dist/css/bootstrap.css";
 const devBootstrapJs = "./node_modules/bootstrap/dist/js/bootstrap.js";
 const devJqueryJs = "./node_modules/jquery/dist/jquery.js";
 
-// function to copy file
+// function to copy file or folder using "ncp"
 function copy(source, destination) {
   ncp(source, destination, (err) => {
     if (err) throw err;
