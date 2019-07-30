@@ -1,18 +1,22 @@
 extends ../layout
 
+block stylesheet
+  link(rel='stylesheet', href='/css/login.css')
+
 block content
-  h1 login
-  if error
-    p= error
-    p please try again
-  if message
-    p= message
-  form(action="/login" id="login-form" method="post" enctype="application/x-www-form-urlencoded")
-    div
-      label(for="email") Email address
-      input(type="email" name="email" placeholder="email address" value=email required)
-    div
-      label(for="password") Password
-      input(type="password" name="password" placeholder="enter password" value=password required)
-    button(type="submit" form="login-form") login
-  p Don't have an account? #[a(href="/register") register your account]
+  .text-center
+    h1.h3.mb-3.font-weight-normal login
+    if error
+      p= error
+      p please try again
+    if message
+      p= message
+    form.form-signin(action="/login" id="login-form" method="post" enctype="application/x-www-form-urlencoded")
+      div
+        label.sr-only(for="email") Email address
+        input.form-control(type="email" name="email" placeholder="email address" value=email required)
+      div
+        label.sr-only(for="password") Password
+        input.form-control(type="password" name="password" placeholder="enter password" value=password required)
+      button.btn.btn-lg.btn-primary.btn-block(type="submit" form="login-form") login
+    p Don't have an account? #[a(href="/register") register your account]

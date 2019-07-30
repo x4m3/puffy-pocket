@@ -6,7 +6,7 @@ html
     meta(charset="utf-8")
     title !{title != null ? `${title} - ` : ""}#{siteName}
     link(rel='stylesheet', href='/css/bootstrap.css')
-    link(rel='stylesheet', href='/css/style.css')
+    block stylesheet
   body
     block content
     script(src="/js/jquery.js")
