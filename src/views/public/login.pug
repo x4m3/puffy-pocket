@@ -9,8 +9,6 @@ block content
     if error
       p= error
       p please try again
-    if message
-      p= message
     form.form-login(action="/login" id="login-form" method="post" enctype="application/x-www-form-urlencoded")
       div
         label.sr-only(for="email") Email address
