@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import dateformat from "dateformat";
 import Identicon from "identicon.js";
+import Sharp from "sharp";
 
 /**
  * GET /account
@@ -20,7 +21,10 @@ export const getAccount = (req: Request, res: Response) => {
  * Display user avatar as png image
  */
 export const getAvatar = (req: Request, res: Response) => {
-  const avatar: Buffer = Buffer.from(new Identicon(req.user.userId, 500).toString(), "base64");
+  const size: number = +req.query.size;
+
+  // generate avatar from either requested size or fallback to 500 pixels
+  const avatar: Buffer = Buffer.from(new Identicon(req.user.userId, size || 500).toString(), "base64");
 
   res.writeHead(200, {
     'Content-Type': 'image/png',
