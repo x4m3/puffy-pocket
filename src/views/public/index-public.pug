@@ -1,6 +1,7 @@
 extends ../layout
 
 block content
-  h1 #{siteName}
-  p Welcome to the home page
-  p please #[a(href="/login") login] or #[a(href="/register") register]
+  .container
+    h1 #{siteName}
+    p Welcome to the home page
+    p.font-weight-bold please #[a(href="/login") login] or #[a(href="/register") register]
