@@ -1,8 +1,22 @@
 extends ../layout
 
+block navbar
+  nav.navbar.navbar-expand-lg.navbar-light.bg-light
+    span.navbar-brand.mb-0.h1 #{siteName}
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+      span.navbar-toggler-icon
+    #navbarNav.collapse.navbar-collapse
+      .navbar-nav.mr-auto
+        a.nav-item.nav-link.active(href="/")
+          | Home
+          span.sr-only (current)
+      .navbar-nav
+        a.nav-item.nav-link(href="/account")
+          | Account
+        a.nav-item.nav-link(href="/logout")
+          | Logout
+
 block content
-  h1 #{siteName}
-  p See your #[a(href="/account") account]
   - var n = 1;
   ul
     while n < numberOfPages
