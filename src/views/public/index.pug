@@ -11,8 +11,10 @@ block navbar
           | Home
           span.sr-only (current)
       .navbar-nav
-        a.nav-item.nav-link(href="/account")
-          | Account
+        .nav-item
+          a.nav-link(href="/account")
+            img.rounded-circle(src="/account/avatar?size=20", alt="avatar")
+            | Account
         a.nav-item.nav-link(href="/logout")
           | Logout
 
