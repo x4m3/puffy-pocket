@@ -39,7 +39,7 @@ export const postLogin = (req: Request, res: Response, next: NextFunction) => {
     req.logIn(user, (err) => {
       if (err) { return next(err); }
       // if login succeeded
-      res.redirect(req.session.returnTo || "/account");
+      res.redirect("/");
     });
   })(req, res, next);
 };
