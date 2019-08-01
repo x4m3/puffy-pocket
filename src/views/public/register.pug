@@ -4,39 +4,45 @@ block stylesheet
   link(rel="stylesheet", href="/css/register.css")
 
 block content
-  .text-center
-    h1.h3.mb-3.font-weight-normal register
-    p.
-      Please use a real email address#[br]
-      Use a password with at least #{passwordLength} characters
+  .container
+    h1 register
+    p Already have an account? #[a(href="/login") Login here]
     if errors
       for err in errors
         .alert.alert-danger.alert-dismissible.fade.show(role='alert')
-          strong #{err}
+          .
+            #{err}
           button.close(type='button', data-dismiss='alert', aria-label='Close')
-            span(aria-hidden='true') ×
-    form.form-register(action="/register" id="register-form" method="post" enctype="application/x-www-form-urlencoded")
-      div
-        label.sr-only(for="firstName") First Name
-        input.form-control(type="text" name="firstName" placeholder="James" value=firstName required)
-      div
-        label.sr-only(for="lastName") Last Name
-        input.form-control(type="text" name="lastName" placeholder="Smith" value=lastName required)
-      div
-        label.sr-only(for="email") Email Address
-        input.form-control(type="email" name="email" placeholder="james.smith@example.net" value=email required)
-      div
-        label.sr-only(for="phone") Phone Number
+            span(aria-hidden='true') &times;
+    form(action="/register" id="register-form" method="post" enctype="application/x-www-form-urlencoded")
+      .form-row
+        .form-group.col-md-6
+          label(for="firstName") First Name
+          input.form-control(type="text" name="firstName" placeholder="James" value=firstName required)
+        .form-group.col-md-6
+          label(for="lastName") Last Name
+          input.form-control(type="text" name="lastName" placeholder="Smith" value=lastName required)
+      .form-group
+        label(for="email") Email Address
+        input.form-control(type="email" name="email" placeholder="james.smith@example.net" value=email aria-describedby="emailHelpBlock" required)
+        small#emailHelpBlock.form-text.text-muted
+          | We'll never share your email with anyone else.
+      .form-group
+        label(for="phone") Phone Number
         input.form-control(type="tel" name="phone" placeholder="+1 206 555 0100" value=phone required)
-      div
-        label.sr-only(for="address") Address
-        input.form-control(type="text" name="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
-      div
-        label.sr-only(for="password") Password
-        input.form-control(type="password" name="password" placeholder="Password" required)
-        input.form-control(type="password" name="passwordConfirm" placeholder="Confirm" required)
-      div
-        label.sr-only(for="referral") Referral code
+      .form-group
+        label(for="address") Address
+        textarea.form-control(rows="3" type="text" name="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
+      .form-row
+        .form-group.col-md-6
+          label(for="password") Password
+          input.form-control(type="password" name="password" placeholder="Choose a password" aria-describedby="passwordHelpBlock" required)
+          small#passwordHelpBlock.form-text.text-muted
+            | Your password must be at least #{passwordLength} characters long.
+        .form-group.col-md-6
+          label(for="password") Confirm password
+          input.form-control(type="password" name="passwordConfirm" placeholder="Confirm your password" required)
+      .form-group
+        label(for="referral") Referral code
         input.form-control(type="text" name="referral" placeholder="Referral code" value=referral required)
       button.btn.btn-lg.btn-primary.btn-block(type="submit" form="register-form") register
-    p Already have an account? #[a(href="/login") login into your account]
