@@ -7,8 +7,10 @@ block content
   .text-center
     h1.h3.mb-3.font-weight-normal login
     if error
-      p= error
-      p please try again
+      .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+        strong #{error}
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') ×
     form.form-login(action="/login" id="login-form" method="post" enctype="application/x-www-form-urlencoded")
       div
         label.sr-only(for="email") Email address

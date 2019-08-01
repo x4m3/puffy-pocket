@@ -10,10 +10,11 @@ block content
       Please use a real email address#[br]
       Use a password with at least #{passwordLength} characters
     if errors
-      ul
-        for err in errors
-          li= err
-      p please try again
+      for err in errors
+        .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+          strong #{err}
+          button.close(type='button', data-dismiss='alert', aria-label='Close')
+            span(aria-hidden='true') ×
     form.form-register(action="/register" id="register-form" method="post" enctype="application/x-www-form-urlencoded")
       div
         label.sr-only(for="firstName") First Name
