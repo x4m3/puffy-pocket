@@ -22,15 +22,15 @@ block content
     p There are no products stored
   else
     p There are #{numberOfProducts} products in database
-    table(border='1')
+    table.table.table-hover
       tr
-        th ProductId
-        th Name
-        th Available
-        th Price
-        th Points
-        th Image
-        th Actions
+        th(scope="col") ProductId
+        th(scope="col") Name
+        th(scope="col") Available
+        th(scope="col") Price
+        th(scope="col") Points
+        th(scope="col") Image
+        th(scope="col") Actions
       for product in products
         tr
           td= product.productId
@@ -40,6 +40,6 @@ block content
           td= product.points
           td
             a(href=product.image)
-              img(src=product.thumbnail, alt=product.name + " thumbnail")
+              img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
           td #[a(href="/admin/products/edit/" + product.productId) Edit] #[a(href="/admin/products/delete/" + product.productId) Delete]
 

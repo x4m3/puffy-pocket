@@ -32,17 +32,17 @@ block content
         input(type="radio" name="admin" value="false" checked)/ No
     button(type="submit" form="new-user-form") register
   h2 List of users
-  table(border='1')
+  table.table.table-hover
     tr
-      th UserId
-      th Email
-      th Name
-      th Phone
-      th Admin
-      th Points
-      th User Referral
-      th Referral Registration
-      th Actions
+      th(scope="col") UserId
+      th(scope="col") Email
+      th(scope="col") Name
+      th(scope="col") Phone
+      th(scope="col") Admin
+      th(scope="col") Points
+      th(scope="col") User Referral
+      th(scope="col") Referral Registration
+      th(scope="col") Actions
     for user in users
       tr
         td= user.userId
