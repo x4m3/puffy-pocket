@@ -1,0 +1,15 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light
+  span.navbar-brand.mb-0.h1 #{siteName}
+  button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  #navbarNav.collapse.navbar-collapse
+    .navbar-nav.mr-auto
+      a.nav-item.nav-link(href="/")
+        | Home
+    .navbar-nav
+      .nav-item
+        a.nav-link(href="/account")
+          img.rounded-circle(src="/account/avatar?size=20", alt="avatar")
+          | Account
+      a.nav-item.nav-link(href="/logout")
+        | Logout
