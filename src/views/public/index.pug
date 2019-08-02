@@ -19,10 +19,32 @@ block navbar
           | Logout
 
 block content
-  - var n = 1;
-  ul
-    while n < numberOfPages
-      li #[a(href="/?page=" + n) Page #{n++}]
+  nav(aria-label='Page navigation')
+    ul.pagination.justify-content-center
+      if currentPage == 1
+        li.page-item.disabled
+          a.page-link(href='?page=' + currentPage, tabindex='-1', aria-disabled='true') Previous
+      else
+        li.page-item
+          a.page-link(href='?page=' + (currentPage - 1)) Previous
+        if (currentPage - 2 != 0)
+          li.page-item
+            a.page-link(href='?page=' + (currentPage - 2)) #{currentPage - 2}
+        li.page-item
+          a.page-link(href='?page=' + (currentPage - 1)) #{currentPage - 1}
+      li.page-item.active
+        a.page-link(href='?page=' + currentPage) #{currentPage}
+      if currentPage == numberOfPages
+        li.page-item.disabled
+          a.page-link(href='?page=' + currentPage, tabindex='-1', aria-disabled='true') Next
+      else
+        li.page-item
+          a.page-link(href='?page=' + (currentPage + 1)) #{currentPage + 1}
+        if (currentPage + 2 <= numberOfPages)
+          li.page-item
+            a.page-link(href='?page=' + (currentPage + 2)) #{currentPage + 2}
+        li.page-item
+          a.page-link(href='?page=' + (currentPage + 1)) Next
   div
     for product in products
       p #[b #{product.name}], #[b #{product.price}]€, #[b #{product.points}] points

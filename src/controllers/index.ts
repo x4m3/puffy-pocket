@@ -55,7 +55,8 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
         title: "homepage",
         products: productList,
         // number of total pages
-        numberOfPages: (productsAvailable / productsPerPage) + 1
+        numberOfPages: Math.floor((productsAvailable / productsPerPage)) + 1,
+        currentPage: currentPage + 1
       });
     })
       // limit search to number of products per page
