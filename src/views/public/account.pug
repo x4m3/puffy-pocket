@@ -1,8 +1,10 @@
 extends ../layout
 
+block navbar
+  include ../navbar
+
 block content
   h1 Welcome back, #{user.info.name.first}!
-  p #[a(href="/") homepage] #[a(href="/logout") logout]
   h2 Your account
   h3 Personal Information
   ul
@@ -20,4 +22,3 @@ block content
   p.
     Your account was created on #{creationDate}#[br]
     Your account was last updated on #{UpdateDate}
-  img(src="/account/avatar", alt="your avatar")
