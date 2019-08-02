@@ -14,7 +14,7 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
   }
 
   // number of products to display per page
-  const productsPerPage: number = 3;
+  const productsPerPage: number = 4;
 
   // current page to display (0 if not specified in url, otherwise number - 1)
   // we count starting from 0, remember :)

@@ -46,9 +46,11 @@ block content
             a.page-link(href='?page=' + (currentPage + 2)) #{currentPage + 2}
         li.page-item
           a.page-link(href='?page=' + (currentPage + 1)) Next
-  div
-    for product in products
-      p #[b #{product.name}], #[b #{product.price}]€, #[b #{product.points}] points
-      p
-        a(href=product.image)
-          img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+  .container
+    .row
+      for product in products
+        .col-sm
+          p #[b #{product.name}], #[b #{product.price}]€, #[b #{product.points}] points
+          p
+            a(href=product.image)
+              img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
