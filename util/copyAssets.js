@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const fs = require('fs');
 const ncp = require('ncp').ncp;
 
 const destBootstrapCss = "./src/public/css/bootstrap.css";
@@ -26,6 +27,14 @@ if (process.argv.slice(2) == "") {
   console.error("argument must either be \"dev\" or \"prod\"");
   process.exit(1);
 }
+
+// create the folders where files will be copied
+fs.mkdir("./src/public/css", (err) => {
+  // don't give a shit about the error
+});
+fs.mkdir("./src/public/js", (err) => {
+  // don't give a shit about the error
+});
 
 if (process.argv.slice(2) == "dev") {
   copy(devBootstrapCss, destBootstrapCss);
