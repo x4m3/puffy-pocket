@@ -32,8 +32,9 @@ block content
             a.page-link(href='?page=' + (currentPage - 2)) #{currentPage - 2}
         li.page-item
           a.page-link(href='?page=' + (currentPage - 1)) #{currentPage - 1}
-      li.page-item.active
-        a.page-link(href='?page=' + currentPage) #{currentPage}
+      li.page-item.active(aria-current="page")
+        span.page-link #{currentPage}
+        span.sr-only (current)
       if currentPage == numberOfPages
         li.page-item.disabled
           a.page-link(href='?page=' + currentPage, tabindex='-1', aria-disabled='true') Next
