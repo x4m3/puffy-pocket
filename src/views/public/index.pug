@@ -7,9 +7,8 @@ block navbar
       span.navbar-toggler-icon
     #navbarNav.collapse.navbar-collapse
       .navbar-nav.mr-auto
-        a.nav-item.nav-link.active(href="/")
+        a.nav-item.nav-link(href="/")
           | Home
-          span.sr-only (current)
       .navbar-nav
         .nav-item
           a.nav-link(href="/account")
@@ -49,8 +48,9 @@ block content
   .container
     .row
       for product in products
-        .col-sm
-          p #[b #{product.name}], #[b #{product.price}]€, #[b #{product.points}] points
-          p
-            a(href=product.image)
-              img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+        .card
+          img.card-img-top.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+          .card-body
+            h5.card-title #{product.name}
+            p.card-text #[b #{product.price}]€, #[b #{product.points}] points
+            a.btn.btn-primary.stretched-link(href=product.image) See product
