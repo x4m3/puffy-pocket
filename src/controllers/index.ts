@@ -54,6 +54,7 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
       res.render("public/index", {
         title: "homepage",
         route: req.route.path,
+        user: req.user,
         products: productList,
         // number of total pages
         numberOfPages: Math.floor((productsAvailable / productsPerPage)) + 1,

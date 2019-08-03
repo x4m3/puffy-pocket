@@ -4,23 +4,15 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
     span.navbar-toggler-icon
   #navbarNav.collapse.navbar-collapse
     .navbar-nav.mr-auto
-      if route == "/"
-        a.nav-item.nav-link.active(href="/")
-          | Home
-          span.sr-only (current)
-      else
-        a.nav-item.nav-link(href="/")
-          | Home
+      a.nav-item.nav-link(href="/")
+        | Home
     .navbar-nav
-      .nav-item
-      if route == "/account"
-        a.nav-link.active(href="/account")
-          img.d-inline-block.align-top(src="/account/avatar?size=20", alt="")
-          | Account
-          span.sr-only (current)
-      else
-        a.nav-link(href="/account")
-          img.d-inline-block.align-top(src="/account/avatar?size=20", alt="")
-          | Account
-      a.nav-item.nav-link(href="/logout")
-        | Logout
+      .nav-item.dropdown
+        a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+          | #{user.email}
+        .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
+          a.nav-link(href="/account")
+            img.d-inline-block.align-top(src="/account/avatar?size=20", alt="")
+            | Account
+          a.dropdown-item(href="/logout")
+            | Logout
