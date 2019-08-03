@@ -1,0 +1,15 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+  span.navbar-brand.mb-0.h1 #{siteName}
+  button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav', aria-controls='navbarNav', aria-expanded='false', aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  #navbarNav.collapse.navbar-collapse
+    .navbar-nav.mr-auto
+      a.nav-item.nav-link(href="/admin")
+        | Admin
+      a.nav-item.nav-link(href="/admin/users")
+        | Users
+      a.nav-item.nav-link(href="/admin/products")
+        | Products
+    .navbar-nav
+      a.nav-item.nav-link(href="/")
+        | Back to site
