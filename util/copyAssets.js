@@ -36,6 +36,9 @@ fs.mkdir("./src/public/js", (err) => {
   // don't give a shit about the error
 });
 
+// copy material icons folder
+copy("./node_modules/material-icons/iconfont/", "./src/public/material-icons/");
+
 if (process.argv.slice(2) == "dev") {
   copy(devBootstrapCss, destBootstrapCss);
   copy(devBootstrapJs, destBootstrapJs);

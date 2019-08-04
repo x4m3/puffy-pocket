@@ -5,6 +5,7 @@ build/
 bootstrap.js
 bootstrap.css
 jquery.js
+src/public/material-icons
 
 # test databases
 *.db

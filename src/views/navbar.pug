@@ -5,6 +5,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
   #navbarNav.collapse.navbar-collapse
     .navbar-nav.mr-auto
       a.nav-item.nav-link(href="/")
+        span.material-icons home
         | Home
     .navbar-nav
       .nav-item.dropdown
@@ -12,7 +13,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
           | #{user.email}
         .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
           a.nav-link(href="/account")
-            img.d-inline-block.align-top(src="/account/avatar?size=20", alt="")
+            span.material-icons account_circle
             | Account
           a.dropdown-item(href="/logout")
+            span.material-icons power_settings_new
             | Logout
