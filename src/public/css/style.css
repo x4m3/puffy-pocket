@@ -2,3 +2,8 @@ html,
 body {
   height: 100%;
 }
+
+/* rule for material-icons spans */
+.material-icons {
+  font-size: 20px;
+}
