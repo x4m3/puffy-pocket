@@ -35,3 +35,25 @@ export const getProductImage = (req: Request, res: Response, next: NextFunction)
     }
   });
 };
+
+/**
+ * GET /products/:productId/details
+ * Display product details from "productId"
+ */
+export const getProductDetails = (req: Request, res: Response, next: NextFunction) => {
+  // find product in database via productId and see if it's available
+  Product.findOne({ productId: req.params.productId, available: true }, (err, product) => {
+    if (err) { return next(err); }
+    if (product) {
+      console.log(product);
+      return res.render("public/product-details", {
+        title: "product detail",
+        user: req.user,
+        product: product
+      })
+    } else {
+      // if productId is invalid or product is not set as available, return 404
+      return next(err);
+    }
+  });
+};

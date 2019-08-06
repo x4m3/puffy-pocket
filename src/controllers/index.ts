@@ -26,8 +26,8 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
     name: string;
     price: number;
     points: number;
-    image: string;
     thumbnail: string;
+    details: string;
   };
   let productList: Array<productData> = [];
 
@@ -47,8 +47,8 @@ export const index = (req: Request, res: Response, next: NextFunction) => {
           name: product.name,
           price: product.price,
           points: product.points,
-          image: "/products/" + product.productId + "/image",
-          thumbnail: "/products/" + product.productId + "/image?width=250"
+          thumbnail: "/products/" + product.productId + "/image?width=250",
+          details: "/products/" + product.productId + "/details"
         });
       });
       res.render("public/index", {
