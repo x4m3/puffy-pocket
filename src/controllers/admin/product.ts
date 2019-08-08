@@ -19,6 +19,7 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     thumbnail: string;
   };
   let productList: Array<productData> = [];
+  let numberOfProductsAvailable: number = 0;
 
   Product.find({}, (err, products) => {
     if (err) { return next(err); }
@@ -32,11 +33,15 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
         image: "/products/" + product.productId + "/image",
         thumbnail: "/products/" + product.productId + "/image?width=250"
       });
+      if (product.available == true) {
+        numberOfProductsAvailable++;
+      }
     });
     res.render("admin/products", {
       title: "products - admin panel",
       products: productList,
-      numberOfProducts: productList.length
+      numberOfProducts: productList.length,
+      numberOfProductsAvailable: numberOfProductsAvailable
     });
   });
 };
