@@ -131,7 +131,6 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
   /**
    * TODO:
    * check if new email is already in database (return error)
-   * for admin users: bypass the admin changing
    */
 
   // find user in database
@@ -145,9 +144,11 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
       if (phone.length != 0) { user.info.phone = phone; }
       if (address.length != 0) { user.info.address = address; }
 
-      // change admin status
-      if (admin == true && user.admin == false) { user.admin = true; }
-      if (admin == false && user.admin == true) { user.admin = false; }
+      // change admin status only if the current userId is different than the userId to change
+      if (req.user.userId != req.params.userId) {
+        if (admin == true && user.admin == false) { user.admin = true; }
+        if (admin == false && user.admin == true) { user.admin = false; }
+      }
 
       // save changes in database
       user.save((err) => {
