@@ -7,7 +7,6 @@ block content
   .container
     h1 Product management
     h2 Add new product
-    p Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
     form(action="/admin/products/add", method="post" id="item-form" enctype="multipart/form-data")
       .form-group
         label(for="name") Product name
@@ -20,7 +19,8 @@ block content
         input.form-control(type="number", name="points" placeholder="Set number of points for product" required)
       .form-group
         label(for="image") Image
-        input.form-control-file(type="file" name="image" required)
+        input.form-control-file(type="file" name="image" aria-describedby="imageHelp" required)
+        small#imageHelp.form-text.text-muted Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
       button.btn.btn-primary(type="submit" form="item-form") Add new product
     h2 List of products
     if numberOfProducts == 0
