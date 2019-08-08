@@ -4,46 +4,45 @@ block navbar
   include ../navbar-admin
 
 block content
-  h1 Administrative panel / products
-  h2 Add new product
-  p Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
-  form(action="/admin/products/add", method="post" id="item-form" enctype="multipart/form-data")
-    div
-      label(for="name") Product name
-      input(type="text", name="name" required)
-    div
-      label(for="price") Price
-      input(type="number", name="price" required)
-    div
-      label(for="points") Points
-      input(type="number", name="points" required)
-    div
-      label(for="image") Image
-      input(type="file" name="image" required)
-    button(type="submit" form="item-form") Add
-  h2 Product management
-  if numberOfProducts == 0
-    p There are no products stored
-  else
-    p There are #{numberOfProducts} products in database
-    table.table.table-hover
-      tr
-        th(scope="col") ProductId
-        th(scope="col") Name
-        th(scope="col") Available
-        th(scope="col") Price
-        th(scope="col") Points
-        th(scope="col") Image
-        th(scope="col") Actions
-      for product in products
+  .container
+    h1 Product management
+    h2 Add new product
+    p Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
+    form(action="/admin/products/add", method="post" id="item-form" enctype="multipart/form-data")
+      .form-group
+        label(for="name") Product name
+        input.form-control(type="text", name="name" placeholder="Enter name" required)
+      .form-group
+        label(for="price") Price
+        input.form-control(type="number", name="price" placeholder="Set price (in euros)" required)
+      .form-group
+        label(for="points") Points
+        input.form-control(type="number", name="points" placeholder="Set number of points for product" required)
+      .form-group
+        label(for="image") Image
+        input.form-control-file(type="file" name="image" required)
+      button.btn.btn-primary(type="submit" form="item-form") Add new product
+    h2 List of products
+    if numberOfProducts == 0
+      p There are no products stored
+    else
+      p There are #{numberOfProducts} products in database
+      table.table.table-hover
         tr
-          td= product.productId
-          td= product.name
-          td= product.available
-          td= product.price
-          td= product.points
-          td
-            a(href=product.image)
-              img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
-          td #[a(href="/admin/products/edit/" + product.productId) Edit] #[a(href="/admin/products/delete/" + product.productId) Delete]
+          th(scope="col") Name
+          th(scope="col") Available
+          th(scope="col") Price
+          th(scope="col") Points
+          th(scope="col") Image
+          th(scope="col") Actions
+        for product in products
+          tr
+            td= product.name
+            td= product.available
+            td= product.price
+            td= product.points
+            td
+              a(href=product.image)
+                img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+            td #[a(href="/admin/products/edit/" + product.productId) Edit]
 
