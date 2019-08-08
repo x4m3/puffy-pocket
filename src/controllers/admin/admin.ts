@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from "express";
  */
 export const getIndex = (req: Request, res: Response, next: NextFunction) => {
   res.render("admin/index", {
-    title: "admin panel"
+    title: "admin panel",
+    user: req.user
   });
 };

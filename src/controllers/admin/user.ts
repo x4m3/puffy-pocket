@@ -41,6 +41,7 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
     });
     res.render("admin/users", {
       title: "users - admin panel",
+      user: req.user,
       users: userList,
       currentUser: req.user.userId
     });
@@ -81,6 +82,7 @@ export const getUserEdit = (req: Request, res: Response, next: NextFunction) => 
     if (user) {
       return res.render("admin/user-edit", {
         title: "edit user - admin panel",
+        user: req.user,
         currentUser: req.user.userId,
         userId: user.userId,
         firstName: user.info.name.first,

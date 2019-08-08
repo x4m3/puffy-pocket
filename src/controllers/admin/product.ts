@@ -39,6 +39,7 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     });
     res.render("admin/products", {
       title: "products - admin panel",
+      user: req.user,
       products: productList,
       numberOfProducts: productList.length,
       numberOfProductsAvailable: numberOfProductsAvailable
@@ -121,6 +122,7 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
     if (product) {
       return res.render("admin/product-edit", {
         title: "edit product - admin panel",
+        user: req.user,
         productId: product.productId,
         name: product.name,
         price: product.price,

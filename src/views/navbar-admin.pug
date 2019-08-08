@@ -4,10 +4,20 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
     span.navbar-toggler-icon
   #navbarNav.collapse.navbar-collapse
     .navbar-nav.mr-auto
+      a.nav-item.nav-link(href="/")
+        span.material-icons home
+        | Home
       a.nav-item.nav-link(href="/admin")
-        span.material-icons supervised_user_circle
+        span.material-icons build
         | Admin
     .navbar-nav
-      a.nav-item.nav-link(href="/")
-        span.material-icons exit_to_app
-        | Back to site
+      .nav-item.dropdown
+        a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+          | #{user.email}
+        .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
+          a.nav-link(href="/account")
+            span.material-icons account_circle
+            | Account
+          a.nav-link(href="/logout")
+            span.material-icons power_settings_new
+            | Logout
