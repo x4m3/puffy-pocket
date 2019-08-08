@@ -128,6 +128,12 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
     return res.redirect("/admin/users/edit/" + req.params.userId);
   }
 
+  /**
+   * TODO:
+   * check if new email is already in database (return error)
+   * for admin users: bypass the admin changing
+   */
+
   // find user in database
   User.findOne({ userId: req.params.userId }, (err, user) => {
     if (err) { return next(err); }
