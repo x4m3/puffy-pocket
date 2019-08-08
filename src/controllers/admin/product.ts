@@ -140,6 +140,8 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
   let points: number = +req.fields.points;
   let available: boolean = (req.fields.available) == "true" ? true : false;
 
+  // TODO: THERE IS A BUG SOMEWHERE
+
   // if no files were uploaded
   if (req.files.image.size == 0) {
     // delete uploaded file from filesystem
