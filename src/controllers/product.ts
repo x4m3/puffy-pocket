@@ -49,7 +49,8 @@ export const getProductDetails = (req: Request, res: Response, next: NextFunctio
       return res.render("public/product-details", {
         title: "product detail",
         user: req.user,
-        product: product
+        product: product,
+        image: "/products/" + product.productId + "/image?width=500"
       })
     } else {
       // if productId is invalid or product is not set as available, return 404

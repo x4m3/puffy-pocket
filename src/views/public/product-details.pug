@@ -4,5 +4,9 @@ block navbar
   include ../navbar
 
 block content
-  h1= product.name
-  p #[b #{product.price}]€, #[b #{product.points}] points
+  .container
+    h1= product.name
+    p #[b #{product.price}]€, #[b #{product.points}] points
+    div
+      img(src=image, alt="image")
+    span.material-icons add_shopping_cart
