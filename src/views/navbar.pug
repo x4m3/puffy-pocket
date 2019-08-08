@@ -7,6 +7,10 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light
       a.nav-item.nav-link(href="/")
         span.material-icons home
         | Home
+      if (user.admin == true)
+        a.nav-item.nav-link(href="/admin")
+          span.material-icons build
+          | Admin
     .navbar-nav
       .nav-item.dropdown
         a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
