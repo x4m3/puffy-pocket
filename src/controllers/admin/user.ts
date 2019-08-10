@@ -41,6 +41,110 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
+ * GET /admin/users/add
+ * Manually add new user
+ */
+export const getUserAdd = (req: Request, res: Response, next: NextFunction) => {
+  return res.render("admin/user-add", {
+    title: "add user - admin panel",
+    user: req.user
+  });
+}
+
+/**
+ * POST /admin/users/add
+ * Manually add new user
+ */
+export const postUserAdd = (req: Request, res: Response, next: NextFunction) => {
+  const firstName: string = req.body.firstName;
+  const lastName: string = req.body.lastName;
+  const password: string = req.body.password;
+  const passwordConfirm: string = req.body.passwordConfirm;
+  const phone: string = req.body.phone;
+  const address: string = req.body.address;
+  const email: string = req.body.email;
+  const admin: boolean = (req.body.admin == "true") ? true : false;
+
+  let errors: Array<string> = [];
+
+  // valid name and last name
+  if (!firstName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/) || !lastName.match(/^[A-Z]+(([' -][a-zA-Z ])?[a-zA-Z]*)*$/)) {
+    errors.push("only letters are allowed for name");
+  }
+
+  // phone number formatting
+  if (!phone.match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)) {
+    errors.push("invalid phone number");
+  }
+
+  // password length and matching passwords
+  if (password.length < passwordLength) {
+    errors.push(`password must be at least ${passwordLength} characters`);
+  }
+  else if (password != passwordConfirm) {
+    errors.push("passwords don't match");
+  }
+
+  if (errors.length > 0) {
+    return res.render("admin/user-add", {
+      title: "add user - admin panel",
+      user: req.user,
+      errors,
+      firstName,
+      lastName,
+      email,
+      phone,
+      address
+    });
+  }
+
+  // check if email is already registered
+  User.findOne({ email: email.toLowerCase() }, (err, existingUser) => {
+    if (err) { return next(err); }
+    if (existingUser) {
+      // email is already registered, render page with error
+      errors.push("email address is already registered");
+      return res.render("admin/user-add", {
+        title: "add user - admin panel",
+        user: req.user,
+        errors,
+        firstName,
+        lastName,
+        email,
+        phone,
+        address
+      });
+    } else {
+      const newUser: UserDocument = new User({
+        userId: generateUserId(),
+        email: email.toLowerCase(),
+        password: password,
+        points: 0,
+        info: {
+          name: {
+            first: firstName,
+            last: lastName
+          },
+          phone: phone,
+          address: address
+        },
+        referral: {
+          user: generateReferralCode(firstName, lastName, 3)
+        },
+        admin: admin
+      });
+
+      newUser.save((err) => {
+        if (err) { return next(err); }
+
+        // registration succeeded, go back to list of users
+        return res.redirect("/admin/users");
+      });
+    }
+  });
+};
+
+/**
  * GET /admin/users/delete/:userId
  * Delete user from "userId"
  */
@@ -155,63 +259,5 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
         }
       });
     }
-  });
-};
-
-/**
- * POST /admin/users/add
- * Manually add new user
- */
-export const postUserAdd = (req: Request, res: Response, next: NextFunction) => {
-  const firstName: string = <string>req.body.firstName;
-  const lastName: string = <string>req.body.lastName;
-  const password: string = <string>req.body.password;
-  const passwordConfirm: string = <string>req.body.passwordConfirm;
-  const phone: string = <string>req.body.phone;
-  const address: string = <string>req.body.address;
-  const email: string = <string>req.body.email;
-  const admin: boolean = (req.body.admin == "true") ? true : false;
-
-  // password length and matching passwords
-  if (password.length < passwordLength) {
-    return res.redirect("/admin/users");
-  }
-  else if (password != passwordConfirm) {
-    return res.redirect("/admin/users");
-  }
-
-  // check if email is already registered
-  User.findOne({ email: email.toLowerCase() }, (err, existingUser) => {
-    if (err) { return next(err); }
-    if (existingUser) {
-      // email is already registered
-      return res.redirect("/admin/users");
-    }
-
-    const newUser: UserDocument = new User({
-      userId: generateUserId(),
-      email: email.toLowerCase(),
-      password: password,
-      points: 0,
-      info: {
-        name: {
-          first: firstName,
-          last: lastName
-        },
-        phone: phone,
-        address: address
-      },
-      referral: {
-        user: generateReferralCode(firstName, lastName, 3)
-      },
-      admin: admin
-    });
-
-    newUser.save((err) => {
-      if (err) { return next(err); }
-
-      // registration succeeded, go back to list of users
-      return res.redirect("/admin/users");
-    });
   });
 };

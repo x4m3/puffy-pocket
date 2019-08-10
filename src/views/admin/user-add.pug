@@ -1,0 +1,53 @@
+extends ../layout
+
+block navbar
+  include ../navbar-admin
+
+block content
+  .container
+    h1 Add user
+    if errors
+      for err in errors
+        .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+          .
+            #{err}
+          button.close(type='button', data-dismiss='alert', aria-label='Close')
+            span(aria-hidden='true') &times;
+    form(action="/admin/users/add" id="new-user-form" method="post" enctype="application/x-www-form-urlencoded")
+      .form-row
+        .form-group.col-md-6
+          label(for="firstName") First Name
+          input.form-control(type="text" name="firstName" id="firstName" placeholder="James" value=firstName required)
+        .form-group.col-md-6
+          label(for="lastName") Last Name
+          input.form-control(type="text" name="lastName" id="lastName" placeholder="Smith" value=lastName required)
+      .form-group
+        label(for="email") Email Address
+        input.form-control(type="email" name="email" id="email" placeholder="james.smith@example.net" value=email aria-describedby="emailHelpBlock" required)
+        small#emailHelpBlock.form-text.text-muted
+          | Make sure that the email address is not already registered.
+      .form-group
+        label(for="phone") Phone Number
+        input.form-control(type="tel" name="phone" id="phone" placeholder="+1 206 555 0100" value=phone required)
+      .form-group
+        label(for="address") Address
+        textarea.form-control(rows="3" type="text" name="address" id="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
+      .form-row
+        .form-group.col-md-6
+          label(for="password") Password
+          input.form-control(type="password" name="password" id="password" placeholder="Choose a password" aria-describedby="passwordHelpBlock" required)
+          small#passwordHelpBlock.form-text.text-muted
+            | The password must be at least #{passwordLength} characters long.
+        .form-group.col-md-6
+          label(for="passwordConfirm") Confirm password
+          input.form-control(type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm your password" required)
+      .form-group
+        label Available
+        .form-check
+          input.form-check-input(type="radio" id="adminTrue" name="admin" aria-describedby="adminHelp" value="true")
+          label.form-check-label(for="adminTrue") Yes
+        .form-check
+          input.form-check-input(type="radio" id="adminFalse" name="admin" aria-describedby="adminHelp" value="false" checked)
+          label.form-check-label(for="adminFalse") No
+        small#adminHelp.form-text.text-muted Will the user be able to edit the site?
+      button.btn.btn-primary(type="submit" form="new-user-form") Add user
