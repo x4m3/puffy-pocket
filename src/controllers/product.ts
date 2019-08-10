@@ -45,7 +45,6 @@ export const getProductDetails = (req: Request, res: Response, next: NextFunctio
   Product.findOne({ productId: req.params.productId, available: true }, (err, product) => {
     if (err) { return next(err); }
     if (product) {
-      console.log(product);
       return res.render("public/product-details", {
         title: "product detail",
         user: req.user,
