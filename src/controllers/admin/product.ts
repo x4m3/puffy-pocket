@@ -74,7 +74,10 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
     return res.render("admin/product-add", {
       title: "add product - admin panel",
       user: req.user,
-      error: "Bad image format"
+      error: "Bad image format",
+      productName: req.fields.productName,
+      price: +req.fields.price,
+      points: +req.fields.points
     });
   }
 
