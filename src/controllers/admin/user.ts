@@ -13,13 +13,9 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
     userId: string;
     email: string;
     name: string;
-    phone: string;
     admin: string;
     points: number;
-    referral: {
-      user: string;
-      registration: string;
-    }
+    referral: string;
   };
   let userList: Array<userData> = [];
 
@@ -30,13 +26,9 @@ export const getUsers = (req: Request, res: Response, next: NextFunction) => {
         userId: user.userId,
         email: user.email,
         name: user.info.name.first + " " + user.info.name.last,
-        phone: user.info.phone,
         admin: (user.admin) ? "yes" : "no",
         points: user.points,
-        referral: {
-          user: user.referral.user,
-          registration: user.referral.registration
-        }
+        referral: user.referral.user
       });
     });
     res.render("admin/users", {
