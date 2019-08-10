@@ -18,31 +18,31 @@ block content
       .form-row
         .form-group.col-md-6
           label(for="firstName") First Name
-          input.form-control(type="text" name="firstName" placeholder="James" value=firstName required)
+          input.form-control(type="text" name="firstName" id="firstName" placeholder="James" value=firstName required)
         .form-group.col-md-6
           label(for="lastName") Last Name
-          input.form-control(type="text" name="lastName" placeholder="Smith" value=lastName required)
+          input.form-control(type="text" name="lastName" id="lastName" placeholder="Smith" value=lastName required)
       .form-group
         label(for="email") Email Address
-        input.form-control(type="email" name="email" placeholder="james.smith@example.net" value=email aria-describedby="emailHelpBlock" required)
+        input.form-control(type="email" name="email" id="email" placeholder="james.smith@example.net" value=email aria-describedby="emailHelpBlock" required)
         small#emailHelpBlock.form-text.text-muted
           | We'll never share your email with anyone else.
       .form-group
         label(for="phone") Phone Number
-        input.form-control(type="tel" name="phone" placeholder="+1 206 555 0100" value=phone required)
+        input.form-control(type="tel" name="phone" id="phone" placeholder="+1 206 555 0100" value=phone required)
       .form-group
         label(for="address") Address
-        textarea.form-control(rows="3" type="text" name="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
+        textarea.form-control(rows="3" type="text" name="address" id="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
       .form-row
         .form-group.col-md-6
           label(for="password") Password
-          input.form-control(type="password" name="password" placeholder="Choose a password" aria-describedby="passwordHelpBlock" required)
+          input.form-control(type="password" name="password" id="password" placeholder="Choose a password" aria-describedby="passwordHelpBlock" required)
           small#passwordHelpBlock.form-text.text-muted
             | Your password must be at least #{passwordLength} characters long.
         .form-group.col-md-6
-          label(for="password") Confirm password
-          input.form-control(type="password" name="passwordConfirm" placeholder="Confirm your password" required)
+          label(for="passwordConfirm") Confirm password
+          input.form-control(type="password" name="passwordConfirm" id="passwordConfirm" placeholder="Confirm your password" required)
       .form-group
         label(for="referral") Referral code
-        input.form-control(type="text" name="referral" placeholder="Referral code" value=referral required)
+        input.form-control(type="text" name="referral" id="referral" placeholder="Referral code" value=referral required)
       button.btn.btn-lg.btn-primary.btn-block(type="submit" form="register-form") register
