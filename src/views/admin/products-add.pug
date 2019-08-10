@@ -1,0 +1,37 @@
+extends ../layout
+
+block navbar
+  include ../navbar-admin
+
+block content
+  .container
+    h1 Add product
+    if error
+      .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+        .
+          #{error}
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') &times;
+    form(action="/admin/products/add", method="post" id="item-form" enctype="multipart/form-data")
+      .form-group
+        label(for="name") Product name
+        input.form-control(type="text" id="name" name="name" placeholder="Enter name" required)
+      .form-group
+        label(for="price") Price
+        input.form-control(type="number" id="name" name="price" placeholder="Set price (in euros)" required)
+      .form-group
+        label(for="points") Points
+        input.form-control(type="number" id="points" name="points" placeholder="Set number of points for product" required)
+      .form-group
+        label(for="image") Image
+        input.form-control-file(type="file" id="image" name="image" aria-describedby="imageHelp" required)
+        small#imageHelp.form-text.text-muted Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
+      .form-group
+        label Available
+        .form-check.form-check-inline
+          input.form-check-input(type="radio" id="availableTrue" name="available" value="true" checked)
+          label.form-check-label(for="availableTrue") Yes
+        .form-check.form-check-inline
+          input.form-check-input(type="radio" id="availableFalse" name="available" value="false")
+          label.form-check-label(for="availableFalse") No
+      button.btn.btn-primary(type="submit" form="item-form") Add product

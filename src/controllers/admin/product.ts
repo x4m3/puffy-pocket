@@ -48,6 +48,17 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
 };
 
 /**
+ * GET /admin/products/add
+ * Add new product to database
+ */
+export const getProductsAdd = (req: Request, res: Response, next: NextFunction) => {
+  return res.render("admin/products-add", {
+    title: "add product - admin panel",
+    user: req.user
+  });
+};
+
+/**
  * POST /admin/products/add
  * Add new product to database
  */
@@ -59,8 +70,12 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
       if (err) throw err;
     });
 
-    // redirect back to the products page
-    return res.redirect("/admin/products");
+    // render page with error message
+    return res.render("admin/products-add", {
+      title: "add product - admin panel",
+      user: req.user,
+      error: "Bad image format"
+    });
   }
 
   const newProduct: ProductDocument = new Product({
@@ -72,7 +87,7 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
       data: fs.readFileSync(req.files.image.path),
       contentType: req.files.image.type
     },
-    available: true
+    available: (req.fields.available == "true") ? true : false
   });
 
   newProduct.save((err) => {
@@ -112,7 +127,7 @@ export const getProductDelete = (req: Request, res: Response, next: NextFunction
 };
 
 /**
- * GET /admin/products/edit/:userId
+ * GET /admin/products/edit/:productId
  * Display edit product information from "productId"
  */
 export const getProductEdit = (req: Request, res: Response, next: NextFunction) => {
@@ -132,7 +147,7 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
         thumbnail: "/products/" + product.productId + "/image?width=250"
       })
     }
-    // if userId is invalid, return 404
+    // if productId is invalid, return 404
     return next(err);
   });
 };

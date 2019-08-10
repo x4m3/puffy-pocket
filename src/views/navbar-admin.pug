@@ -10,6 +10,27 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
       a.nav-item.nav-link(href="/admin")
         span.material-icons build
         | Admin
+      .nav-item.dropdown
+        a#navbarDropdownProducts.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+          | Products
+        .dropdown-menu(aria-labelledby='navbarDropdownProducts')
+          a.nav-link.text-dark(href="/admin/products")
+            span.material-icons format_list_bulleted
+            | Product list
+          a.nav-link.text-dark(href="/admin/products/add")
+            span.material-icons add
+            | Add product
+      .nav-item.dropdown
+        a#navbarUsersProducts.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+          | Users
+        .dropdown-menu(aria-labelledby='navbarDropdownUsers')
+          a.nav-link.text-dark(href="/admin/users/list")
+            span.material-icons format_list_bulleted
+            | User list
+          a.nav-link.text-dark(href="/admin/users/add")
+            span.material-icons add
+            | Add user
+
     .navbar-nav
       .nav-item.dropdown
         a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
