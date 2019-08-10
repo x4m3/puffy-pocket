@@ -28,10 +28,11 @@ block content
         small#imageHelp.form-text.text-muted Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
       .form-group
         label Available
-        .form-check.form-check-inline
-          input.form-check-input(type="radio" id="availableTrue" name="available" value="true" checked)
+        .form-check
+          input.form-check-input(type="radio" id="availableTrue" name="available" aria-describedby="availableHelp" value="true" checked)
           label.form-check-label(for="availableTrue") Yes
-        .form-check.form-check-inline
-          input.form-check-input(type="radio" id="availableFalse" name="available" value="false")
+        .form-check
+          input.form-check-input(type="radio" id="availableFalse" name="available" aria-describedby="availableHelp" value="false")
           label.form-check-label(for="availableFalse") No
+        small#availableHelp.form-text.text-muted Is the product available right now to buy?
       button.btn.btn-primary(type="submit" form="item-form") Add product
