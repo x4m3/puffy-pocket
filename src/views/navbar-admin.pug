@@ -15,9 +15,9 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
         a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
           | #{user.email}
         .dropdown-menu(aria-labelledby='navbarDropdownMenuLink')
-          a.nav-link(href="/account")
+          a.nav-link.text-dark(href="/account")
             span.material-icons account_circle
             | Account
-          a.nav-link(href="/logout")
+          a.nav-link.text-dark(href="/logout")
             span.material-icons power_settings_new
             | Logout
