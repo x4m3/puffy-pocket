@@ -80,7 +80,7 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
 
   const newProduct: ProductDocument = new Product({
     productId: generateProductId(),
-    name: <string>req.fields.name, // need to cast to string
+    name: <string>req.fields.productName, // need to cast to string
     price: +req.fields.price, // "+" means to store as "number"
     points: +req.fields.points, // "+" means to store as "number"
     image: {
