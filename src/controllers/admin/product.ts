@@ -52,7 +52,7 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
  * Add new product to database
  */
 export const getProductsAdd = (req: Request, res: Response, next: NextFunction) => {
-  return res.render("admin/products-add", {
+  return res.render("admin/product-add", {
     title: "add product - admin panel",
     user: req.user
   });
@@ -71,7 +71,7 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
     });
 
     // render page with error message
-    return res.render("admin/products-add", {
+    return res.render("admin/product-add", {
       title: "add product - admin panel",
       user: req.user,
       error: "Bad image format"
