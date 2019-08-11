@@ -207,7 +207,7 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
       }
 
       // update info if it has changed
-      if (name.length != product.name.length) { product.name = name; }
+      if (name != product.name) { product.name = name; }
       if (price != product.price) { product.price = price; }
       if (points != product.points) { product.points = points; }
 
