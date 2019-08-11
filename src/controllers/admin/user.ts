@@ -187,10 +187,11 @@ export const getUserEdit = (req: Request, res: Response, next: NextFunction) => 
         phone: user.info.phone,
         address: user.info.address,
         admin: user.admin
-      })
+      });
+    } else {
+      // if userId is invalid, return 404
+      return next(err);
     }
-    // if userId is invalid, return 404
-    return next(err);
   });
 };
 
@@ -219,45 +220,57 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
     errors.push("invalid phone number");
   }
 
-  if (errors.length > 0) {
-    // render page again with user info and error messages
-    return res.redirect("/admin/users/edit/" + req.params.userId);
-  }
-
   // find if new email address is already registered
   User.findOne({ email: email }, (err, registeredEmail) => {
     if (err) { return next(err); }
-
-    // if the email is already registered
     if (registeredEmail) {
-      return res.redirect("/admin/users/edit/" + req.params.userId);
-    } else {
-      // find user in database
-      User.findOne({ userId: req.params.userId }, (err, user) => {
-        if (err) { return next(err); }
-        if (user) {
-          // update user info if they have changed
-          if (firstName.length != 0) { user.info.name.first = firstName; }
-          if (lastName.length != 0) { user.info.name.last = lastName; }
-          if (email.length != 0) { user.email = email; }
-          if (phone.length != 0) { user.info.phone = phone; }
-          if (address.length != 0) { user.info.address = address; }
-
-          // change admin status only if the current userId is different than the userId to change
-          if (req.user.userId != req.params.userId) {
-            if (admin == true && user.admin == false) { user.admin = true; }
-            if (admin == false && user.admin == true) { user.admin = false; }
-          }
-
-          // save changes in database
-          user.save((err) => {
-            if (err) { return next(err); }
-
-            // redirect back to the users page
-            return res.redirect("/admin/users");
-          })
-        }
-      });
+      // if the email is already registered
+      errors.push("Email address is already registered");
     }
+    // find user in database
+    User.findOne({ userId: req.params.userId }, (err, user) => {
+      if (err) { return next(err); }
+      if (user) {
+        if (errors.length > 0) {
+          // render page again with user info and error messages
+          return res.render("admin/user-edit", {
+            title: "edit user - admin panel",
+            user: req.user,
+            currentUser: req.user.userId,
+            userId: user.userId,
+            errors: errors,
+            firstName: user.info.name.first,
+            lastName: user.info.name.last,
+            email: user.email,
+            phone: user.info.phone,
+            address: user.info.address,
+            admin: user.admin
+          });
+        }
+
+        // update user info if they have changed
+        if (firstName != user.info.name.first) { user.info.name.first = firstName; }
+        if (lastName != user.info.name.last) { user.info.name.last = lastName; }
+        if (email != user.email) { user.email = email.toLowerCase(); }
+        if (phone != user.info.phone) { user.info.phone = phone; }
+        if (address != user.info.address) { user.info.address = address; }
+
+        // change admin status only if the current userId is different than the userId to change
+        if (req.user.userId != req.params.userId) {
+          if (admin == true && user.admin == false) { user.admin = true; }
+          if (admin == false && user.admin == true) { user.admin = false; }
+        }
+
+        // save changes in database
+        user.save((err) => {
+          if (err) { return next(err); }
+
+          // redirect back to the users page
+          return res.redirect("/admin/users");
+        });
+      } else {
+        return next(err);
+      }
+    });
   });
 };

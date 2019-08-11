@@ -23,7 +23,4 @@ block content
           td= user.admin
           td= user.points
           td= user.referral
-          if user.userId == currentUser
-            td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit]
-          else
-            td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit] #[a.btn.btn-danger(href="/admin/users/delete/" + user.userId) Delete]
+          td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit]
