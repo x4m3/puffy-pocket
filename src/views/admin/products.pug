@@ -6,6 +6,8 @@ block navbar
 block content
   .container
     h1 List of products
+    p
+      a.btn.btn-success(href="/admin/products/add") Add product
     p There are #{numberOfProducts} products in database, #{numberOfProductsAvailable} of them are available
     table.table.table-hover
       tr

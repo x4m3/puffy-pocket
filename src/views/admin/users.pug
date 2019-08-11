@@ -5,7 +5,9 @@ block navbar
 
 block content
   .container
-    h2 List of users
+    h1 List of users
+    p
+      a.btn.btn-success(href="/admin/users/add") Add user
     table.table.table-hover
       tr
         th(scope="col") Name
@@ -22,6 +24,6 @@ block content
           td= user.points
           td= user.referral
           if user.userId == currentUser
-            td #[a(href="/admin/users/edit/" + user.userId) Edit]
+            td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit]
           else
-            td #[a(href="/admin/users/edit/" + user.userId) Edit] #[a(href="/admin/users/delete/" + user.userId) Delete]
+            td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit] #[a.btn.btn-danger(href="/admin/users/delete/" + user.userId) Delete]
