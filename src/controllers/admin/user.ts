@@ -248,12 +248,12 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
           });
         }
 
-        // update user info if they have changed
-        if (firstName != user.info.name.first) { user.info.name.first = firstName; }
-        if (lastName != user.info.name.last) { user.info.name.last = lastName; }
-        if (email != user.email) { user.email = email.toLowerCase(); }
-        if (phone != user.info.phone) { user.info.phone = phone; }
-        if (address != user.info.address) { user.info.address = address; }
+        // update user info if input value is not empty
+        if (firstName.length != 0) { user.info.name.first = firstName; }
+        if (lastName.length != 0) { user.info.name.last = lastName; }
+        if (email.length != 0) { user.email = email; }
+        if (phone.length != 0) { user.info.phone = phone; }
+        if (address.length != 0) { user.info.address = address; }
 
         // change admin status only if the current userId is different than the userId to change
         if (req.user.userId != req.params.userId) {
