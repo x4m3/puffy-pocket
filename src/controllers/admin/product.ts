@@ -15,7 +15,6 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
     name: string;
     price: number;
     points: number;
-    image: string;
     thumbnail: string;
   };
   let productList: Array<productData> = [];
@@ -30,7 +29,6 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
         name: product.name,
         price: product.price,
         points: product.points,
-        image: "/products/" + product.productId + "/image",
         thumbnail: "/products/" + product.productId + "/image?width=250"
       });
       if (product.available == true) {
@@ -142,11 +140,10 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
         title: "edit product - admin panel",
         user: req.user,
         productId: product.productId,
-        name: product.name,
+        productName: product.name,
         price: product.price,
         points: product.points,
         available: product.available,
-        image: "/products/" + product.productId + "/image",
         thumbnail: "/products/" + product.productId + "/image?width=250"
       })
     }
@@ -160,29 +157,32 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
  * Edit product information from "productId"
  */
 export const postProductEdit = (req: Request, res: Response, next: NextFunction) => {
-  let name: string = <string>req.fields.name;
+  let name: string = <string>req.fields.productName;
   let price: number = +req.fields.price;
   let points: number = +req.fields.points;
-  let available: boolean = (req.fields.available) == "true" ? true : false;
+  let available: boolean = (req.fields.available == "true") ? true : false;
 
-  // TODO: THERE IS A BUG SOMEWHERE
+  let errors: Array<string> = [];
+
+  if (price < 0) {
+    errors.push("Price can not be negative");
+  }
+  if (points < 0) {
+    errors.push("Points can not be negative");
+  }
 
   // if no files were uploaded
   if (req.files.image.size == 0) {
-    // delete uploaded file from filesystem
-    fs.unlink(req.files.image.path, (err) => {
-      if (err) throw err;
-    });
+    // delete empty file from filesystem
+    fs.unlink(req.files.image.path, (err) => { if (err) throw err; });
   } else {
     // if uploaded file is not an image
     if (checkFileImage(req.files.image.name) == false) {
       // delete uploaded file from filesystem
-      fs.unlink(req.files.image.path, (err) => {
-        if (err) throw err;
-      });
+      fs.unlink(req.files.image.path, (err) => { if (err) throw err; });
 
-      // redirect back to the products page
-      return res.redirect("/admin/products");
+      // add error message to array
+      errors.push("Bad image format");
     }
   }
 
@@ -190,10 +190,26 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
   Product.findOne({ userId: req.params.userId }, (err, product) => {
     if (err) { return next(err); }
     if (product) {
+
+      if (errors.length > 0) {
+        // if there is errors, render page again with messages and values from database
+        return res.render("admin/product-edit", {
+          title: "edit product - admin panel",
+          user: req.user,
+          errors: errors,
+          productId: product.productId,
+          productName: product.name,
+          price: product.price,
+          points: product.points,
+          available: product.available,
+          thumbnail: "/products/" + product.productId + "/image?width=250"
+        });
+      }
+
       // update info if it has changed
-      if (name.length != 0) { product.name = name; }
-      if (price != 0) { product.price = price; }
-      if (points != 0) { product.points = points; }
+      if (name.length != product.name.length) { product.name = name; }
+      if (price != product.price) { product.price = price; }
+      if (points != product.points) { product.points = points; }
 
       // save new image if it has changed
       if (req.files.image.size != 0) {
@@ -212,11 +228,14 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
 
       // save changes in database
       product.save((err) => {
-        if (err) { return next(err); }
+        if (err) {
+          console.log(err);
+          return next(err);
+        }
 
         // redirect back to the products page
         return res.redirect("/admin/products");
-      })
+      });
     }
   });
 };

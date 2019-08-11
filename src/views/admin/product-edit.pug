@@ -4,34 +4,53 @@ block navbar
   include ../navbar-admin
 
 block content
-  h1 Edit product details
-  p.
-    Please fill #[b only] the fields that needs to be updated.#[br]
-    If the modification #[b succeeds], you will be taken back the list of all products.
-  form(action="/admin/products/edit/" + productId id="edit-form" method="post" enctype="multipart/form-data")
-    div
-      label(for="name") Name
-      input(type="text" name="name" placeholder=name)
-    div
-      label(for="price") Price
-      input(type="number" name="price" placeholder=price)
-    div
-      label(for="points") Points
-      input(type="number" name="points" placeholder=points)
-    div
-      label(for="image") Image
-      div
-        a(href=image)
-          img(src=thumbnail, alt=name + " thumbnail")
-      input(type="file" name="image")
-    div
-      label(for="available") Available
-      if available == true
-        input(type="radio" name="available" value="true" checked)/ Yes
-        input(type="radio" name="available" value="false")/ No
-      else
-        input(type="radio" name="available" value="true")/ Yes
-        input(type="radio" name="available" value="false" checked)/ No
-    button(type="submit" form="edit-form") Edit
-    p #[a(href="/admin/products/delete/" + productId) Delete product]
+  .container
+    h1 Edit product
+    p Please fill #[b only] the fields that needs to be updated.
+    if errors
+      for err in errors
+        .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+          .
+            #{err}
+          button.close(type='button', data-dismiss='alert', aria-label='Close')
+            span(aria-hidden='true') &times;
+    form(action="/admin/products/edit/" + productId id="edit-form" method="post" enctype="multipart/form-data")
+      .form-group
+        label(for="name") Product name
+        input.form-control(type="text" id="name" name="productName" aria-describedby="nameHelp" placeholder=productName)
+        small#nameHelp.form-text.text-muted How the product name will be displayed on the website
+      .form-group
+        label(for="price") Price
+        input.form-control(type="number" id="price" name="price" aria-describedby="priceHelp" placeholder=price)
+        small#priceHelp.form-text.text-muted Price of the product in Euros (€)
+      .form-group
+        label(for="points") Points
+        input.form-control(type="number" id="points" name="points" aria-describedby="pointsHelp" placeholder=points)
+        small#pointsHelp.form-text.text-muted How much points will be given when buying this product
+      .form-group
+        label(for="image") Image
+        p
+          img.img-thumbnail(src=thumbnail, alt=productName + " thumbnail")
+        input.form-control-file(type="file" id="image" name="image" aria-describedby="imageHelp")
+        small#imageHelp.form-text.text-muted Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
+      .form-group
+        label Available
+        if available == true
+          .form-check
+            input.form-check-input(type="radio" id="availableTrue" name="available" aria-describedby="availableHelp" value="true" checked)
+            label.form-check-label(for="availableTrue") Yes
+          .form-check
+            input.form-check-input(type="radio" id="availableFalse" name="available" aria-describedby="availableHelp" value="false")
+            label.form-check-label(for="availableFalse") No
+        else
+          .form-check
+            input.form-check-input(type="radio" id="availableTrue" name="available" aria-describedby="availableHelp" value="true")
+            label.form-check-label(for="availableTrue") Yes
+          .form-check
+            input.form-check-input(type="radio" id="availableFalse" name="available" aria-describedby="availableHelp" value="false" checked)
+            label.form-check-label(for="availableFalse") No
+        small#availableHelp.form-text.text-muted Is the product available right now to buy?
+      p
+        button.btn.btn-primary(type="submit" form="edit-form" style={ "margin-right": "1em" }) Save changes
+        a.btn.btn-danger(href="/admin/products/delete/" + productId) Delete product
 
