@@ -170,7 +170,7 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
             phone: phone
           },
           referral: {
-            user: generateReferralCode(firstName, lastName, 3, referral),
+            user: generateReferralCode(firstName, lastName, 3),
             registration: referral
           },
           admin: false
