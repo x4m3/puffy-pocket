@@ -31,8 +31,18 @@ block content
         label(for="phone") Phone Number
         input.form-control(type="tel" name="phone" id="phone" placeholder=phone)
       .form-group
-        label(for="address") Address
-        textarea.form-control(rows="3" type="text" name="address" id="address" placeholder=address)
+          label(for="street") Street
+          input.form-control(type="text" name="street" id="street" placeholder=street)
+      .form-group
+          label(for="streetComplement") Complement #[span.text-muted (optional)]
+          input.form-control(type="text" name="streetComplement" id="streetComplement" placeholder=streetComplement)
+      .form-row
+        .form-group.col-md-3
+          label(for="postalCode") Postal Code
+          input.form-control(type="text" name="postalCode" id="postalCode" placeholder=postalCode)
+        .form-group.col-md-9
+          label(for="city") City
+          input.form-control(type="text" name="city" id="city" placeholder=city)
       .form-group
         label Admin
         if currentUser == userId

@@ -56,14 +56,17 @@ export const getUserAdd = (req: Request, res: Response, next: NextFunction) => {
  * Manually add new user
  */
 export const postUserAdd = (req: Request, res: Response, next: NextFunction) => {
-  const firstName: string = req.body.firstName;
-  const lastName: string = req.body.lastName;
-  const password: string = req.body.password;
-  const passwordConfirm: string = req.body.passwordConfirm;
-  const phone: string = req.body.phone;
-  const address: string = req.body.address;
-  const email: string = req.body.email;
-  const admin: boolean = (req.body.admin == "true") ? true : false;
+  const firstName:        string  = req.body.firstName;
+  const lastName:         string  = req.body.lastName;
+  const password:         string  = req.body.password;
+  const passwordConfirm:  string  = req.body.passwordConfirm;
+  const phone:            string  = req.body.phone;
+  const street:           string  = req.body.street;
+  const streetComplement: string  = req.body.streetComplement;
+  const postalCode:       string  = req.body.postalCode;
+  const city:             string  = req.body.city;
+  const email:            string  = req.body.email;
+  const admin:            boolean = (req.body.admin == "true") ? true : false;
 
   let errors: Array<string> = [];
 
@@ -85,6 +88,16 @@ export const postUserAdd = (req: Request, res: Response, next: NextFunction) => 
     errors.push("passwords don't match");
   }
 
+  // postal code check
+  if (!postalCode.match(/^[0-9]{5}$/)) {
+    errors.push("invalid postal code");
+  }
+
+  // city name check
+  if (!city.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)) {
+    errors.push("invalid city");
+  }
+
   if (errors.length > 0) {
     return res.render("admin/user-add", {
       title: "add user - admin panel",
@@ -94,7 +107,10 @@ export const postUserAdd = (req: Request, res: Response, next: NextFunction) => 
       lastName,
       email,
       phone,
-      address
+      street,
+      streetComplement,
+      postalCode,
+      city
     });
   }
 
@@ -112,7 +128,10 @@ export const postUserAdd = (req: Request, res: Response, next: NextFunction) => 
         lastName,
         email,
         phone,
-        address
+        street,
+        streetComplement,
+        postalCode,
+        city
       });
     } else {
       const newUser: UserDocument = new User({
@@ -125,8 +144,13 @@ export const postUserAdd = (req: Request, res: Response, next: NextFunction) => 
             first: firstName,
             last: lastName
           },
-          phone: phone,
-          address: address
+          address: {
+            street: street,
+            streetComplement: streetComplement,
+            postalCode: +postalCode,
+            city: city
+          },
+          phone: phone
         },
         referral: {
           user: generateReferralCode(firstName, lastName, 3)
@@ -185,7 +209,10 @@ export const getUserEdit = (req: Request, res: Response, next: NextFunction) => 
         lastName: user.info.name.last,
         email: user.email,
         phone: user.info.phone,
-        address: user.info.address,
+        street: user.info.address.street,
+        streetComplement: user.info.address.streetComplement,
+        postalCode: user.info.address.postalCode,
+        city: user.info.address.city,
         admin: user.admin
       });
     } else {
@@ -200,12 +227,15 @@ export const getUserEdit = (req: Request, res: Response, next: NextFunction) => 
  * Edit user information from "userId"
  */
 export const postUserEdit = (req: Request, res: Response, next: NextFunction) => {
-  let firstName: string = req.body.firstName;
-  let lastName: string = req.body.lastName;
-  let email: string = req.body.email;
-  let phone: string = req.body.phone;
-  let address: string = req.body.address;
-  let admin: boolean = (req.body.admin == "true") ? true : false;
+  const firstName:        string  = req.body.firstName;
+  const lastName:         string  = req.body.lastName;
+  const phone:            string  = req.body.phone;
+  const street:           string  = req.body.street;
+  const streetComplement: string  = req.body.streetComplement;
+  const postalCode:       string  = req.body.postalCode;
+  const city:             string  = req.body.city;
+  const email:            string  = req.body.email;
+  const admin:            boolean = (req.body.admin == "true") ? true : false;
 
   let errors: Array<string> = [];
 
@@ -218,6 +248,16 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
 
   if (phone.length != 0 && !phone.match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/)) {
     errors.push("invalid phone number");
+  }
+
+  // postal code check
+  if (postalCode.length != 0 && !postalCode.match(/^[0-9]{5}$/)) {
+    errors.push("invalid postal code");
+  }
+
+  // city name check
+  if (city.length != 0 && !city.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)) {
+    errors.push("invalid city");
   }
 
   // find if new email address is already registered
@@ -243,7 +283,10 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
             lastName: user.info.name.last,
             email: user.email,
             phone: user.info.phone,
-            address: user.info.address,
+            street: user.info.address.street,
+            streetComplement: user.info.address.streetComplement,
+            postalCode: user.info.address.postalCode,
+            city: user.info.address.city,
             admin: user.admin
           });
         }
@@ -253,7 +296,9 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
         if (lastName.length != 0) { user.info.name.last = lastName; }
         if (email.length != 0) { user.email = email; }
         if (phone.length != 0) { user.info.phone = phone; }
-        if (address.length != 0) { user.info.address = address; }
+        if (street.length != 0) { user.info.address.street = street; }
+        if (streetComplement.length != 0) { user.info.address.streetComplement = streetComplement; }
+        if (postalCode.length != 0 && +postalCode != user.info.address.postalCode) { user.info.address.postalCode = +postalCode; }
 
         // change admin status only if the current userId is different than the userId to change
         if (req.user.userId != req.params.userId) {

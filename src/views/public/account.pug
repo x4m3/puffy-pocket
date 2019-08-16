@@ -5,15 +5,17 @@ block navbar
 
 block content
   .container
-    h1 Welcome back, #{user.info.name.first}!
-    h2 Your account
+    h1 Your account
     h3 Personal Information
     ul
       li First name #[b #{user.info.name.first}]
       li Last name #[b #{user.info.name.last}]
       li Email address #[b #{user.email}]
       li Phone number #[b #{user.info.phone}]
-      li Address #[b #{user.info.address}]
+      if user.info.address.streetComplement.length
+        li Address #[b #{user.info.address.street}], #[b #{user.info.address.streetComplement}], #[b #{user.info.address.postalCode}] #[b #{user.info.address.city}]
+      else
+        li Address #[b #{user.info.address.street}], #[b #{user.info.address.postalCode}] #[b #{user.info.address.city}]
     h3 Store
     p Your referral code is #[b #{user.referral.user}]
     p You currently have #[b #{user.points}] points.

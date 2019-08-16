@@ -10,15 +10,20 @@ export type UserDocument = mongoose.Document & {
     name: {
       first: string; // first name
       last: string; // last name
-    },
+    };
+    address: { // French address format
+      street: string; // street name
+      streetComplement: string; // complement of street
+      postalCode: number; // postal code
+      city: string; // city
+    };
     phone: string; // phone number
-    address: string; // postal address
   };
   referral: {
     user: string; // code to give to others
     registration: string; // code used to register
   };
-  firstUser: boolean; // user should not be deleted if this is set to true
+  firstUser: boolean; // used to give admin to the first real user of the site
   admin: boolean; // administrator of store ?
 };
 
@@ -32,8 +37,13 @@ const UserSchema = new mongoose.Schema({
       first: String,
       last: String
     },
-    phone: String,
-    address: String
+    address: {
+      street: String,
+      streetComplement: String,
+      postalCode: Number,
+      city: String
+    },
+    phone: String
   },
   referral: {
     user: String,

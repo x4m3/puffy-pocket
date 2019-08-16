@@ -63,14 +63,17 @@ export const getRegister = (req: Request, res: Response) => {
  * register new user
  */
 export const postRegister = (req: Request, res: Response, next: NextFunction) => {
-  const firstName:       string = <string>req.body.firstName;
-  const lastName:        string = <string>req.body.lastName;
-  const password:        string = <string>req.body.password;
-  const passwordConfirm: string = <string>req.body.passwordConfirm;
-  const phone:           string = <string>req.body.phone;
-  const address:         string = <string>req.body.address;
-  const referral:        string = <string>req.body.referral;
-  const email:           string = <string>req.body.email;
+  const firstName:        string = req.body.firstName;
+  const lastName:         string = req.body.lastName;
+  const password:         string = req.body.password;
+  const passwordConfirm:  string = req.body.passwordConfirm;
+  const phone:            string = req.body.phone;
+  const street:           string = req.body.street;
+  const streetComplement: string = req.body.streetComplement;
+  const postalCode:       string = req.body.postalCode;
+  const city:             string = req.body.city;
+  const referral:         string = req.body.referral;
+  const email:            string = req.body.email;
 
   let errors: Array<string> = [];
 
@@ -92,6 +95,16 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
     errors.push("passwords don't match");
   }
 
+  // postal code check
+  if (!postalCode.match(/^[0-9]{5}$/)) {
+    errors.push("invalid postal code");
+  }
+
+  // city name check
+  if (!city.match(/^([a-zA-Z\u0080-\u024F]+(?:. |-| |'))*[a-zA-Z\u0080-\u024F]*$/)) {
+    errors.push("invalid city");
+  }
+
   // only capital letters and numbers for referral
   if (!referral.match(/[A-Z0-9]+/)) {
     errors.push("referral code format doesn't match");
@@ -105,7 +118,10 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
       lastName,
       email,
       phone,
-      address,
+      street,
+      streetComplement,
+      postalCode,
+      city,
       referral
     });
   }
@@ -126,7 +142,10 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
             lastName,
             email,
             phone,
-            address,
+            street,
+            streetComplement,
+            postalCode,
+            city,
             referral
           });
         }
@@ -142,8 +161,13 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
               first: firstName,
               last: lastName
             },
-            phone: phone,
-            address: address,
+            address: {
+              street: street,
+              streetComplement: streetComplement,
+              postalCode: +postalCode,
+              city: city
+            },
+            phone: phone
           },
           referral: {
             user: generateReferralCode(firstName, lastName, 3, referral),
@@ -188,7 +212,10 @@ export const postRegister = (req: Request, res: Response, next: NextFunction) =>
         lastName,
         email,
         phone,
-        address,
+        street,
+        streetComplement,
+        postalCode,
+        city,
         referral
       });
     }

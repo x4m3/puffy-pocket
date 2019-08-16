@@ -30,9 +30,21 @@ block content
       .form-group
         label(for="phone") Phone Number
         input.form-control(type="tel" name="phone" id="phone" placeholder="+1 206 555 0100" value=phone required)
+      hr.col-xs-12
       .form-group
-        label(for="address") Address
-        textarea.form-control(rows="3" type="text" name="address" id="address" placeholder="1 Infinite Loop, Cupertino, CA 95014 USA" value=address required)
+          label(for="street") Street
+          input.form-control(type="text" name="street" id="street" placeholder="113 Avenue de Clichy" value=street required)
+      .form-group
+          label(for="streetComplement") Complement #[span.text-muted (optional)]
+          input.form-control(type="text" name="streetComplement" id="streetComplement" placeholder="Appartement 1310" value=streetComplement)
+      .form-row
+        .form-group.col-md-3
+          label(for="postalCode") Postal Code
+          input.form-control(type="text" name="postalCode" id="postalCode" placeholder="75017" value=postalCode required)
+        .form-group.col-md-9
+          label(for="city") City
+          input.form-control(type="text" name="city" id="city" placeholder="Paris" value=city required)
+      hr.col-xs-12
       .form-row
         .form-group.col-md-6
           label(for="password") Password
