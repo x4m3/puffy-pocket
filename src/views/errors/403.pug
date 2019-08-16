@@ -1,7 +1,11 @@
 extends ../layout
 
 block content
-  h1 403 Forbidden
-  p You do not have access to page #[b #{url}]
-  p contact the administrators if you think this should not happen
-  a(href="/") go home
+  .container
+    .row
+      .col-md-12
+        div(style={ "padding": "40px 15px" })
+          h1 Access forbidden
+          p Sorry, but you are not allowed to access the address #[b #{url}].
+          p
+            a.btn.btn-primary(href="/") Go to homepage

@@ -1,7 +1,12 @@
 extends ../layout
 
 block content
-  h1 404 Not found
-  p file #[b #{url}] could not be found
-  p contact the administrators if you think this should not happen
-  a(href="/") go home
+  .container
+    .row
+      .col-md-12
+        div(style={ "padding": "40px 15px" })
+          h1 Page not found
+          p The address #[b #{url}] could not be found on #{siteName}.
+          p Maybe the page has been deleted, or moved to another place.
+          p
+            a.btn.btn-primary(href="/") Go to homepage
