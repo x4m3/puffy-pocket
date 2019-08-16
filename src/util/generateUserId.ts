@@ -9,7 +9,7 @@ export function generateUserId(): string {
   User.findOne({ userId: userId }, (err, existingId) => {
     if (err) { return false; }
     // call function again to generate a new id and check again
-    if (existingId) { generateUserId(); }
+    if (existingId) { return generateUserId(); }
   });
   return userId;
-}
+};

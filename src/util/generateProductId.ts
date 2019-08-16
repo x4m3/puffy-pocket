@@ -9,7 +9,7 @@ export function generateProductId(): string {
   Product.findOne({ productId: productId }, (err, existingId) => {
     if (err) { return false; }
     // call function again to generate a new id and check again
-    if (existingId) { generateProductId(); }
+    if (existingId) { return generateProductId(); }
   });
   return productId;
 };
