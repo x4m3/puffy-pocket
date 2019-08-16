@@ -112,7 +112,9 @@ app.get("/admin/products/add", isAuthenticated, isAdmin, adminProductController.
 app.post("/admin/products/add", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminProductController.postProductsAdd);
 app.get("/admin/products/delete/:productId", isAuthenticated, isAdmin, adminProductController.getProductDelete);
 app.get("/admin/products/edit/:productId", isAuthenticated, isAdmin, adminProductController.getProductEdit);
-app.post("/admin/products/edit/:productId", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminProductController.postProductEdit);
+app.post("/admin/products/edit/:productId", isAuthenticated, isAdmin, adminProductController.postProductEdit);
+app.get("/admin/products/edit-image/:productId", isAuthenticated, isAdmin, adminProductController.getProductEditImage);
+app.post("/admin/products/edit-image/:productId", isAuthenticated, isAdmin, ExpressFormidable({ hash: "sha1" }), adminProductController.postProductEditImage);
 app.get("/admin/users", isAuthenticated, isAdmin, adminUserController.getUsers);
 app.get("/admin/users/delete/:userId", isAuthenticated, isAdmin, adminUserController.getUserDelete);
 app.get("/admin/users/edit/:userId", isAuthenticated, isAdmin, adminUserController.getUserEdit);

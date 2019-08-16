@@ -1,0 +1,23 @@
+extends ../layout
+
+block navbar
+  include ../navbar-admin
+
+block content
+  .container
+    h1 Edit image for #{productName}
+    if error
+      .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+        .
+          #{error}
+        button.close(type='button', data-dismiss='alert', aria-label='Close')
+          span(aria-hidden='true') &times;
+    form(action="/admin/products/edit-image/" + productId id="edit-form" method="post" enctype="multipart/form-data")
+      .form-group
+        p
+          img.img-thumbnail(src=thumbnail, alt=productName + " thumbnail")
+        input.form-control-file(type="file" id="image" name="image" aria-describedby="imageHelp" required)
+        small#imageHelp.form-text.text-muted Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
+      p
+        button.btn.btn-primary(type="submit" form="edit-form") Save image
+

@@ -205,7 +205,7 @@ export const postUserEdit = (req: Request, res: Response, next: NextFunction) =>
   let email: string = req.body.email;
   let phone: string = req.body.phone;
   let address: string = req.body.address;
-  let admin: boolean = (req.body.admin) == "true" ? true : false;
+  let admin: boolean = (req.body.admin == "true") ? true : false;
 
   let errors: Array<string> = [];
 

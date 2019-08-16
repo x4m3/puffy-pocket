@@ -145,7 +145,7 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
         points: product.points,
         available: product.available,
         thumbnail: "/products/" + product.productId + "/image?width=250"
-      })
+      });
     }
     // if productId is invalid, return 404
     return next(err);
@@ -157,33 +157,18 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
  * Edit product information from "productId"
  */
 export const postProductEdit = (req: Request, res: Response, next: NextFunction) => {
-  let name: string = <string>req.fields.productName;
-  let price: number = +req.fields.price;
-  let points: number = +req.fields.points;
-  let available: boolean = (req.fields.available == "true") ? true : false;
+  let name: string = req.body.productName;
+  let price: number = +req.body.price;
+  let points: number = +req.body.points;
+  let available: boolean = (req.body.available == "true") ? true : false;
 
   let errors: Array<string> = [];
 
-  if (price < 0) {
-    errors.push("Price can not be negative");
+  if (price <= 0) {
+    errors.push("You can't sell products for free!");
   }
-  if (points < 0) {
-    errors.push("Points can not be negative");
-  }
-
-  // if no files were uploaded
-  if (req.files.image.size == 0) {
-    // delete empty file from filesystem
-    fs.unlink(req.files.image.path, (err) => { if (err) throw err; });
-  } else {
-    // if uploaded file is not an image
-    if (checkFileImage(req.files.image.name) == false) {
-      // delete uploaded file from filesystem
-      fs.unlink(req.files.image.path, (err) => { if (err) throw err; });
-
-      // add error message to array
-      errors.push("Bad image format");
-    }
+  if (points <= 0) {
+    errors.push("You can't give 0 points for buying something!");
   }
 
   // find product in database
@@ -211,27 +196,13 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
       if (price != product.price) { product.price = price; }
       if (points != product.points) { product.points = points; }
 
-      // save new image if it has changed
-      if (req.files.image.size != 0) {
-        product.image.data = fs.readFileSync(req.files.image.path);
-        product.image.contentType = req.files.image.type;
-
-        // delete uploaded file from filesystem
-        fs.unlink(req.files.image.path, (err) => {
-          if (err) throw err;
-        });
-      }
-
-      // change available status
+      // change available status if it has changed
       if (available == true && product.available == false) { product.available = true; }
       if (available == false && product.available == true) { product.available = false; }
 
       // save changes in database
       product.save((err) => {
-        if (err) {
-          console.log(err);
-          return next(err);
-        }
+        if (err) { return next(err); }
 
         // redirect back to the products page
         return res.redirect("/admin/products");
@@ -239,3 +210,80 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
     }
   });
 };
+
+/**
+ * GET /admin/products/edit-image/:productId
+ * Change image of product via "productId"
+ */
+export const getProductEditImage = (req: Request, res: Response, next: NextFunction) => {
+  // try to find product in database
+  Product.findOne({ productId: req.params.productId }, (err, product) => {
+    if (err) { return next(err); }
+
+    if (product) {
+      return res.render("admin/product-edit-image", {
+        title: "edit image - admin panel",
+        user: req.user,
+        productId: product.productId,
+        productName: product.name,
+        thumbnail: "/products/" + product.productId + "/image?width=250"
+      });
+    }
+    // if productId is invalid, return 404
+    return next(err);
+  });
+};
+
+/**
+ * POST /admin/products/edit-image/:productId
+ * Change image of product via "productId"
+ */
+export const postProductEditImage = (req: Request, res: Response, next: NextFunction) => {
+  // try to find product in database
+  Product.findOne({ productId: req.params.productId }, (err, product) => {
+    if (err) { return next(err); }
+
+    if (product) {
+      // if uploaded file is not an image
+      if (checkFileImage(req.files.image.name) == false) {
+        // delete uploaded file from filesystem
+        fs.unlink(req.files.image.path, (err) => {
+          if (err) throw err;
+        });
+
+        // render page with error message
+        return res.render("admin/product-edit-image", {
+          title: "edit image - admin panel",
+          user: req.user,
+          error: "Bad image format",
+          productId: product.productId,
+          productName: product.name,
+          thumbnail: "/products/" + product.productId + "/image?width=250"
+        });
+      }
+      // save new image
+      product.image.data = fs.readFileSync(req.files.image.path);
+      product.image.contentType = req.files.image.type;
+
+      // save changes in database
+      product.save((err) => {
+        if (err) { return next(err); }
+
+        // delete uploaded file from filesystem
+        fs.unlink(req.files.image.path, (err) => {
+          if (err) throw err;
+        });
+
+        // redirect back to the products page
+        return res.redirect("/admin/products/edit/" + product.productId);
+      });
+    } else {
+      // delete uploaded file from filesystem
+      fs.unlink(req.files.image.path, (err) => {
+        if (err) throw err;
+      });
+      // return 404
+      return next(err);
+    }
+  });
+}

@@ -14,25 +14,24 @@ block content
             #{err}
           button.close(type='button', data-dismiss='alert', aria-label='Close')
             span(aria-hidden='true') &times;
-    form(action="/admin/products/edit/" + productId id="edit-form" method="post" enctype="multipart/form-data")
+    form(action="/admin/products/edit/" + productId id="edit-form" method="post" enctype="application/x-www-form-urlencoded")
       .form-group
         label(for="name") Product name
         input.form-control(type="text" id="name" name="productName" aria-describedby="nameHelp" placeholder=productName)
         small#nameHelp.form-text.text-muted How the product name will be displayed on the website
       .form-group
         label(for="price") Price
-        input.form-control(type="number" id="price" name="price" aria-describedby="priceHelp" placeholder=price)
+        input.form-control(type="number" id="price" name="price" aria-describedby="priceHelp" placeholder=price value=price)
         small#priceHelp.form-text.text-muted Price of the product in Euros (€)
       .form-group
         label(for="points") Points
-        input.form-control(type="number" id="points" name="points" aria-describedby="pointsHelp" placeholder=points)
+        input.form-control(type="number" id="points" name="points" aria-describedby="pointsHelp" placeholder=points value=points)
         small#pointsHelp.form-text.text-muted How much points will be given when buying this product
       .form-group
         label(for="image") Image
         p
           img.img-thumbnail(src=thumbnail, alt=productName + " thumbnail")
-        input.form-control-file(type="file" id="image" name="image" aria-describedby="imageHelp")
-        small#imageHelp.form-text.text-muted Please make sure your image is either a #[b jpg], #[b jpeg], #[b png] or #[b webp] file.
+        a.btn.btn-primary(href="/admin/products/edit-image/" + productId) Change image
       .form-group
         label Available
         if available == true
