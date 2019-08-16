@@ -10,8 +10,7 @@ export const getAccount = (req: Request, res: Response) => {
   res.render("public/account", {
     title: "Your account",
     user: req.user,
-    creationDate: dateformat(req.user.createdAt, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
-    UpdateDate: dateformat(req.user.updatedAt, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+    creationDate: dateformat(req.user.createdAt, "d/m/yyyy")
   });
 };
 

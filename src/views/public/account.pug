@@ -4,21 +4,18 @@ block navbar
   include ../navbar
 
 block content
-  h1 Welcome back, #{user.info.name.first}!
-  h2 Your account
-  h3 Personal Information
-  ul
-    li First name #[b #{user.info.name.first}]
-    li Last name #[b #{user.info.name.last}]
-    li Email address #[b #{user.email}]
-    li Phone number #[b #{user.info.phone}]
-    li Address #[b #{user.info.address}]
-  h3 Store
-  p Your referral code is #[b #{user.referral.user}]
-  p You currently have #[b #{user.points}] points.
-  h3 Miscellaneous
-  if user.admin
-    p You are an #[b administrator] of the store. See the #[a(href="/admin") administration panel].
-  p.
-    Your account was created on #{creationDate}#[br]
-    Your account was last updated on #{UpdateDate}
+  .container
+    h1 Welcome back, #{user.info.name.first}!
+    h2 Your account
+    h3 Personal Information
+    ul
+      li First name #[b #{user.info.name.first}]
+      li Last name #[b #{user.info.name.last}]
+      li Email address #[b #{user.email}]
+      li Phone number #[b #{user.info.phone}]
+      li Address #[b #{user.info.address}]
+    h3 Store
+    p Your referral code is #[b #{user.referral.user}]
+    p You currently have #[b #{user.points}] points.
+    h3 Miscellaneous
+    p Member since #{creationDate}
