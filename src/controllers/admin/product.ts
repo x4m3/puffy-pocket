@@ -29,7 +29,7 @@ export const getProducts = (req: Request, res: Response, next: NextFunction) => 
         name: product.name,
         price: product.price,
         points: product.points,
-        thumbnail: "/products/" + product.productId + "/image?width=250"
+        thumbnail: "/products/" + product.productId + "/image?width=100"
       });
       if (product.available == true) {
         numberOfProductsAvailable++;

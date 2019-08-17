@@ -9,8 +9,8 @@ block content
     p
       a.btn.btn-success(href="/admin/products/add") Add product
     p There are #{numberOfProducts} products in database, #{numberOfProductsAvailable} of them are available
-    .responsive-table
-      table.table.table-hover
+    .table-responsive
+      table.table.table-sm.table-hover
         tr
           th(scope="col") Name
           th(scope="col") Available
@@ -25,7 +25,7 @@ block content
             td= product.price
             td= product.points
             td
-              img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+              img.img-thumbnail.img-fluid(src=product.thumbnail, alt=product.name)
             if (product.available == "yes")
               td #[a.btn.btn-primary(href="/admin/products/edit/" + product.productId) Edit] #[a.btn.btn-secondary(href="/products/" + product.productId + "/details") See product]
             else
