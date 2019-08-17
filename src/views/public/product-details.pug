@@ -8,5 +8,5 @@ block content
     h1= product.name
     p #[b #{product.price}]€, #[b #{product.points}] points
     div
-      img(src=image, alt="image")
+      img.img-fluid(src=image, alt=product.name)
     span.material-icons add_shopping_cart

@@ -35,7 +35,7 @@ block content
     .row
       for product in products
         .card.mx-auto
-          img.card-img-top.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+          img.card-img-top.img-thumbnail(src=product.thumbnail, alt=product.name)
           .card-body
             h5.card-title #{product.name}
             p.card-text #[b #{product.price}]€, #[b #{product.points}] points
