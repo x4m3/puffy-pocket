@@ -8,19 +8,20 @@ block content
     h1 List of users
     p
       a.btn.btn-success(href="/admin/users/add") Add user
-    table.table.table-hover
-      tr
-        th(scope="col") Name
-        th(scope="col") Email
-        th(scope="col") Admin
-        th(scope="col") Points
-        th(scope="col") User Referral
-        th(scope="col") Actions
-      for user in users
+    .table-responsive
+      table.table.table-hover
         tr
-          td= user.name
-          td= user.email
-          td= user.admin
-          td= user.points
-          td= user.referral
-          td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit]
+          th(scope="col") Name
+          th(scope="col") Email
+          th(scope="col") Admin
+          th(scope="col") Points
+          th(scope="col") User Referral
+          th(scope="col") Actions
+        for user in users
+          tr
+            td= user.name
+            td= user.email
+            td= user.admin
+            td= user.points
+            td= user.referral
+            td #[a.btn.btn-primary(href="/admin/users/edit/" + user.userId) Edit]

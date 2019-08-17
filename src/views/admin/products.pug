@@ -9,23 +9,24 @@ block content
     p
       a.btn.btn-success(href="/admin/products/add") Add product
     p There are #{numberOfProducts} products in database, #{numberOfProductsAvailable} of them are available
-    table.table.table-hover
-      tr
-        th(scope="col") Name
-        th(scope="col") Available
-        th(scope="col") Price
-        th(scope="col") Points
-        th(scope="col") Image
-        th(scope="col") Actions
-      for product in products
+    .responsive-table
+      table.table.table-hover
         tr
-          td= product.name
-          td= product.available
-          td= product.price
-          td= product.points
-          td
-            img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
-          if (product.available == "yes")
-            td #[a.btn.btn-primary(href="/admin/products/edit/" + product.productId) Edit] #[a.btn.btn-secondary(href="/products/" + product.productId + "/details") See product]
-          else
-            td #[a.btn.btn-primary(href="/admin/products/edit/" + product.productId) Edit]
+          th(scope="col") Name
+          th(scope="col") Available
+          th(scope="col") Price
+          th(scope="col") Points
+          th(scope="col") Image
+          th(scope="col") Actions
+        for product in products
+          tr
+            td= product.name
+            td= product.available
+            td= product.price
+            td= product.points
+            td
+              img.img-thumbnail(src=product.thumbnail, alt=product.name + " thumbnail")
+            if (product.available == "yes")
+              td #[a.btn.btn-primary(href="/admin/products/edit/" + product.productId) Edit] #[a.btn.btn-secondary(href="/products/" + product.productId + "/details") See product]
+            else
+              td #[a.btn.btn-primary(href="/admin/products/edit/" + product.productId) Edit]
