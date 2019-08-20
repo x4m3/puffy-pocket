@@ -61,28 +61,51 @@ export const getProductsAdd = (req: Request, res: Response, next: NextFunction) 
  * Add new product to database
  */
 export const postProductsAdd = (req: Request, res: Response, next: NextFunction) => {
+  let price: string = <string>req.fields.price;
+
+  let errors: Array<string> = [];
+
+  if (+price <= 0) {
+    errors.push("You can't sell products for free!");
+  }
+  if (+req.fields.points <= 0) {
+    errors.push("You can't give 0 points for buying something!");
+  }
+  // price can contain ',' or '.' for cents separation, 2 digits max after the separation
+  if (!price.match(/^\d+((,|\.)\d{1,2})?$/)) {
+    errors.push("Bad price format");
+  }
+
   // if uploaded file is not an image
   if (checkFileImage(req.files.image.name) == false) {
     // delete uploaded file from filesystem
     fs.unlink(req.files.image.path, (err) => {
       if (err) throw err;
     });
+    errors.push("Bad image format");
+  }
 
-    // render page with error message
+  if (errors.length > 0) {
+    // render page with errors
     return res.render("admin/product-add", {
       title: "add product - admin panel",
       user: req.user,
-      error: "Bad image format",
+      errors: errors,
       productName: req.fields.productName,
-      price: +req.fields.price,
+      price: "",
       points: +req.fields.points
     });
+  }
+
+  // only if the price has a ',' convert it to a '.' to become a valid number
+  if (price.match(/[,]/)) {
+    price = price.replace(",", ".");
   }
 
   const newProduct: ProductDocument = new Product({
     productId: generateProductId(),
     name: <string>req.fields.productName, // need to cast to string
-    price: +req.fields.price, // "+" means to store as "number"
+    price: +price, // "+" means to store as "number"
     points: +req.fields.points, // "+" means to store as "number"
     image: {
       data: fs.readFileSync(req.files.image.path),

@@ -6,12 +6,13 @@ block navbar
 block content
   .container
     h1 Add product
-    if error
-      .alert.alert-danger.alert-dismissible.fade.show(role='alert')
-        .
-          #{error}
-        button.close(type='button', data-dismiss='alert', aria-label='Close')
-          span(aria-hidden='true') &times;
+    if errors
+      for err in errors
+        .alert.alert-danger.alert-dismissible.fade.show(role='alert')
+          .
+            #{err}
+          button.close(type='button', data-dismiss='alert', aria-label='Close')
+            span(aria-hidden='true') &times;
     form(action="/admin/products/add", method="post" id="item-form" enctype="multipart/form-data")
       .form-group
         label(for="name") Product name
@@ -19,7 +20,7 @@ block content
         small#nameHelp.form-text.text-muted How the product name will be displayed on the website
       .form-group
         label(for="price") Price
-        input.form-control(type="number" id="price" name="price" aria-describedby="priceHelp" placeholder="Set price" value=price required)
+        input.form-control(type="text" id="price" name="price" aria-describedby="priceHelp" placeholder="Set price" value=price required)
         small#priceHelp.form-text.text-muted Price of the product in Euros (€)
       .form-group
         label(for="points") Points
