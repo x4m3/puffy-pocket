@@ -65,15 +65,16 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
 
   let errors: Array<string> = [];
 
-  if (+price <= 0) {
-    errors.push("You can't sell products for free!");
+  // only if the price has a ',' convert it to a '.' to become a valid number
+  if (price.match(/[,]/)) {
+    price = price.replace(",", ".");
+  }
+  // price can contain ',' or '.' for cents separation, 2 digits max after the separation or price can't be under 1
+  if (!price.match(/^\d+((,|\.)\d{1,2})?$/) || +price < 1) {
+    errors.push("Bad price format");
   }
   if (+req.fields.points <= 0) {
     errors.push("You can't give 0 points for buying something!");
-  }
-  // price can contain ',' or '.' for cents separation, 2 digits max after the separation
-  if (!price.match(/^\d+((,|\.)\d{1,2})?$/)) {
-    errors.push("Bad price format");
   }
 
   // if uploaded file is not an image
@@ -95,11 +96,6 @@ export const postProductsAdd = (req: Request, res: Response, next: NextFunction)
       price: "",
       points: +req.fields.points
     });
-  }
-
-  // only if the price has a ',' convert it to a '.' to become a valid number
-  if (price.match(/[,]/)) {
-    price = price.replace(",", ".");
   }
 
   const newProduct: ProductDocument = new Product({
