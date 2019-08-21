@@ -177,21 +177,26 @@ export const getProductEdit = (req: Request, res: Response, next: NextFunction) 
  */
 export const postProductEdit = (req: Request, res: Response, next: NextFunction) => {
   let name: string = req.body.productName;
-  let price: number = +req.body.price;
+  let price: string = req.body.price;
   let points: number = +req.body.points;
   let available: boolean = (req.body.available == "true") ? true : false;
 
   let errors: Array<string> = [];
 
-  if (price <= 0) {
-    errors.push("You can't sell products for free!");
+  // only if the price has a ',' convert it to a '.' to become a valid number
+  if (price.match(/[,]/)) {
+    price = price.replace(",", ".");
+  }
+  // price can contain ',' or '.' for cents separation, 2 digits max after the separation or price can't be under 1
+  if (!price.match(/^\d+((,|\.)\d{1,2})?$/) || +price < 1) {
+    errors.push("Bad price format");
   }
   if (points <= 0) {
     errors.push("You can't give 0 points for buying something!");
   }
 
   // find product in database
-  Product.findOne({ userId: req.params.userId }, (err, product) => {
+  Product.findOne({ productId: req.params.productId }, (err, product) => {
     if (err) { return next(err); }
     if (product) {
 
@@ -212,7 +217,7 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
 
       // update info if it has changed
       if (name.length != 0) { product.name = name; }
-      if (price != product.price) { product.price = price; }
+      if (+price != product.price) { product.price = +price; }
       if (points != product.points) { product.points = points; }
 
       // change available status if it has changed
@@ -226,6 +231,9 @@ export const postProductEdit = (req: Request, res: Response, next: NextFunction)
         // redirect back to the products page
         return res.redirect("/admin/products");
       });
+    } else {
+      // if product could not be found, return 404
+      return next(err);
     }
   });
 };
@@ -247,9 +255,10 @@ export const getProductEditImage = (req: Request, res: Response, next: NextFunct
         productName: product.name,
         thumbnail: "/products/" + product.productId + "/image?width=250"
       });
+    } else {
+      // if productId is invalid, return 404
+      return next(err);
     }
-    // if productId is invalid, return 404
-    return next(err);
   });
 };
 
