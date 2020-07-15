@@ -19,7 +19,7 @@
     "express-session": "^1.16.2",
     "express-status-monitor": "^1.2.6",
     "identicon.js": "^2.3.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mime-types": "^2.1.24",
     "mongoose": "^5.7.7",
     "morgan": "~1.9.1",
